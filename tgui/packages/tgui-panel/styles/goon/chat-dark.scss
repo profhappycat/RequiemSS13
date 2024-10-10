@@ -396,6 +396,12 @@ em {
   font-size: 185%;
 }
 
+.userhelp {
+  color: #059223;
+  font-weight: bold;
+  font-size: 185%;
+}
+
 .danger {
   color: #c51e1e;
 }
@@ -513,6 +519,19 @@ em {
 
 .nicegreen {
   color: #059223;
+}
+
+.userlove {
+  color: #FF1493;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 0 0 6px #ff6dbc;
+}
+
+.love {
+  color: #ff006a;
+  font-style: italic;
+  text-shadow: 0 0 6px #ff6d6d;
 }
 
 .cult {
@@ -664,6 +683,15 @@ em {
 
 .robot {
   font-family: "Courier New", cursive, sans-serif;
+}
+
+.phone {
+  font-family: "Courier New", cursive, sans-serif;
+}
+
+.smallphone {
+  font-family: "Courier New", cursive, sans-serif;
+  font-size: 85%;
 }
 
 .command_headset {

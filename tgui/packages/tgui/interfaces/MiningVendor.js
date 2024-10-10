@@ -21,7 +21,7 @@ export const MiningVendor = (props, context) => {
               {' '}
               <b>{data.user.job || "Unemployed"}</b>!
               <br />
-              Your balance is <b>{data.user.points} mining points</b>.
+              Your balance is <b>{data.user.points} dollars</b>.
             </Box>
           ) || (
             <Box color="light-gray">
@@ -51,7 +51,7 @@ export const MiningVendor = (props, context) => {
                       }}
                       disabled={!data.user
                         || product.price > data.user.points}
-                      content={product.price + ' points'}
+                      content={product.price + ' dollars'}
                       onClick={() => act('purchase', {
                         'ref': product.ref,
                       })} />
