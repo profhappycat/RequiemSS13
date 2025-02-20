@@ -22,6 +22,7 @@
 	fire_and_forget = TRUE
 	cooldown_length = 15 SECONDS
 	duration_length = 3 SECONDS
+	range = 7
 
 /datum/discipline_power/dominate/activate(mob/living/target)
 	. = ..()
