@@ -129,7 +129,6 @@
 	if(!CheckFrenzyMove())
 		set_glide_size(DELAY_TO_GLIDE_SIZE(total_multiplicative_slowdown()))
 		step_away(src, step_from, 99)
-		face_atom(step_from)
 
 //MAJESTY
 /datum/discipline_power/presence/majesty
@@ -145,4 +144,4 @@
 	target.Immobilize(1 SECONDS)
 	for(var/obj/item/clothing/W in target.contents)
 		if(W)
-			H.dropItemToGround(W, TRUE)
+			target.dropItemToGround(W, TRUE)
