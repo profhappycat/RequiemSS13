@@ -61,13 +61,13 @@ GLOBAL_LIST_INIT(clinic_positions, list(
 ))
 */
 GLOBAL_LIST_INIT(neutral_positions, list())
-/*
+
 GLOBAL_LIST_INIT(giovanni_positions, list(
     "Capo",
     "La Squadra",
     "La Famiglia"
 ))
-
+/*
 GLOBAL_LIST_INIT(tzimisce_positions, list(
     "Voivode",
     "Bogatyr",
