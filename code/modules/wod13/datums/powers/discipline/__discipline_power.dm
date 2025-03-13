@@ -46,7 +46,7 @@
 	/// If this power uses its own cooldown handling rather than the default handling
 	var/cooldown_override = FALSE
 	/// List of Discipline power types that cannot be activated alongside this power and share a cooldown with it.
-	var/list/grouped_powers = list()
+	var/list/grouped_powers
 
 	/* NOT MEANT TO BE OVERRIDDEN */
 	/// Timer(s) tracking the duration of the power. Can have multiple if multi_activate is true.
@@ -59,14 +59,15 @@
 	var/datum/discipline/discipline
 	/// The player using this Discipline power.
 	var/mob/living/carbon/human/owner
-
 	///if I actually want to bother working with the duration timer system
 	var/bothers_with_duration_timers = TRUE
 
 /datum/discipline_power/New(datum/discipline/discipline)
-	if (discipline)
-		src.discipline = discipline
-		src.owner = discipline.owner
+	if(!discipline)
+		CRASH("discipline_power [src.name] created without a parent discipline!")
+
+	src.discipline = discipline
+	src.owner = discipline.owner
 
 /**
  * Returns the time left the cooldown timer, or
@@ -138,24 +139,25 @@
 		return FALSE
 
 	//a mutually exclusive power is already active or on cooldown
-	for (var/exclude_power in grouped_powers)
-		var/datum/discipline_power/found_power = discipline.get_power(exclude_power)
-		if (!found_power || (found_power == src))
-			continue
+	if (islist(grouped_powers))
+		for (var/exclude_power in grouped_powers)
+			var/datum/discipline_power/found_power = discipline.get_power(exclude_power)
+			if (!found_power || (found_power == src))
+				continue
 
-		if (found_power.active)
-			if (found_power.cancelable || found_power.toggled)
+			if (found_power.active)
+				if (found_power.cancelable || found_power.toggled)
+					if (alert)
+						found_power.try_deactivate(direct = TRUE, alert = TRUE)
+					return TRUE
+				else
+					if (alert)
+						to_chat(owner, span_warning("You cannot have [src] and [found_power] active at the same time!"))
+					return FALSE
+			if (found_power.get_cooldown())
 				if (alert)
-					found_power.try_deactivate(direct = TRUE, alert = TRUE)
-				return TRUE
-			else
-				if (alert)
-					to_chat(owner, span_warning("You cannot have [src] and [found_power] active at the same time!"))
+					to_chat(owner, span_warning("You cannot activate [src] before [found_power]'s cooldown expires in [DisplayTimeText(found_power.get_cooldown())]."))
 				return FALSE
-		if (found_power.get_cooldown())
-			if (alert)
-				to_chat(owner, span_warning("You cannot activate [src] before [found_power]'s cooldown expires in [DisplayTimeText(found_power.get_cooldown())]."))
-			return FALSE
 
 	//the user cannot afford the power's vitae expenditure
 	if (!can_afford())
@@ -275,7 +277,7 @@
 
 	//check target type
 	// mob/living with a bunch of extra conditions
-	if (((target_type & TARGET_MOB) || (target_type & TARGET_LIVING) || (target_type & TARGET_HUMAN) || (target_type & TARGET_PLAYER) || (target_type & TARGET_VAMPIRE)) && istype(target, /mob/living))
+	if ((target_type & MOB_LIVING_TARGETING) && isliving(target))
 		//make sure our LIVING target isn't DEAD
 		var/mob/living/living_target = target
 		if ((target_type & TARGET_LIVING) && (living_target.stat == DEAD))
@@ -352,7 +354,7 @@
 		//feedback is sent by the proc cancelling activation
 		return
 
-	if (!src.pre_activation_checks(target))
+	if (!pre_activation_checks(target))
 		return
 
 	activate(target)
@@ -497,6 +499,9 @@
  * try_deactivate(direct = TRUE).
  */
 /datum/discipline_power/proc/do_duration(atom/target)
+	if (toggled && (duration_length == 0))
+		return
+
 	duration_timers.Add(addtimer(CALLBACK(src, PROC_REF(duration_expire), target), duration_length, TIMER_STOPPABLE | TIMER_DELETE_ME))
 
 /**
@@ -537,8 +542,7 @@
  */
 /datum/discipline_power/proc/duration_expire(atom/target)
 	//clean up the expired timer, which SHOULD be the first in the list
-	deltimer(duration_timers[1])
-	duration_timers.Cut(1, 2)
+	clear_duration_timer()
 
 	//proceed to deactivation or refreshing
 	if (toggled)
@@ -618,8 +622,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (direct && bothers_with_duration_timers)
-		deltimer(duration_timers[1])
-		duration_timers.Cut(1, 2)
+		clear_duration_timer()
 
 	SEND_SIGNAL(src, COMSIG_POWER_DEACTIVATE, src, target)
 	SEND_SIGNAL(owner, COMSIG_POWER_DEACTIVATE, src, target)
@@ -697,3 +700,15 @@
  */
 /datum/discipline_power/proc/do_refresh_checks(atom/target)
 	return TRUE
+
+/**
+ * Clears the last active timer (usually the first in the list).
+ * If called before it expires, this immediately makes the
+ * duration_timer expire without calling the relevant proc.
+ */
+/datum/discipline_power/proc/clear_duration_timer(to_clear = 1)
+	if (toggled && (duration_length == 0))
+		return
+
+	deltimer(duration_timers[to_clear])
+	duration_timers.Cut(to_clear, to_clear + 1)

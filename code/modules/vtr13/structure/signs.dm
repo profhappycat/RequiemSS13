@@ -16,8 +16,3 @@
 	icon = 'icons/vtr13/structure/signs.dmi'
 	icon_state = "bar"
 
-/obj/structure/vampmap/longbeach
-	name = "\improper map"
-	desc = "Locate yourself now."
-	icon = 'icons/vtr13/structure/signs.dmi'
-	icon_state = "map"

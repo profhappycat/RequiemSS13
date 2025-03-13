@@ -27,7 +27,7 @@
 	///The mob that owns and is using this Discipline.
 	var/mob/living/carbon/human/owner
 	///If this Discipline has been assigned before and post_gain effects have already been applied.
-	var/initialized
+	var/post_gain_applied
 
 //TODO: rework this and set_level to use proper loadouts instead of a default set every time
 /datum/discipline/New(level)
@@ -86,49 +86,23 @@
 	for (var/datum/discipline_power/power in known_powers)
 		power.owner = owner
 
-	if (!initialized)
+	if (!post_gain_applied)
 		post_gain()
-	initialized = TRUE
+	post_gain_applied = TRUE
 
 /**
  * Returns a known Discipline power in this Discipline
- * searching by name or type.
+ * searching by type.
  *
  * Arguments:
- * * power - the power name or type to search for
+ * * power - the power type to search for
  */
 /datum/discipline/proc/get_power(power)
+	if (!ispath(power))
+		return
 	for (var/datum/discipline_power/found_power in known_powers)
-		if (istext(power))
-			if (found_power.name == power)
-				return found_power
-		else if (ispath(power))
-			if (found_power.type == power)
-				return found_power
-
-/datum/discipline/proc/can_activate(atom/target)
-	return current_power.can_activate(target)
-
-/datum/discipline/proc/can_activate_untargeted(alert)
-	return current_power.can_activate_untargeted(alert)
-
-/datum/discipline/proc/pre_activation(atom/target)
-	current_power.pre_activation(target)
-
-/datum/discipline/proc/activate(atom/target)
-	current_power.activate(target)
-
-/datum/discipline/proc/try_activate(atom/target)
-	return current_power.try_activate(target)
-
-/datum/discipline/proc/can_deactivate(atom/target)
-	return current_power.can_deactivate(target)
-
-/datum/discipline/proc/can_deactivate_untargeted()
-	return current_power.can_deactivate_untargeted()
-
-/datum/discipline/proc/deactivate(atom/target)
-	current_power.deactivate(target)
+		if (found_power.type == power)
+			return found_power
 
 /**
  * Applies effects specific to the Discipline to
