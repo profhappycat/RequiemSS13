@@ -13,7 +13,7 @@
 	var/theirpower = target.get_total_mentality() + target.get_total_blood()
 
 	to_chat(owner, span_danger("You probe [target]'s mind..."))
-	var/their_successes = target.storyteller_roll(mypower, 6, TRUE, "" ,FALSE)
+	var/their_successes = target.storyteller_roll(theirpower, 6, TRUE, "" ,FALSE)
 	var/my_successes = owner.storyteller_roll(mypower, 6, TRUE, "Mentality+Auspex vs [their_successes] successes")
 
 	if(their_successes >= my_successes)
