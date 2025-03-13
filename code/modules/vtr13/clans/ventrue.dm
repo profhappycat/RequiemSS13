@@ -3,11 +3,10 @@
 	desc = "The prudes, elgeon write this"
 	curse = "you have psychopathy ig. elgeon put this in a nicer way kthx"
 	clane_disciplines = list(
-		/datum/discipline/dominate,
+		/datum/discipline/vtr/animalism,
 		/datum/discipline/vtr/resiliance,
-		/datum/discipline/presence
+		/datum/discipline/dominate
 	)
 	male_clothes = /obj/item/clothing/under/vampire/ventrue
 	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
-	clan_keys = /obj/item/vamp/keys/ventrue
 	humanitymod = 2

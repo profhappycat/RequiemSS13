@@ -139,4 +139,5 @@
 	
 	//VTR EDIT BEGIN
 	var/disguise_description = null
+	var/using_auspex = FALSE
 	//VTR EDIT END

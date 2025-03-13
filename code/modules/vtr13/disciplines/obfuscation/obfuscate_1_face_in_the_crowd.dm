@@ -68,7 +68,7 @@
 	obfuscate_image.override = 1
 	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "obfuscate", obfuscate_image)
 
-	owner.disguise_description = victim.examine(owner)
+	owner.disguise_description = victim.examine(owner, TRUE)
 	is_shapeshifted = TRUE
 	owner.update_body()
 

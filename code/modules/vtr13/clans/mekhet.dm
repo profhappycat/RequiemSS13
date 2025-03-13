@@ -3,10 +3,9 @@
 	desc = "Big nerds, like elgeon and hex"
 	curse = "I forgor, elge write dis."
 	clane_disciplines = list(
-		/datum/discipline/dominate,
-		/datum/discipline/fortitude,
-		/datum/discipline/presence
+		/datum/discipline/vtr/celerity,
+		/datum/discipline/vtr/auspex,
+		/datum/discipline/vtr/obfuscate
 	)
-	male_clothes = /obj/item/clothing/under/vampire/ventrue
-	female_clothes = /obj/item/clothing/under/vampire/ventrue/female
-	clan_keys = /obj/item/vamp/keys/ventrue
+	male_clothes = /obj/item/clothing/under/vampire/tremere
+	female_clothes = /obj/item/clothing/under/vampire/tremere/female

@@ -1,5 +1,5 @@
 /datum/discipline/vtr/animalism
-	name = "Animalism but VTR tho"
+	name = "Animalism"
 	desc = "Elgeon should write a description for this. Violates Masquerade (?)."
 	icon_state = "animalism"
 	power_type = /datum/discipline_power/vtr/animalism

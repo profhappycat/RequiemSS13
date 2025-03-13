@@ -352,7 +352,7 @@
 		//feedback is sent by the proc cancelling activation
 		return
 
-	if (!pre_activation_checks(target))
+	if (!src.pre_activation_checks(target))
 		return
 
 	activate(target)

@@ -9,7 +9,7 @@
 // END_FILE_DIR
 
 // BEGIN_PREFERENCES
-#define DEBUG
+//#define DEBUG
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -3486,6 +3486,12 @@
 #include "code\modules\vtr13\disciplines\animalism\animalism_3_summon_fell.dm"
 #include "code\modules\vtr13\disciplines\animalism\animalism_4_cause_frenzy.dm"
 #include "code\modules\vtr13\disciplines\animalism\animalism_5_mark_territory.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex_1_heightened_senses.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex_2_pierce_the_veil.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex_3_spirits_touch.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex_4_telepathy.dm"
+#include "code\modules\vtr13\disciplines\auspex\auspex_5_psychic_projection.dm"
 #include "code\modules\vtr13\disciplines\celerity\celerity.dm"
 #include "code\modules\vtr13\disciplines\celerity\celerity_1.dm"
 #include "code\modules\vtr13\disciplines\celerity\celerity_2.dm"
@@ -3511,6 +3517,7 @@
 #include "code\modules\vtr13\disciplines\vigor\vigor_4.dm"
 #include "code\modules\vtr13\disciplines\vigor\vigor_5.dm"
 #include "code\modules\vtr13\effects\queen_lilith.dm"
+#include "code\modules\vtr13\huds\update_auspex_hud_vtr.dm"
 #include "code\modules\vtr13\items\ids.dm"
 #include "code\modules\vtr13\items\keys.dm"
 #include "code\modules\vtr13\items\clothing\hats.dm"
