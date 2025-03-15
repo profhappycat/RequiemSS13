@@ -31,7 +31,7 @@
 
 /datum/discipline_power/vtr/protean/horrid_form/activate()
 	. = ..()
-	owner.visible_message(span_alert("[owner]'s hands begin to crack and distort, growing feral claws!"))
+	owner.visible_message(span_alert("[owner]'s body begins to distort and reform into something MONSTEROUS!"))
 	if (!GA)
 		GA = new(owner)
 	GA.shapeshift_type = horrid_form

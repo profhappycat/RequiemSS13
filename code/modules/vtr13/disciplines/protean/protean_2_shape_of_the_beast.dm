@@ -117,6 +117,8 @@
 	UnregisterSignal(shapeshifted_creature, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	UnregisterSignal(owner, COMSIG_POWER_TRY_ACTIVATE)
 	if(shapeshifted_creature)
+		playsound(get_turf(shapeshifted_creature), 'sound/effects/dismember.ogg', 100, TRUE, -6)
+		shapeshifted_creature.visible_message(span_alert("[shapeshifted_creature]'s body emits visceral cracks and groans as they suddenly revert into [owner]!"))
 		GA.Restore(GA.myshape)
 
 //Action button for selecting
