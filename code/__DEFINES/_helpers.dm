@@ -20,5 +20,6 @@
 #define span_subtler(str) ("<span class='subtler'>" + str + "</span>")
 #define span_adminnotice(str) ("<span class='adminnotice'>" + str + "</span>")
 // TFN EDIT END
+#define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
 #define span_danger(str) ("<span class='danger'>" + str + "</span>")
 #define span_alert(str) ("<span class='alert'>" + str + "</span>")
