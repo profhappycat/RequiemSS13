@@ -1177,7 +1177,7 @@
 	return buckle_mob(target, TRUE, TRUE, RIDER_NEEDS_ARMS)
 
 /mob/living/carbon/human/proc/climb_wall(turf/above_turf)
-	if(body_position != STANDING_UP)
+	if(body_position != STANDING_UP || HAS_TRAIT(src, TRAIT_LEANING))
 		return
 	if(above_turf && istype(above_turf, /turf/open/openspace))
 		var/total_dexterity = get_total_dexterity()
@@ -1194,6 +1194,7 @@
 				to_chat(src, span_warning("You were interrupted and failed to climb up."))
 				animate(src, pixel_y = 0, time = 0)
 				return
+      
 			animate(src, pixel_y = 0, time = 0)
 
 		var/success = ROLL_FAILURE
@@ -1216,19 +1217,6 @@
 			to_chat(src, span_warning("You slip while climbing!"))
 		else
 			to_chat(src, span_warning("You fail to climb up."))
-
-	return
-
-/mob/living/carbon/human/MouseDrop(atom/over_object)
-	. = ..()
-	if(src == usr)
-		if(istype(over_object, /turf/closed/wall/vampwall))
-			if(get_dist(src, over_object) < 2)
-				var/turf/above_turf = locate(x, y, z + 1)
-				if(above_turf && istype(above_turf, /turf/open/openspace))
-					climb_wall(above_turf)
-				else
-					to_chat(src, "<span class='warning'>You can't climb there!</span>")
 
 	return
 
