@@ -1,6 +1,6 @@
 /datum/discipline_power/vtr/nightmare/carneval
-	name = "PLACEHOLDER"
-	desc = "HEX MAKE THIS."
+	name = "Carneval"
+	desc = "NOT DONE AT ALL."
 	
 	level = 4
 	
@@ -14,7 +14,7 @@
 	var/overlay_time = 5 SECONDS
 
 
-/datum/discipline_power/vtr/nightmare/hysterical_blindness/pre_activation_checks(mob/living/target)
+/datum/discipline_power/vtr/nightmare/carneval/pre_activation_checks(mob/living/target)
 	if(owner.opposed_roll(
 		owner,
 		target,
@@ -30,7 +30,7 @@
 	return FALSE
 
 
-/datum/discipline_power/vtr/nightmare/hysterical_blindness/activate(mob/living/carbon/human/target)
+/datum/discipline_power/vtr/nightmare/carneval/activate(mob/living/carbon/human/target)
 	. = ..()
 	target.remove_overlay(MUTATIONS_LAYER)
 	var/mutable_appearance/dementation_overlay = mutable_appearance('code/modules/wod13/icons.dmi', "dementation", -MUTATIONS_LAYER)
@@ -46,9 +46,9 @@
 
 	addtimer(CALLBACK(src, PROC_REF(overlay_end_early),target),overlay_time)
 
-/datum/discipline_power/vtr/nightmare/hysterical_blindness/proc/overlay_end_early(mob/living/carbon/human/target)
+/datum/discipline_power/vtr/nightmare/carneval/proc/overlay_end_early(mob/living/carbon/human/target)
 	target.remove_overlay(MUTATIONS_LAYER)
 
-/datum/discipline_power/vtr/nightmare/hysterical_blindness/deactivate(mob/living/carbon/human/target)
+/datum/discipline_power/vtr/nightmare/carneval/deactivate(mob/living/carbon/human/target)
 	. = ..()
 	to_chat(target, span_warning("At long last, the horrors fade."))
