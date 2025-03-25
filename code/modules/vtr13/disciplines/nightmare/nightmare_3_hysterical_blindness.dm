@@ -12,13 +12,12 @@
 	duration_length = 10 SECONDS
 
 /datum/discipline_power/vtr/nightmare/hysterical_blindness/pre_activation_checks(mob/living/target)
-	if(owner.opposed_roll(
+	if(SSroll.opposed_roll(
 		owner,
 		target,
 		dice_a = owner.get_total_mentality() + discipline.level,
-		dice_b = target.get_total_mentality() + target.get_total_blood(),
-		stat_test_a_header = "Mentality + Nightmare",
-		stat_test_b_header = "Mentality + Blood")) //TODO HEX: Tie to blood_potency
+		dice_b = target.get_total_mentality() + target.get_total_blood(), 
+		alert_atom = target)) //TODO HEX: Tie to blood_potency
 		return TRUE	
 	to_chat(owner, span_warning("[target] keeps their eyes open!"))
 	if(target.mind)

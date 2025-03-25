@@ -383,32 +383,6 @@
 					if (!BLOODBONDED.can_be_embraced)
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
-
-					if((BLOODBONDED.timeofdeath + 5 MINUTES) > world.time)
-						if (BLOODBONDED.auspice?.level) //here be Abominations
-							if (BLOODBONDED.auspice.force_abomination)
-								to_chat(H, "<span class='danger'>Something terrible is happening.</span>")
-								to_chat(BLOODBONDED, "<span class='userdanger'>Gaia has forsaken you.</span>")
-								message_admins("[ADMIN_LOOKUPFLW(H)] has turned [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination through an admin setting the force_abomination var.")
-								log_game("[key_name(H)] has turned [key_name(BLOODBONDED)] into an Abomination through an admin setting the force_abomination var.")
-							else
-								switch(SSroll.storyteller_roll(BLOODBONDED.auspice.level))
-									if (ROLL_BOTCH)
-										to_chat(H, "<span class='danger'>Something terrible is happening.</span>")
-										to_chat(BLOODBONDED, "<span class='userdanger'>Gaia has forsaken you.</span>")
-										message_admins("[ADMIN_LOOKUPFLW(H)] has turned [ADMIN_LOOKUPFLW(BLOODBONDED)] into an Abomination.")
-										log_game("[key_name(H)] has turned [key_name(BLOODBONDED)] into an Abomination.")
-									if (ROLL_FAILURE)
-										BLOODBONDED.visible_message("<span class='warning'>[BLOODBONDED.name] convulses in sheer agony!</span>")
-										BLOODBONDED.Shake(15, 15, 5 SECONDS)
-										playsound(BLOODBONDED.loc, 'code/modules/wod13/sounds/vicissitude.ogg', 100, TRUE)
-										BLOODBONDED.can_be_embraced = FALSE
-										return
-									if (ROLL_SUCCESS)
-										to_chat(H, "<span class='notice'>[BLOODBONDED.name] does not respond to your Vitae...</span>")
-										BLOODBONDED.can_be_embraced = FALSE
-										return
-
 						log_game("[key_name(H)] has Embraced [key_name(BLOODBONDED)].")
 						message_admins("[ADMIN_LOOKUPFLW(H)] has Embraced [ADMIN_LOOKUPFLW(BLOODBONDED)].")
 						giving = FALSE
@@ -426,34 +400,17 @@
 						BLOODBONDED.clane = null
 						if(H.generation < 13)
 							BLOODBONDED.generation = 13
-							//BLOODBONDED.skin_tone = get_vamp_skin_color(BLOODBONDED.skin_tone)
-							BLOODBONDED.update_body()
-							if (H.clane.whitelisted)
-								if (!SSwhitelists.is_whitelisted(BLOODBONDED.ckey, H.clane.name))
-									if(H.clane.name == "True Brujah")
-										BLOODBONDED.clane = new /datum/vampireclane/brujah()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Brujah</span>")
-									else if(H.clane.name == "Tzimisce")
-										BLOODBONDED.clane = new /datum/vampireclane/old_clan_tzimisce()
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to the non WL Old Tzmisce</span>")
-									else
-										to_chat(BLOODBONDED,"<span class='warning'> You don't got that whitelist! Changing to a random non WL clan.</span>")
-										var/list/non_whitelisted_clans = list(/datum/vampireclane/brujah,/datum/vampireclane/malkavian,/datum/vampireclane/nosferatu,/datum/vampireclane/gangrel,/datum/vampireclane/giovanni,/datum/vampireclane/ministry,/datum/vampireclane/salubri,/datum/vampireclane/toreador,/datum/vampireclane/tremere,/datum/vampireclane/ventrue)
-										var/random_clan = pick(non_whitelisted_clans)
-										BLOODBONDED.clane = new random_clan
-								else
-									BLOODBONDED.clane = new H.clane.type()
-							else
-								BLOODBONDED.clane = new H.clane.type()
+
+							BLOODBONDED.clane = new H.clane.type()
 
 							BLOODBONDED.clane.on_gain(BLOODBONDED)
 							BLOODBONDED.clane.post_gain(BLOODBONDED)
 							if(BLOODBONDED.clane.alt_sprite && !BLOODBONDED.clane.alt_sprite_greyscale)
 								BLOODBONDED.skin_tone = ALBINO
-								BLOODBONDED.update_body()
+							BLOODBONDED.update_body()
+							
 
 							//Gives the Childe the Sire's first three Disciplines
-
 							var/list/disciplines_to_give = list()
 							for (var/i in 1 to min(3, H.client.prefs.discipline_types.len))
 								disciplines_to_give += H.client.prefs.discipline_types[i]

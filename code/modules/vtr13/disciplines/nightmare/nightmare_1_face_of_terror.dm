@@ -14,13 +14,12 @@
 	duration_length = 3 SECONDS
 
 /datum/discipline_power/vtr/nightmare/face_of_terror/pre_activation_checks(mob/living/target)
-	if(owner.opposed_roll(
+	if(SSroll.opposed_roll(
 		owner,
 		target,
 		dice_a = owner.get_total_mentality() + discipline.level,
-		dice_b = target.get_total_mentality() + target.get_total_blood(),
-		stat_test_a_header = "Mentality + Nightmare",
-		stat_test_b_header = "Mentality + Blood")) //TODO HEX: Tie to blood_potency
+		dice_b = target.get_total_mentality() + target.get_total_blood(), 
+		alert_atom = target)) //TODO HEX: Tie to blood_potency
 		return TRUE	
 	to_chat(owner, span_warning("[target] resists the horror of what they see!"))
 	if(target.mind)

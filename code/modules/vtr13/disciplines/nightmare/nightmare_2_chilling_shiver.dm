@@ -13,13 +13,12 @@
 	duration_length = 30 SECONDS
 
 /datum/discipline_power/vtr/nightmare/phantom_trauma/pre_activation_checks(mob/living/carbon/human/target)
-	if(owner.opposed_roll(
+	if(SSroll.opposed_roll(
 		owner,
 		target,
 		dice_a = owner.get_total_mentality() + discipline.level,
-		dice_b = target.get_total_mentality() + target.get_total_blood(),
-		stat_test_a_header = "Mentality + Nightmare",
-		stat_test_b_header = "Mentality + Blood")) //TODO HEX: Tie to blood_potency instead
+		dice_b = target.get_total_mentality() + target.get_total_blood(), 
+		alert_atom = target)) //TODO HEX: Tie to blood_potency
 		return TRUE	
 	to_chat(owner, span_warning("[target] resists the the chill going up their spine!"))
 	if(target.mind)
@@ -41,7 +40,8 @@
 	ADD_TRAIT(target, TRAIT_NO_QUICK_EQUIP, NIGHTMARE_2_TRAIT)
 	owner.playsound_local(get_turf(target), 'sound/magic/ethereal_enter.ogg', 100, FALSE)
 	to_chat(target, span_userdanger("You find yourself in the final moments of a horror you cannot remember. The danger has passed, but your body trembles like a leaf from the stress."))
-	target.AddElement(/datum/element/ui_button_shake_inventory_group, 16)
+	if(target.mind)
+		target.AddElement(/datum/element/ui_button_shake_inventory_group, 16)
 
 /datum/discipline_power/vtr/nightmare/phantom_trauma/deactivate(mob/living/carbon/human/target)
 	. = ..()
