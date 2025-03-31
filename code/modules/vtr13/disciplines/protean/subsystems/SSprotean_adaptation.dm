@@ -2,9 +2,7 @@ SUBSYSTEM_DEF(protean_adaptation)
 	name = "Protean Adaptations"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_ATOMS
-	var/barriers_enabled = TRUE
 
-	///List of vip barriers
 	var/list/adaptations_predatory = list()
 
 	var/list/adaptations_unnatural = list()

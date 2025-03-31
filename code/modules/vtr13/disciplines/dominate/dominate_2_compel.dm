@@ -6,16 +6,13 @@
 	check_flags = DISC_CHECK_CAPABLE|DISC_CHECK_SPEAK|DISC_CHECK_SEE
 	target_type = TARGET_PLAYER|TARGET_LIVING|TARGET_SELF
 
-	var/datum/action/select_compel_command/select_command_button = null
-
-	var/list/commands = list(
-		"Twerk!" = /atom
-	)
+	var/datum/action/select_compel_button/select_compel_button = null
 	var/selected_command
 
 /datum/discipline_power/vtr/dominate/compel/post_gain()
-	select_command_button = new(owner, src)
-	select_command_button.Grant(owner)
+	selected_command = SSdominate_compulsion.compel_list["Think Twice!"]
+	select_compel_button = new(owner, src)
+	select_compel_button.Grant(owner)
 
 /datum/discipline_power/vtr/dominate/compel/activate(mob/living/target)
 	. = ..()
@@ -30,4 +27,4 @@
 		show_player_b = FALSE))
 		to_chat(owner, span_warning("[target] resists your command!"))
 		return
-	
+	target.AddElement(/datum/element/compulsion, owner, selected_command)

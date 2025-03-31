@@ -14,6 +14,8 @@
 #define NIGHTMARE_4_TRAIT "nightmare_4"
 #define NIGHTMARE_5_TRAIT "nightmare_5"
 
+#define DOMINATE_ACT_TRAIT "dominate_act"
+
 //Discipline related traits
 #define TRAIT_EYES_VIOLATING_MASQUERADE "eyes_violating_masquerade"
 #define TRAIT_GECKO_GRIP "gecko_grip"
@@ -22,3 +24,6 @@
 #define TRAIT_NO_QUICK_EQUIP "no_quick_equip"
 
 #define TRAIT_ATTENDING_CARNIVAL "attending_carnival"
+
+//A bunch of dominate compel/command traits
+#define TRAIT_COMPEL_THINK_TWICE "compel_think_twice"
