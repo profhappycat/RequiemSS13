@@ -32,10 +32,7 @@ SUBSYSTEM_DEF(humannpcpool)
 			GLOB.npc_list -= NPC		//HUH??? A BUG? NO WAY
 			GLOB.alive_npc_list -= NPC
 			GLOB.boring_npc_list -= NPC
-//			if(QDELETED(NPC))
 			log_world("Found a null in npc list!")
-//			else
-//				log_world("Found a dead NPC in npc list!")
 			continue
 
 		//!NPC.route_optimisation()
