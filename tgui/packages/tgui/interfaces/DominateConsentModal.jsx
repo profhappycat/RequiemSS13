@@ -1,13 +1,7 @@
-/**
- * @file
- * @copyright 2020 bobbahbrown (https://github.com/bobbahbrown)
- * @license MIT
- */
-
 import { Loader } from "./common/Loader";
 import { useBackend } from '../backend';
-import { Component, createRef } from 'inferno';
-import { Box, Flex, Section, Button, Stack } from '../components';
+import { Component, createRef } from 'react';
+import { Box, Flex, Section, Button, Stack } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export class DominateConsentModal extends Component {
