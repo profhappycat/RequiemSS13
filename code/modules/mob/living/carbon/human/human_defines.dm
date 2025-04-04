@@ -136,7 +136,12 @@
 	max_yin_chi = 2
 
 	var/headshot_link = null
-	
+	///The Examine Panel TGUI.
+	var/datum/examine_panel/tgui = new() //create the datum
+	var/headshot_link = null
+	var/ooc_notes
+
+
 	//VTR EDIT BEGIN
 	var/disguise_description = null
 	var/using_auspex = FALSE
