@@ -10,6 +10,7 @@
 
 // BEGIN_PREFERENCES
 #define DEBUG
+#define AREA_GROUPER_DEBUGGING
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -3436,8 +3437,8 @@
 #include "code\modules\vtr13\areas\battle.dm"
 #include "code\modules\vtr13\areas\elysium.dm"
 #include "code\modules\vtr13\areas\masquerade.dm"
-#include "code\modules\vtr13\areas\record.dm"
 #include "code\modules\vtr13\areas\vtr.dm"
+#include "code\modules\vtr13\areas\datums\area_group.dm"
 #include "code\modules\vtr13\areas\exterior\alamitos_beach.dm"
 #include "code\modules\vtr13\areas\exterior\graveyard.dm"
 #include "code\modules\vtr13\areas\exterior\la_river.dm"
@@ -3478,6 +3479,7 @@
 #include "code\modules\vtr13\areas\interior\nightclub\nightclub_elysium.dm"
 #include "code\modules\vtr13\areas\interior\police_station\police_lockup.dm"
 #include "code\modules\vtr13\areas\interior\police_station\police_station.dm"
+#include "code\modules\vtr13\areas\subsystems\ssarea_grouper.dm"
 #include "code\modules\vtr13\components\ambiance.dm"
 #include "code\modules\vtr13\connections\character_connection.dm"
 #include "code\modules\vtr13\connections\connection_get_procs.dm"
