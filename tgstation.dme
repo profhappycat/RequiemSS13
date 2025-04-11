@@ -10,6 +10,7 @@
 
 // BEGIN_PREFERENCES
 #define DEBUG
+#define AREA_GROUPER_DEBUGGING
 // END_PREFERENCES
 
 // BEGIN_INCLUDE
@@ -3263,10 +3264,10 @@
 #include "code\modules\tgui\states.dm"
 #include "code\modules\tgui\tgui.dm"
 #include "code\modules\tgui\tgui_alert.dm"
+#include "code\modules\tgui\tgui_input_checkboxes.dm"
 #include "code\modules\tgui\tgui_input_list.dm"
 #include "code\modules\tgui\tgui_input_number.dm"
 #include "code\modules\tgui\tgui_input_text.dm"
-#include "code\modules\tgui\tgui_input_checkboxes.dm"
 #include "code\modules\tgui\tgui_window.dm"
 #include "code\modules\tgui\states\admin.dm"
 #include "code\modules\tgui\states\always.dm"
@@ -3439,8 +3440,8 @@
 #include "code\modules\vtr13\areas\battle.dm"
 #include "code\modules\vtr13\areas\elysium.dm"
 #include "code\modules\vtr13\areas\masquerade.dm"
-#include "code\modules\vtr13\areas\record.dm"
 #include "code\modules\vtr13\areas\vtr.dm"
+#include "code\modules\vtr13\areas\datums\area_group.dm"
 #include "code\modules\vtr13\areas\exterior\alamitos_beach.dm"
 #include "code\modules\vtr13\areas\exterior\graveyard.dm"
 #include "code\modules\vtr13\areas\exterior\la_river.dm"
@@ -3481,11 +3482,13 @@
 #include "code\modules\vtr13\areas\interior\nightclub\nightclub_elysium.dm"
 #include "code\modules\vtr13\areas\interior\police_station\police_lockup.dm"
 #include "code\modules\vtr13\areas\interior\police_station\police_station.dm"
+#include "code\modules\vtr13\areas\subsystems\ssarea_grouper.dm"
 #include "code\modules\vtr13\clans\daeva.dm"
 #include "code\modules\vtr13\clans\gangrel.dm"
 #include "code\modules\vtr13\clans\mekhet.dm"
 #include "code\modules\vtr13\clans\nosferatu.dm"
 #include "code\modules\vtr13\clans\ventrue.dm"
+#include "code\modules\vtr13\components\ambiance.dm"
 #include "code\modules\vtr13\connections\character_connection.dm"
 #include "code\modules\vtr13\connections\connection_get_procs.dm"
 #include "code\modules\vtr13\connections\connection_insert_procs.dm"
@@ -3670,6 +3673,7 @@
 #include "code\modules\vtr13\mobs\npcs\simplemob_say.dm"
 #include "code\modules\vtr13\mobs\npcs\bouncers\bouncer_boris.dm"
 #include "code\modules\vtr13\structure\bench.dm"
+#include "code\modules\vtr13\structure\columns.dm"
 #include "code\modules\vtr13\structure\cratestack.dm"
 #include "code\modules\vtr13\structure\longbeach_map.dm"
 #include "code\modules\vtr13\structure\signs.dm"
