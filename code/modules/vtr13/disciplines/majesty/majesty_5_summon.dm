@@ -3,7 +3,7 @@
 	desc = "Call to the blood of another and compel them to come to you via the invocation of their True Name."
 	level = 5
 	cooldown_length = 1 MINUTES
-	duration_length = 30 MINUTES
+	var/majesty_duration = 15 MINUTES
 	var/power_in_use = FALSE
 	var/charmed_status_debuff = 2
 	var/spoken_name
@@ -30,13 +30,13 @@
 	var/mob/living/victim
 
 	for(var/mob/living/player in GLOB.player_list)
-		if(player.true_real_name && player.true_real_name == spoken_name)
+		if(player.true_real_name && player.true_real_name == current_name)
 			victim = player
 			break
 
 	if(!victim)
 		to_chat(owner, span_warning("Your leash does not find its collar; either the name is incorrect, or they are not in the area."))
-	
+
 	if(!SSroll.opposed_roll(
 		owner,
 		victim,
@@ -49,11 +49,12 @@
 		if(victim.mind)
 			to_chat(victim, span_danger("An unknown force pulls at you, but you resist the temptation, for now."))
 		return
-	
+
 	var/turf/destination_turf = get_turf(owner)
-	var/turf/current_turf = get_turf(owner)
 
-	victim.add_client_colour(/datum/client_colour/glass_colour/darkred)
-	ADD_TRAIT(victim, TRAIT_MUTE, MAJESTY_5_TRAIT)
-	to_chat(victim, span_userdanger("You are called to the [destination_turf.loc]."))
+	victim.AddComponent(/datum/component/summon_dial, destination_turf, owner, src)
+	
+	addtimer(CALLBACK(src, PROC_REF(trigger_summon_end), victim), majesty_duration)
 
+/datum/discipline_power/vtr/majesty/summon/proc/trigger_summon_end(mob/living/victim)
+	SEND_SIGNAL(src, COMSIG_MAJESTY_5_END, victim)

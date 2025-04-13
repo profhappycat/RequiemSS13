@@ -6,6 +6,9 @@
 #define COMSIG_HUMAN_EXAMINE_OVERRIDE "human_examine_override"
 	#define COMPONENT_EXAMINE_CHANGE_RESPONSE (1<<0)
 
+//called in /obj/transfer_point_vamp/Bumped (atom, obj/transfer_point_vamp, turf/new_turf)
+#define COMSIG_ATOM_MOVABLE_TRANSFER_POINT_USE "atom_movable_transfer_point_use"
+
 ///called in /datum/mind/proc/transfer_to (brain, new_mob)
 #define COMSIG_MIND_TRANSFERRED "mind_transferred"
 
@@ -25,10 +28,8 @@
 //called in /datum/component/base_memory/proc/get_memory_data
 #define COMSIG_MEMORY_DISCIPLINE_TEXT "memory_discipline_text"
 
-
 //from base of /mob/verb/pointed(): (mob/pointer)
 #define COMSIG_MOB_LIVING_POINTED "mob_living_pointed"
-
 
 //from base of mob/jump(): (atom/target, distance)
 #define COMSIG_MOB_LIVING_JUMP "mob_living_jump"
@@ -36,7 +37,8 @@
 
 #define COMSIG_UI_SHAKE_REMOVE "ui_shake_remove"
 
-
 #define COMSIG_DOMINATE_ACT_END_EARLY "dominate_act_end_early"
 
 #define COMSIG_COMPONENT_ENRAPTURE_REMOVE "component_enrapture_remove"
+
+#define COMSIG_MAJESTY_5_END "majesty_5_end"
