@@ -38,7 +38,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///Whether emotes will be displayed on runechat. Requires chat_on_map to have effect. Boolean.
 	var/see_rc_emotes = TRUE
 	//Клан вампиров
-	var/datum/vampireclane/clane = new /datum/vampireclane/brujah()
+	var/datum/vampireclane/clane = new /datum/vampireclane/vtr/daeva()
 	// Custom Keybindings
 	var/list/key_bindings = list()
 
@@ -298,7 +298,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	lockpicking = A.start_lockpicking
 	athletics = A.start_athletics
 	qdel(clane)
-	clane = new /datum/vampireclane/brujah()
+	clane = new /datum/vampireclane/vtr/daeva()
 	discipline_types = list()
 	discipline_levels = list()
 	for (var/i in 1 to clane.clane_disciplines.len)
@@ -1899,7 +1899,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						update_preview_icon()
 
 				if("info_choose")
-					var/new_info_known = tgui_input_list(user, "Choose who knows your character:", "Fame", list(INFO_KNOWN_UNKNOWN, INFO_KNOWN_CLAN_ONLY, INFO_KNOWN_FACTION, INFO_KNOWN_PUBLIC))
+					var/new_info_known = tgui_input_list(user, "Choose who knows your character:", "Fame", list(INFO_KNOWN_UNKNOWN, INFO_KNOWN_FACTION, INFO_KNOWN_PUBLIC))
 					if(new_info_known)
 						info_known = new_info_known
 
@@ -2061,7 +2061,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if((true_experience < 10) || !(pref_species.id == "kindred") || !(clane.name == "Caitiff"))
 						return
 
-					var/list/possible_new_disciplines = subtypesof(/datum/discipline) - discipline_types - /datum/discipline/bloodheal
+					var/list/possible_new_disciplines = subtypesof(/datum/discipline/vtr) - discipline_types
 					for (var/discipline_type in possible_new_disciplines)
 						var/datum/discipline/discipline = new discipline_type
 						if (discipline.clan_restricted)
@@ -2548,7 +2548,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 								discipline_levels.Cut()
 							if("kindred")
 								qdel(clane)
-								clane = new /datum/vampireclane/brujah()
+								clane = new /datum/vampireclane/vtr/daeva()
 								discipline_types.Cut()
 								discipline_levels.Cut()
 								for (var/i in 1 to clane.clane_disciplines.len)
