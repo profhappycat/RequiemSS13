@@ -1383,11 +1383,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
-			// TFN EDIT START: alt job titles
-			var/displayed_rank = rank
-			if(length(job.alt_titles) && (rank in alt_titles_preferences))
-				displayed_rank = alt_titles_preferences[rank]
-			// TFN EDIT END
 			lastJob = job
 			if(is_banned_from(user.ckey, rank))
 				HTML += "<font color=red>[rank]</font></td><td><a href='byond://?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
