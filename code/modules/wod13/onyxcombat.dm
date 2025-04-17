@@ -499,34 +499,7 @@
 	update_shadow()
 	handle_vampire_music()
 	//update_auspex_hud_vtr()
-	if(warrant)
-		last_nonraid = world.time
-		if(key)
-			if(stat != DEAD)
-				if(istype(get_area(src), /area/vtm))
-					var/area/vtm/V = get_area(src)
-					if(V.upper)
-						last_showed = world.time
-						if(last_raid+600 < world.time)
-							last_raid = world.time
-							for(var/turf/open/O in range(1, src))
-								if(prob(25))
-									new /obj/effect/temp_visual/desant(O)
-							playsound(loc, 'code/modules/wod13/sounds/helicopter.ogg', 50, TRUE)
-				if(last_showed+9000 < world.time)
-					to_chat(src, "<b>POLICE STOPPED SEARCHING</b>")
-					SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
-					killed_count = 0
-					warrant = FALSE
-			else
-				warrant = FALSE
-		else
-			warrant = FALSE
-	else
-		if(last_nonraid+1800 < world.time)
-			last_nonraid = world.time
-			killed_count = max(0, killed_count-1)
-
+	check_police_raid()
 	..()
 
 /mob/living/Initialize()
@@ -578,3 +551,8 @@
 				elysium_checks = 0
 				if(HAS_TRAIT(src, TRAIT_ELYSIUM))
 					REMOVE_TRAIT(src, TRAIT_ELYSIUM, "elysium")
+
+
+
+
+
