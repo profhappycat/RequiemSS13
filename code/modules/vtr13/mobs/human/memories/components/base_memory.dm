@@ -131,6 +131,6 @@
 
 /datum/action/memory_button/Topic(href, href_list)
 	if(href_list["delete_connection"])
-		var/mob/living/owner_human
+		var/mob/living/owner_human = owner
 		owner_human.retire_connection(text2num(href_list["delete_connection"]))
 		Trigger()
