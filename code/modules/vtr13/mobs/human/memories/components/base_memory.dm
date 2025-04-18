@@ -107,7 +107,7 @@
 		dat += " "
 		dat += "<b>I've made some connections in the city:</b>"
 		for(var/datum/character_connection/connection in owner.mind.character_connections)
-			dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(src)];delete_connection=[connection.group_id]'>Delete</a>"
+			dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?_src_;delete_connection=[connection.group_id]'>Delete</a>"
 		dat += " "
 	
 	return dat
