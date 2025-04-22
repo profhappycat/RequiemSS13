@@ -145,5 +145,6 @@
 	var/datum/vtr_faction/vtr_faction
 	var/datum/vampireclane/clane
 	var/datum/vampireclane/regent_clan
+	var/vamp_rank = 0
 	var/datum/examine_panel_fake/examine_panel_fake = new()
 	//VTR EDIT END

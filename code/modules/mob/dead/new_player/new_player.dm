@@ -298,6 +298,8 @@
 			return "[jobtitle] is already filled to capacity."
 		if(JOB_UNAVAILABLE_GENERATION)
 			return "Your generation is too young for [jobtitle]."
+		if(JOB_UNAVAILABLE_FACTION)
+			return "You are in the wrong faction for [jobtitle]."
 		if(JOB_UNAVAILABLE_SPECIES)
 			return "Your species cannot be [jobtitle]."
 		if(JOB_UNAVAILABLE_SPECIES_LIMITED)
@@ -327,6 +329,8 @@
 		return JOB_UNAVAILABLE_GENERIC
 	if(job.minimum_vamp_rank && (client.prefs.vamp_rank >= job.minimum_vamp_rank) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
+	if((client.prefs.pref_species.name == "Vampire" || client.prefs.pref_species.name == "Ghoul") && GLOB.vampire_factions_list.Find(job.exp_type_department) && client.prefs.vamp_faction?.name != job.exp_type_department)
+		return JOB_UNAVAILABLE_FACTION
 	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 		return JOB_UNAVAILABLE_MASQUERADE
 	if(!job.allowed_species.Find(client.prefs.pref_species.name) && !bypass)

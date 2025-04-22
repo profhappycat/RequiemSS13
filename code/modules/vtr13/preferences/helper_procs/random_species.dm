@@ -19,7 +19,8 @@
 		vamp_rank = VAMP_RANK_GHOUL
 
 	if(pref_species.id == "kindred")
-		qdel(clane)
+		if(clane)
+			qdel(clane)
 		clane = new /datum/vampireclane/vtr/daeva()
 		discipline_types = list()
 		discipline_levels = list()

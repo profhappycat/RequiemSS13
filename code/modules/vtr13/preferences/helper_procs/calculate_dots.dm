@@ -50,7 +50,7 @@
 		else
 			discipline_dots = DISCIPLINE_DOTS_DEFAULT
 	for(var/discipline_level in discipline_levels)
-		character_dots -= discipline_level
+		discipline_dots -= discipline_level
 	
 	if(discipline_dots < 0)
 		CRASH("Error - More discipline dots have been taken than there are dots to have!")

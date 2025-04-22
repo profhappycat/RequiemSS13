@@ -8,10 +8,13 @@
 		var/datum/discipline/discipline = new discipline_type
 		var/discipline_level = discipline_levels[i]
 		var/is_clan_discipline = FALSE
+		
 		if(clane.clane_disciplines)
 			is_clan_discipline = clane.clane_disciplines.Find(discipline.type)
+		
 		if(!is_clan_discipline && regent_clan.clane_disciplines)
 			is_clan_discipline = regent_clan.clane_disciplines.Find(discipline.type)
+		
 		discipline_count += 1
 
 		dat += "<b>[discipline.name]</b>: [discipline_level > 0 ? "●" : "○"][discipline_level > 1 ? "●" : "○"][discipline_level > 2 ? "●" : "○"][discipline_level > 3 ? "●" : "○"][discipline_level > 4 ? "●" : "○"]([discipline_level])"

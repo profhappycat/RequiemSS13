@@ -58,7 +58,7 @@
 				update_preview_icon()
 
 		if("actual_age")
-			var/new_age = tgui_input_number(user, "Choose your character's actual age:\n([age]-[age+1000])", "Character Preference", actual_age, age+1000, age, round_value = TRUE)
+			var/new_age = tgui_input_number(user, "Choose your character's actual age:\n([age]-[6000])", "Character Preference", actual_age, 6000, age, round_value = TRUE)
 			if(new_age)
 				actual_age = clamp(new_age, age, age+1000)
 				update_preview_icon()
@@ -363,7 +363,7 @@
 					discipline_input_list[discipline.name] = discipline_type
 				qdel(discipline)
 
-			var/new_discipline = tgui_input_list(user, "Select your new Discipline", "Discipline Selection", sortList(possible_new_disciplines))
+			var/new_discipline = tgui_input_list(user, "Select your new Discipline", "Discipline Selection", sortList(discipline_input_list))
 			if(new_discipline)
 				discipline_types += new_discipline
 				discipline_levels.Add(0)
@@ -445,7 +445,7 @@
 			to_chat(user, span_notice("Please use a relatively SFW image of the head and shoulder area to maintain immersion level. Lastly, ["<b>do not use a real life photo or use any image that is less than serious.</b>"]"))
 			to_chat(user, span_notice("If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser."))
 			to_chat(user, span_notice("Resolution: 250x250 pixels."))
-			var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, discord, lensdump, imgbox, catbox):", "Headshot", headshot_link, encode = FALSE)
+			var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox, imgur):", "Headshot", headshot_link, encode = FALSE)
 			if(isnull(new_headshot_link))
 				return
 			if(!length(new_headshot_link))

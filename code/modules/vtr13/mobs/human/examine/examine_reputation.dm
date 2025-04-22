@@ -1,5 +1,5 @@
-/mob/living/carbon/human/proc/examine_reputation(mob/user)
-	var/t_him = p_them()
+/mob/living/carbon/human/proc/examine_reputation(mob/user, temp_gender = null)
+	var/t_him = p_them(FALSE, temp_gender)
 
 	if(iskindred(user) && iskindred(src) && is_face_visible())
 		switch(info_known)

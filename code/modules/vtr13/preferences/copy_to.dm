@@ -44,6 +44,7 @@
 	character.recalculate_max_health(TRUE)
 
 	character.blood_potency = 0
+	character.vamp_rank = vamp_rank
 	switch(vamp_rank)
 		if(VAMP_RANK_FLEDGLING)
 			character.blood_potency = 1
