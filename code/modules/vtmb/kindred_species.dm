@@ -243,9 +243,12 @@
 						giving = FALSE
 						return
 				else
-					if(H?.clane?.name == "Revenant")
+					if(owner?.clane?.name == "Revenant")
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] does not respond to your vitae.</span>")
 						return
+					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
+						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
+					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 					to_chat(BLOODBONDED, "<span class='userlove'>You feel good when you drink this <b>BLOOD</b>...</span>")
 
