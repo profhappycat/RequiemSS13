@@ -192,7 +192,7 @@
 				BLOODBONDED.drunked_of |= "[H.dna.real_name]"
 
 				if(BLOODBONDED.stat == DEAD && !iskindred(BLOODBONDED))
-					if (!BLOODBONDED.can_be_embraced || (BLOODBONDED.timeofdeath + 5 MINUTES) < world.time)
+					if (!BLOODBONDED.can_be_embraced || (BLOODBONDED.timeofdeath + 5 MINUTES) < world.time || owner?.clane?.name == "Revenant")
 						to_chat(H, "<span class='notice'>[BLOODBONDED.name] doesn't respond to your Vitae.</span>")
 						return
 					log_game("[key_name(H)] has Embraced [key_name(BLOODBONDED)].")
@@ -278,6 +278,9 @@
 						giving = FALSE
 						return
 				else
+					if(owner?.clane?.name == "Revenant")
+						to_chat(owner, "<span class='notice'>[BLOODBONDED] does not respond to your vitae.</span>")
+						return
 					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
 						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
 					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
