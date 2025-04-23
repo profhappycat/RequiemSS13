@@ -33,8 +33,9 @@
 	RegisterSignal(parent, COMSIG_HUMAN_EXAMINE_OVERRIDE, PROC_REF(disguise_override))
 	RegisterSignal(source_power, COMSIG_POWER_DEACTIVATE, PROC_REF(remove_disguise))
 
-	parent_human.real_name = disguise_mob.real_name
 	original_name = parent_human.real_name
+	parent_human.real_name = disguise_mob.real_name
+	
 
 	var/image/obfuscate_overlay = image(disguise_mob, loc=parent_human, layer = ABOVE_MOB_LAYER)
 	obfuscate_overlay.setDir(null)
@@ -95,7 +96,7 @@
 	examine_result ? return_list.Add(examine_result) : null
 
 	//the real person's Beast
-	examine_result = human_parent.examine_beast(user)
+	examine_result = human_parent.examine_beast(user, disguise.gender)
 	examine_result ? return_list.Add(examine_result) : null
 	
 
@@ -108,11 +109,11 @@
 	examine_result ? return_list.Add(examine_result) : null
 
 	//Statuses of the real person
-	examine_result = human_parent.examine_status(user)
+	examine_result = human_parent.examine_status(user, disguise.gender)
 	examine_result ? return_list.Add(examine_result) : null
 
 	//Death status of real person
-	examine_result = human_parent.examine_death(user)
+	examine_result = human_parent.examine_death(user, disguise.gender)
 	examine_result ? return_list.Add(examine_result) : null
 
 	//health of the false identity, when it was taken
@@ -120,7 +121,7 @@
 	examine_result ? return_list.Add(examine_result) : null
 
 	//bleeding status of the real person
-	examine_result = human_parent.examine_health_no_disguise(user)
+	examine_result = human_parent.examine_health_no_disguise(user, disguise.gender)
 	examine_result ? return_list.Add(examine_result) : null
 
 	if(!(human_parent.stat == DEAD || (HAS_TRAIT(human_parent, TRAIT_FAKEDEATH))))
@@ -129,7 +130,7 @@
 		examine_result ? return_list.Add(examine_result) : null
 
 		//mood of the real person
-		examine_result = human_parent.examine_mood(user)
+		examine_result = human_parent.examine_mood(user, disguise.gender)
 		examine_result ? return_list.Add(examine_result) : null
 
 	//scars of the false identity, when it was taken
@@ -137,7 +138,7 @@
 	examine_result ? return_list.Add(examine_result) : null
 
 	//flavortext window handling
-	examine_result = human_parent.examine_flavortext_window(user)
+	examine_result = flavortext_window_disguise(user, disguise, examine_result)
 	examine_result ? return_list.Add(examine_result) : null
 	
 	examine_result = human_parent.examine_hud_info(user)
