@@ -20,12 +20,12 @@
 	var/area_heat_max
 	var/alarm_trigerred = 0
 	var/alarm_disabled = 0
-	var/list/cased_by = list()
 	var/loot_spawned = 0
 	var/obj/structure/vtm/dwelling_alarm/alarm_panel
-	var/list/dwelling_doors = list()
-	var/list/dwelling_windows = list()
-	var/list/loot_containers = list()
+	var/list/cased_by
+	var/list/dwelling_doors
+	var/list/dwelling_windows
+	var/list/loot_containers
 	var/forced_loot
 	var/list/loot_list = list("type" = "none",
 		"minor" = 0,
@@ -36,6 +36,10 @@
 /area/vtm/vtr/Initialize(mapload)
 	. = ..()
 	if(is_loot_dwelling)
+		cased_by = list()
+		dwelling_doors = list()
+		dwelling_windows = list()
+		loot_containers = list()
 		SSdwelling.dwelling_area_list += src
 
 
@@ -84,6 +88,8 @@
 	return
 
 /area/vtm/vtr/proc/setup_loot() //Primary setup proc
+	if(!length(loot_containers))
+		return
 	if(forced_loot)
 		setup_loot_table(forced_loot)
 	if(loot_list["type"] == "none")
