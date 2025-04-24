@@ -238,14 +238,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (corpse)")
 			for(var/obj/item/I in H.contents)
 				if(I)
 					if(I.masquerade_violating)
@@ -257,14 +250,7 @@
 										H.last_loot_check = world.time
 										H.last_nonraid = world.time
 										H.killed_count = H.killed_count+1
-										if(!H.warrant && !H.ignores_warrant)
-											if(H.killed_count >= 5)
-												H.warrant = TRUE
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-											else
-												SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-												to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+										H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (equipment)")
 	if(H.hearing_ghosts)
 		H.bloodpool = max(0, H.bloodpool-1)
 		to_chat(H, "<span class='warning'>Necromancy Vision reduces your blood points too sustain itself.</span>")
@@ -325,7 +311,7 @@
 			if(!H.antifrenzy)
 				if(P.humanity < 1)
 					H.enter_frenzymod()
-					to_chat(H, "<span class='userdanger'>You have lost control of the Beast within you, and it has taken your body. Be more [H.client.prefs.enlightenment ? "Enlightened" : "humane"] next time.</span>")
+					to_chat(H, "<span class='userdanger'>You have lost control of the Beast within you, and it has taken your body. Be more humane next time.</span>")
 					H.ghostize(FALSE)
 					P.reason_of_death = "Lost control to the Beast ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 

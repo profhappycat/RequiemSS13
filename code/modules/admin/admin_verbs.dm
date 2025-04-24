@@ -26,7 +26,8 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/grouper_get_path,
 	/client/proc/grouper_setup_path_dial,
 	#endif
-	/client/proc/fix_air				/*resets air in designated radius to its default atmos composition*/
+	/client/proc/fix_air,				/*resets air in designated radius to its default atmos composition*/
+	/client/proc/requests
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
 GLOBAL_PROTECT(admin_verbs_admin)
@@ -38,7 +39,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/verbs/menu/Admin/verb/playerpanel,
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/toggle_canon,
-	/client/proc/reward_exp,
 	/client/proc/grant_discipline,
 	/client/proc/remove_discipline,
 	/client/proc/whitelist_panel,
@@ -97,6 +97,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggleadminhelpsound,
 	/client/proc/respawn_character,
 	/datum/admins/proc/open_borgopanel,
+	/client/proc/log_viewer_new,
 	/client/proc/fax_panel /*send a paper to fax*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
@@ -539,51 +540,18 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/is_enlightenment = FALSE
-	if (M.client?.prefs?.enlightenment)
-		is_enlightenment = TRUE
-
-	var/value = input(usr, "Enter the [is_enlightenment ? "Enlightenment" : "Humanity"] adjustment value for [M.key]:", "Humanity Adjustment", 0) as num|null
+	var/value = input(usr, "Enter the Humanity adjustment value for [M.key]:", "Humanity Adjustment", 0) as num|null
 	if(value == null)
 		return
-	if (is_enlightenment)
-		value = -value
 
 	M.AdjustHumanity(value, 0, forced = TRUE)
 
-	var/msg = "<span class='adminnotice'><b>Humanity Adjustment: [key_name_admin(usr)] adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [is_enlightenment ? -value : value] to [M.humanity]</b></span>"
-	log_admin("HumanityAdjust: [key_name_admin(usr)] has adjusted [key_name(M)]'s [is_enlightenment ? "Enlightenment" : "Humanity"] by [is_enlightenment ? -value : value] to [M.humanity]")
+	var/msg = "<span class='adminnotice'><b>Humanity Adjustment: [key_name_admin(usr)] adjusted [key_name(M)]'s Humanity by [value] to [M.humanity]</b></span>"
+	log_admin("HumanityAdjust: [key_name_admin(usr)] has adjusted [key_name(M)]'s Humanity by [value] to [M.humanity]")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
 	SSoverwatch.record_action(usr, "HumanityAdjust: [key_name_admin(usr)] has adjusted [key_name(M)]'s Humanity by [value] to [M.humanity]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Adjust Humanity")
-
-/client/proc/reward_exp()
-	set name = "Reward Experience"
-	set category = "Admin"
-	if (!check_rights(R_ADMIN))
-		return
-
-	var/list/explist = list()
-	for(var/client/C in GLOB.clients)
-		explist |= "[C.ckey]"
-	var/exper = input("Rewarding:") as null|anything in explist
-	if(exper)
-		var/amount = input("Amount:") as null|num
-		if(amount)
-			var/reason = input("Reason:") as null|text
-			if(reason)
-				for(var/client/C in GLOB.clients)
-					if("[C.ckey]" == "[exper]")
-						to_chat(C, "<b>You've been rewarded with [amount] experience points. Reason: \"[reason]\"</b>")
-
-						C.prefs.add_experience(amount)
-						C.prefs.save_character()
-
-						message_admins("[ADMIN_LOOKUPFLW(usr)] rewarded [ADMIN_LOOKUPFLW(exper)] with [amount] experience points. Reason: [reason]")
-						log_admin("[key_name(usr)] rewarded [key_name(exper)] with [amount] experience points. Reason: [reason]")
-						SSoverwatch.record_action(usr, "[key_name(usr)] rewarded [key_name(exper)] with [amount] experience points. Reason: [reason]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Reward Experience") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/grant_whitelist()
 	set name = "Grant Whitelist"
@@ -709,24 +677,39 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	holder.poll_list_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Server Poll Management") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/findStealthKey(txt)
-	if(txt)
-		for(var/P in GLOB.stealthminID)
-			if(GLOB.stealthminID[P] == txt)
-				return P
-	txt = GLOB.stealthminID[ckey]
-	return txt
+/// Returns this client's stealthed ckey
+/client/proc/getStealthKey()
+	return GLOB.stealthminID[ckey]
+
+/// Takes a stealthed ckey as input, returns the true key it represents
+/proc/findTrueKey(stealth_key)
+	if(!stealth_key)
+		return
+	for(var/potentialKey in GLOB.stealthminID)
+		if(GLOB.stealthminID[potentialKey] == stealth_key)
+			return potentialKey
+
+/// Hands back a stealth ckey to use, guarenteed to be unique
+/proc/generateStealthCkey()
+	var/guess = rand(0, 1000)
+	var/text_guess
+	var/valid_found = FALSE
+	while(valid_found == FALSE)
+		valid_found = TRUE
+		text_guess = "@[num2text(guess)]"
+		// We take a guess at some number, and if it's not in the existing stealthmin list we exit
+		for(var/key in GLOB.stealthminID)
+			// If it is in the list tho, we up one number, and redo the loop
+			if(GLOB.stealthminID[key] == text_guess)
+				guess += 1
+				valid_found = FALSE
+				break
+
+	return text_guess
+
 
 /client/proc/createStealthKey()
-	var/num = (rand(0,1000))
-	var/i = 0
-	while(i == 0)
-		i = 1
-		for(var/P in GLOB.stealthminID)
-			if(num == GLOB.stealthminID[P])
-				num++
-				i = 0
-	GLOB.stealthminID["[ckey]"] = "@[num2text(num)]"
+	GLOB.stealthminID["[ckey]"] = generateStealthCkey()
 
 /client/proc/stealth()
 	set category = "Admin"

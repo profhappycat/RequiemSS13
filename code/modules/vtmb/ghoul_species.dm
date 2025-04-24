@@ -95,15 +95,9 @@
 	var/level = 1
 
 /datum/action/blood_heal/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
-	if(owner)
-		if(owner.client)
-			if(owner.client.prefs)
-				if(owner.client.prefs.old_discipline)
-					button_icon = 'code/modules/wod13/disciplines.dmi'
-					icon_icon = 'code/modules/wod13/disciplines.dmi'
-				else
-					button_icon = 'code/modules/wod13/UI/actions.dmi'
-					icon_icon = 'code/modules/wod13/UI/actions.dmi'
+	if(owner.mind)
+		button_icon = 'code/modules/wod13/UI/actions.dmi'
+		icon_icon = 'code/modules/wod13/UI/actions.dmi'
 	. = ..()
 
 /datum/action/blood_heal/Trigger()
@@ -171,14 +165,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (corpse)")
 			for(var/obj/item/I in H.contents)
 				if(I)
 					if(I.masquerade_violating)
@@ -188,14 +175,8 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (equipment)")
+
 	if(H.key && H.stat != DEAD)
 		var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
 		if(P)
@@ -231,14 +212,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (corpse)")
 			for(var/obj/item/I in H.contents)
 				if(I)
 					if(I.masquerade_violating)
@@ -248,14 +222,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (equipment)")
 	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
 		H.last_bloodpool_restore = world.time
 		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)
@@ -279,14 +246,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (corpse)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (corpse)")
 			for(var/obj/item/I in H.contents)
 				if(I)
 					if(I.masquerade_violating)
@@ -296,14 +256,7 @@
 									H.last_loot_check = world.time
 									H.last_nonraid = world.time
 									H.killed_count = H.killed_count+1
-									if(!H.warrant && !H.ignores_warrant)
-										if(H.killed_count >= 5)
-											H.warrant = TRUE
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-										else
-											SEND_SOUND(H, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-											to_chat(H, "<span class='userdanger'><b>SUSPICIOUS ACTION (equipment)</b></span>")
+									H.set_warrant(H.killed_count >= 5, "SUSPICIOUS ACTION (equipment)")
 	if((H.last_bloodpool_restore + 60 SECONDS) <= world.time)
 		H.last_bloodpool_restore = world.time
 		H.bloodpool = min(H.maxbloodpool, H.bloodpool+1)

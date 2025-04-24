@@ -66,6 +66,8 @@
 
 	var/lifespan = 0	//How many cycles. He'll be deleted if over than a ten thousand
 	var/old_movement = FALSE
+	var/cur_waypoint = null
+	var/last_waypoint = null //to prevent NPCs going between two waypoints forever we store the last two waypoints and try not to visit last_waypoint
 	var/max_stat = 2
 
 	var/list/spotted_bodies = list()
@@ -129,30 +131,14 @@
 					HS.my_creator.AdjustHumanity(-1, 0)
 					HS.my_creator.last_nonraid = world.time
 					HS.my_creator.killed_count = HS.my_creator.killed_count+1
-					if(!HS.my_creator.warrant && !HS.my_creator.ignores_warrant)
-						if(HS.my_creator.killed_count >= 5)
-//							GLOB.fuckers |= HS.my_creator
-							HS.my_creator.warrant = TRUE
-							SEND_SOUND(HS.my_creator, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-							to_chat(HS.my_creator, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-						else
-							SEND_SOUND(HS.my_creator, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-							to_chat(HS.my_creator, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
+					HS.my_creator.set_warrant(HS.my_creator.killed_count >= 5, "SUSPICIOUS ACTION (murder)")
 			else
 				if(ishuman(last_attacker))
 					var/mob/living/carbon/human/HM = last_attacker
 					HM.AdjustHumanity(-1, 0)
 					HM.last_nonraid = world.time
 					HM.killed_count = HM.killed_count+1
-					if(!HM.warrant && !HM.ignores_warrant)
-						if(HM.killed_count >= 5)
-//							GLOB.fuckers |= HM
-							HM.warrant = TRUE
-							SEND_SOUND(HM, sound('code/modules/wod13/sounds/suspect.ogg', 0, 0, 75))
-							to_chat(HM, "<span class='userdanger'><b>POLICE ASSAULT IN PROGRESS</b></span>")
-						else
-							SEND_SOUND(HM, sound('code/modules/wod13/sounds/sus.ogg', 0, 0, 75))
-							to_chat(HM, "<span class='userdanger'><b>SUSPICIOUS ACTION (murder)</b></span>")
+					HM.set_warrant(HM.killed_count >= 5, "SUSPICIOUS ACTION (murder)")
 	remove_overlay(FIGHT_LAYER)
 	..()
 
@@ -168,7 +154,7 @@
 	multiplicative_slowdown = 2
 
 /datum/socialrole
-	//For randomizing 
+	//For randomizing
 	//I turned this off, -hex
 	var/s_tones_force = null
 	var/list/s_tones = list("albino",
@@ -387,12 +373,14 @@
 	if(!S)
 		return
 	physique = rand(1, max_stat)
-	social = rand(1, max_stat)
-	mentality = rand(1, max_stat)
-	lockpicking = rand(1, max_stat)
-	blood = rand(1, 2)
-	maxHealth = round(initial(maxHealth)+(initial(maxHealth)/3)*(physique))
-	health = round(initial(health)+(initial(health)/3)*(physique))
+	stamina = rand(1, max_stat)
+	wits = rand(1, max_stat)
+	resolve = rand(1, max_stat)
+	charisma = rand(1, max_stat)
+	composure = rand(1, max_stat)
+
+	recalculate_max_health(TRUE)
+	
 	last_health = health
 	socialrole = new S()
 

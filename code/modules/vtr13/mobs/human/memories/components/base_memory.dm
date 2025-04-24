@@ -28,11 +28,11 @@
 	SIGNAL_HANDLER
 	if(!invader.mind)
 		return
-	get_memory_data(FALSE)
+	get_memory_data(src, FALSE)
 	invader << browse(dat.Join("<br>"), "window=vampire;size=500x450;border=1;can_resize=1;can_minimize=0")
 	
 
-/datum/component/base_memory/proc/get_memory_data(var/is_own_memories = TRUE)
+/datum/component/base_memory/proc/get_memory_data(datum/source, var/is_own_memories = TRUE)
 	dat = list()
 	dat += {"
 		<style type="text/css">
@@ -53,12 +53,11 @@
 	SEND_SIGNAL(src, COMSIG_MEMORY_SPLAT_TEXT, owner, is_own_memories)
 	
 	dat += "<b>Physique</b>: [owner.physique] + [owner.additional_physique]"
-	dat += "<b>Dexterity</b>: [owner.dexterity] + [owner.additional_dexterity]"
-	dat += "<b>Social</b>: [owner.social] + [owner.additional_social]"
-	dat += "<b>Mentality</b>: [owner.mentality] + [owner.additional_mentality]"
-	dat += "<b>Cruelty</b>: [owner.blood] + [owner.additional_blood]"
-	dat += "<b>Lockpicking</b>: [owner.lockpicking] + [owner.additional_lockpicking]"
-	dat += "<b>Athletics</b>: [owner.athletics] + [owner.additional_athletics]"
+	dat += "<b>Stamina</b>: [owner.stamina] + [owner.additional_stamina]"
+	dat += "<b>Charisma</b>: [owner.charisma] + [owner.additional_charisma]"
+	dat += "<b>Composure</b>: [owner.composure] + [owner.additional_composure]"
+	dat += "<b>Wits</b>: [owner.wits] + [owner.additional_wits]"
+	dat += "<b>Resolve</b>: [owner.resolve] + [owner.additional_resolve]"
 	dat += ""
 	SEND_SIGNAL(src, COMSIG_MEMORY_DISCIPLINE_TEXT, owner, is_own_memories)
 
@@ -107,7 +106,7 @@
 		dat += " "
 		dat += "<b>I've made some connections in the city:</b>"
 		for(var/datum/character_connection/connection in owner.mind.character_connections)
-			dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(src)];delete_connection=[connection.group_id]'>Delete</a>"
+			dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(source)];delete_connection=[connection.group_id]'>Delete</a>"
 		dat += " "
 	
 	return dat
@@ -126,11 +125,11 @@
 	src.parent_component = parent_component
 
 /datum/action/memory_button/Trigger()
-	var/list/memory_data = parent_component.get_memory_data(TRUE)
+	var/list/memory_data = parent_component.get_memory_data(src, TRUE)
 	owner << browse(memory_data.Join("<br>"), "window=vampire;size=500x450;border=1;can_resize=1;can_minimize=0")
 
 /datum/action/memory_button/Topic(href, href_list)
 	if(href_list["delete_connection"])
-		var/mob/living/owner_human
+		var/mob/living/owner_human = owner
 		owner_human.retire_connection(text2num(href_list["delete_connection"]))
 		Trigger()

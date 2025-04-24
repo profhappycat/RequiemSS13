@@ -16,8 +16,8 @@
 	if(SSroll.opposed_roll(
 		owner,
 		target,
-		dice_a = owner.get_total_mentality() + discipline.level,
-		dice_b = target.get_total_mentality() + target.get_total_blood(), 
+		dice_a = owner.get_total_wits() + discipline.level,
+		dice_b = target.get_total_resolve() + target.blood_potency,
 		alert_atom = target)) //TODO HEX: Tie to blood_potency
 		return TRUE	
 	to_chat(owner, span_warning("[target] resists the the chill going up their spine!"))
@@ -38,7 +38,7 @@
 	if(target.mind)
 		target.AddElement(/datum/element/ui_button_shake_inventory_group, 16)
 		target.AddElement(/datum/element/ui_button_shake_wide_button_group, 1)
-		target.RemoveElement(/datum/element/ui_button_shake_wide_button_group)
+		
 	do_cooldown(TRUE)
 	owner.update_action_buttons()
 
@@ -49,3 +49,4 @@
 	REMOVE_TRAIT(target, TRAIT_NO_QUICK_EQUIP, NIGHTMARE_2_TRAIT)
 	to_chat(target, span_warning("You regain control of your senses."))
 	target.RemoveElement(/datum/element/ui_button_shake_inventory_group)
+	target.RemoveElement(/datum/element/ui_button_shake_wide_button_group)
