@@ -211,6 +211,47 @@
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
+	else
+		output += "<input type='hidden' name='roleban_delimiter' value='1'>"
+		//there's not always a client to use the bancache of so to avoid many individual queries from using is_banned_form we'll build a cache to use here
+		var/banned_from = list()
+		if(player_key)
+			var/datum/db_query/query_get_banned_roles = SSdbcore.NewQuery({"
+				SELECT role
+				FROM [format_table_name("ban")]
+				WHERE
+					ckey = :player_ckey AND
+					role <> 'server'
+					AND unbanned_datetime IS NULL
+					AND (expiration_time IS NULL OR expiration_time > NOW())
+			"}, list("player_ckey" = ckey(player_key)))
+			if(!query_get_banned_roles.warn_execute())
+				qdel(query_get_banned_roles)
+				return
+			while(query_get_banned_roles.NextRow())
+				banned_from += query_get_banned_roles.item[1]
+			qdel(query_get_banned_roles)
+		var/break_counter = 0
+		var/list/job_lists = list("Invictus" = GLOB.command_positions,
+							"Lancea et Sanctum" = GLOB.lancea_positions,
+							"Ordo Dracul" = GLOB.ordo_positions,
+							"Circle of the Crone" = GLOB.crone_positions,
+							"Carthian Movement" = GLOB.carthian_positions,
+							"Law Enforcement" = GLOB.police_positions,
+							"Other" = GLOB.citizen_positions + GLOB.services_positions + GLOB.clinic_positions)
+		for(var/department in job_lists)
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
+			break_counter = 0
+			for(var/job in job_lists[department])
+				if(break_counter > 0 && (break_counter % 3 == 0))
+					output += "<br>"
+				output += {"<label class='inputlabel checkbox'>[job]
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
+							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
+				"}
+				break_counter++
+			output += "</div></div>"
+		output += "</div>"
 	output += "</form>"
 	panel.set_content(jointext(output, ""))
 	panel.open()
