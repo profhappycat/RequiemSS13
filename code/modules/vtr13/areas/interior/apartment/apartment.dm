@@ -12,3 +12,11 @@
 
 	ambiance_message = "elge might draw from her own experience n write a blurb abt this pie hole"
 	id = "apartment"
+
+
+/area/vtm/vtr/masquerade/interior/floor_three/northwest/apartment
+	name = "Apartment Complex (Third Floor)"
+	icon_state = "anarch"
+
+	ambiance_message = "elge might draw from her own experience n write a blurb abt this pie hole"
+	id = "apartment"

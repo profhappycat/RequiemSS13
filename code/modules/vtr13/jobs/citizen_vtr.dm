@@ -25,6 +25,7 @@
 	alt_titles = list(
 		"Private Investigator",
 		"Private Security",
+		"Barista",
 		"Tourist",
 		"Visitor",
 		"Entertainer",
