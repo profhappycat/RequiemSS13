@@ -57,10 +57,7 @@
 	else
 		output += "<p>Late Party: <a href='byond://?src=[REF(src)];late_party=1'>No</a></p>"
 
-	var/height
-
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		height =220
 		switch(ready)
 			if(PLAYER_NOT_READY)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | <b>Not Ready</b> | [LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)] \]</p>"
@@ -69,7 +66,6 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-		height =270
 		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
@@ -82,7 +78,7 @@
 	
 
 
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>[make_font_cool("NEW PLAYER")]</div>", 265, height)
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>[make_font_cool("NEW PLAYER")]</div>", 265, 280)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output.Join())
 	popup.open(FALSE)
@@ -309,14 +305,20 @@
 			return "You are in the wrong faction for [jobtitle]."
 		if(JOB_UNAVAILABLE_SPECIES)
 			return "Your species cannot be [jobtitle]."
+		if(JOB_UNAVAILABLE_ENDORSEMENT)
+			return "You need more endorsments for [jobtitle]."
 		if(JOB_UNAVAILABLE_SPECIES_LIMITED)
 			return "Your species has a limit on how many can be [jobtitle]."
 	return "Error: Unknown job availability."
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
 	var/bypass = FALSE
+
+	/*
 	if (check_rights_for(client, R_ADMIN))
 		bypass = TRUE
+	*/
+
 	var/datum/job/vamp/vtr/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
@@ -334,7 +336,7 @@
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
-	if(job.minimum_vamp_rank && (client.prefs.vamp_rank >= job.minimum_vamp_rank) && !bypass)
+	if((client.prefs.pref_species.name == "Vampire" || client.prefs.pref_species.name == "Ghoul") && job.minimum_vamp_rank && (client.prefs.vamp_rank < job.minimum_vamp_rank) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
 	if((client.prefs.pref_species.name == "Vampire" || client.prefs.pref_species.name == "Ghoul") && GLOB.vampire_factions_list.Find(job.exp_type_department) && client.prefs.vamp_faction?.name != job.exp_type_department)
 		return JOB_UNAVAILABLE_FACTION
@@ -342,14 +344,10 @@
 		return JOB_UNAVAILABLE_MASQUERADE
 	if(!job.allowed_species.Find(client.prefs.pref_species.name) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES
-	if ((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
+	if(job.endorsement_required && (!client.prefs.endorsement_roles_eligable || !client.prefs.endorsement_roles_eligable.Find(job.title)) && !bypass)
+		return JOB_UNAVAILABLE_ENDORSEMENT
+	if((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
 		return JOB_UNAVAILABLE_SPECIES_LIMITED
-	if((client.prefs.pref_species.name == "Vampire") && !bypass)
-		if(client.prefs.clane)
-			for(var/i in job.allowed_bloodlines)
-				if(i == client.prefs.clane.name)
-					return JOB_AVAILABLE
-			return JOB_UNAVAILABLE_CLAN
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -543,8 +541,7 @@
 	new_character = .
 	if(transfer_after)
 		transfer_character()
-//	if(client.prefs.archtype)
-//		H.__archetype = new client.prefs.archtype
+
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
@@ -560,7 +557,8 @@
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
 				GLOB.fucking_joined |= H.client.prefs.real_name
-				H.mind.character_connections = H.get_character_connections()
+		if(new_character.mind)
+			new_character.mind.character_connections = SScharacter_connection.get_character_connections(ckey, new_character.true_real_name)
 		new_character = null
 		qdel(src)
 

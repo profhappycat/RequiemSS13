@@ -47,7 +47,7 @@
 	vitae.Grant(C)
 
 	//this needs to be adjusted to be more accurate for blood spending rates
-	var/datum/discipline/bloodheal/giving_bloodheal = new(clamp(11 - C.generation, 1, 10))
+	var/datum/discipline/bloodheal/giving_bloodheal = new(C.blood_potency)
 	C.give_discipline(giving_bloodheal)
 
 	var/datum/action/blood_power/bloodpower = new()
@@ -55,10 +55,7 @@
 
 	add_verb(C, /mob/living/carbon/human/verb/teach_discipline)
 
-	C.yang_chi = 0
-	C.max_yang_chi = 0
-	C.yin_chi = 6
-	C.max_yin_chi = 6
+	SScharacter_connection.setup_character_connection_verbs(C)
 
 	//vampires go to -200 damage before dying
 	for (var/obj/item/bodypart/bodypart in C.bodyparts)
@@ -197,7 +194,6 @@
 							save_data_v = TRUE
 						else
 							save_data_v = FALSE
-					BLOODBONDED.roundstart_vampire = FALSE
 					BLOODBONDED.set_species(/datum/species/kindred)
 					BLOODBONDED.clane = new H.clane.type()
 					
@@ -236,7 +232,8 @@
 								BLOODBONDED_prefs_v.discipline_types += BLOODBONDED_prefs_v.clane.clane_disciplines[i]
 								BLOODBONDED_prefs_v.discipline_levels.Add(0)
 						BLOODBONDED_prefs_v.save_character()
-						BLOODBONDED.create_embrace_connection(H)
+
+						SScharacter_connection.add_connection(CONNECTION_EMBRACE, BLOODBONDED, H)
 						BLOODBONDED.update_auspex_hud_vtr()
 					else
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] is totally <b>DEAD</b>!</span>")
@@ -246,9 +243,6 @@
 					if(H?.clane?.name == "Revenant")
 						to_chat(owner, "<span class='notice'>[BLOODBONDED] does not respond to your vitae.</span>")
 						return
-					if(BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
-						BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
-					BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
 					to_chat(owner, "<span class='notice'>You successfuly fed [BLOODBONDED] with vitae.</span>")
 					to_chat(BLOODBONDED, "<span class='userlove'>You feel good when you drink this <b>BLOOD</b>...</span>")
 
@@ -256,32 +250,37 @@
 					if(H.reagents)
 						if(length(H.reagents.reagent_list))
 							H.reagents.trans_to(BLOODBONDED, min(10, H.reagents.total_volume), transfered_by = H, methods = VAMPIRE)
+					
 					BLOODBONDED.adjustBruteLoss(-25, TRUE)
+					
 					if(length(BLOODBONDED.all_wounds))
 						var/datum/wound/W = pick(BLOODBONDED.all_wounds)
 						W.remove_wound()
+					
 					BLOODBONDED.adjustFireLoss(-25, TRUE)
 					BLOODBONDED.bloodpool = min(BLOODBONDED.maxbloodpool, BLOODBONDED.bloodpool+2)
+					
 					giving = FALSE
 					if (iskindred(BLOODBONDED))
 						var/datum/species/kindred/species = BLOODBONDED.dna.species
 						if (HAS_TRAIT(BLOODBONDED, TRAIT_TORPOR) && COOLDOWN_FINISHED(species, torpor_timer))
 							BLOODBONDED.untorpor()
 
-					if(!isghoul(H.pulling) && istype(H.pulling, /mob/living/carbon/human/npc))
-						var/mob/living/carbon/human/npc/NPC = H.pulling
-						if(NPC.ghoulificate(owner))
-							NPC.roundstart_vampire = FALSE
 					var/blood_bond_result = 0
 
 					//apply the blood bond to the database
 					if(BLOODBONDED.mind)
-						blood_bond_result = BLOODBONDED.create_blood_bond_to(H)
+						blood_bond_result = SScharacter_connection.add_connection(CONNECTION_BLOOD_BOND, BLOODBONDED, H)
 						if(blood_bond_result == 3 && BLOODBONDED.mind.enslaved_to != owner)
 							BLOODBONDED.mind.enslave_mind_to_creator(owner)
 						if(blood_bond_result >= 2 && BLOODBONDED.has_status_effect(STATUS_EFFECT_INLOVE))
 							BLOODBONDED.remove_status_effect(STATUS_EFFECT_INLOVE)
 							BLOODBONDED.apply_status_effect(STATUS_EFFECT_INLOVE, owner)
+
+					//handle ghouling
+					if(!isghoul(BLOODBONDED) && !iskindred(BLOODBONDED) && tgui_alert(owner, "Do you wish to turn [BLOODBONDED] into a ghoul?.", "Confirmation", list("Yes", "No")) == "Yes")
+						BLOODBONDED.handle_ghouling(H)
+
 					if(isghoul(BLOODBONDED) && blood_bond_result > 1)
 						var/datum/species/ghoul/G = BLOODBONDED.dna.species
 						G.last_vitae = world.time

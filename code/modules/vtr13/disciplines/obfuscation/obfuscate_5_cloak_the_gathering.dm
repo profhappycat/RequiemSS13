@@ -41,15 +41,14 @@
 
 /datum/discipline_power/vtr/obfuscate/cloak_the_gathering/activate(mob/living/target)
 	. = ..()
-	RegisterSignal(target, aggressive_signals, PROC_REF(gathering_on_combat_signal), override = TRUE)
+	RegisterSignal(target, aggressive_signals, PROC_REF(gathering_on_combat_signal))
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 	for(var/mob/living/carbon/human/npc/NPC in GLOB.npc_list)
 		if (NPC.danger_source == target)
 			NPC.danger_source = null
-	
-	target.invisibility = OBFUSCATE_LEVEL_2
 
+	target.invisibility = OBFUSCATE_LEVEL_2
 	cloaked_persons += 1
 
 /datum/discipline_power/vtr/obfuscate/cloak_the_gathering/proc/trigger_off(mob/living/culprit)

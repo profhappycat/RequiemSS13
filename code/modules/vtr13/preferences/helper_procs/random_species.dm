@@ -6,8 +6,7 @@
 		real_name = pref_species.random_name(gender,1)
 
 	if(pref_species.id == "ghoul")
-		if(regent_clan)
-			qdel(regent_clan)
+		qdel(regent_clan)
 		regent_clan = new /datum/vampireclane/vtr/daeva()
 		discipline_types = list()
 		discipline_levels = list()
@@ -17,14 +16,16 @@
 			discipline_types.Add(disc_type)
 			discipline_levels.Add(0)
 		vamp_rank = VAMP_RANK_GHOUL
+		vamp_faction = new /datum/vtr_faction/vamp_faction/unaligned()
 
 	if(pref_species.id == "kindred")
-		if(clane)
-			qdel(clane)
+		qdel(clane)
 		clane = new /datum/vampireclane/vtr/daeva()
+
 		discipline_types = list()
 		discipline_levels = list()
 		for (var/disc_type in clane.clane_disciplines)
 			discipline_types.Add(disc_type)
 			discipline_levels.Add(0)
 		vamp_rank = VAMP_RANK_NEONATE
+		vamp_faction = new /datum/vtr_faction/vamp_faction/unaligned()

@@ -95,10 +95,10 @@
 	var/examine_result = disguise_title_cache
 	examine_result ? return_list.Add(examine_result) : null
 
-	//the real person's Beast
-	examine_result = human_parent.examine_beast(user, disguise.gender)
+	//the disguise's Beast
+	examine_result = disguise.examine_beast(user)
 	examine_result ? return_list.Add(examine_result) : null
-	
+
 
 	//The disguise target's fame
 	examine_result = disguise.examine_reputation(user)

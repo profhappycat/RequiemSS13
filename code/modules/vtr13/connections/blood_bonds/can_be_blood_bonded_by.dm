@@ -1,20 +1,23 @@
-/mob/living/proc/can_be_blood_bonded_by(mob/living/carbon/human/domitor)
+/datum/character_connection_type/blood_bond/proc/can_be_blood_bonded_by(mob/living/thrall, mob/living/domitor)
 
-	if(!ckey || !mind)
+	if(!thrall || !thrall.mind)
 		return FALSE
 
 	if(!domitor || !domitor.mind)
+		to_chat(domitor, "<span class='warning'>You are mindless???????</span>")
 		return FALSE
 
 	if(!iskindred(domitor))
+		to_chat(domitor, "<span class='warning'>You are not a vampire????</span>")
 		return FALSE
 
 	//is the thrall already in a level three blood bond?
-	if(!check_character_level_three_blood_bonds(domitor))
-		to_chat(src, "<span class='warning'>Your deep devotion to your Regent prevents a blood bond from forming.</span>")
+	if(!SScharacter_connection.check_level_three_blood_bonds(thrall))
+		to_chat(thrall, "<span class='warning'>Your deep devotion to your Regent prevents a blood bond from forming.</span>")
 		return FALSE
-	
-	if(check_mutual_blood_bonds_made_this_round(domitor))
+
+	if(SScharacter_connection.check_mutual_blood_bonds_made_this_round(thrall, domitor))
+		to_chat(domitor, "<span class='warning'>You have already forged a blood bond with [thrall] this night.</span>")
 		return FALSE
 
 	return TRUE

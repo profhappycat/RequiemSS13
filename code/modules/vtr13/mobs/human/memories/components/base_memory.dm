@@ -29,10 +29,11 @@
 	if(!invader.mind)
 		return
 	get_memory_data(src, FALSE)
-	invader << browse(dat.Join("<br>"), "window=vampire;size=500x450;border=1;can_resize=1;can_minimize=0")
+	invader << browse(dat.Join("<br>"), "window=vampire;size=500x600;border=1;can_resize=1;can_minimize=0")
 	
 
 /datum/component/base_memory/proc/get_memory_data(datum/source, var/is_own_memories = TRUE)
+
 	dat = list()
 	dat += {"
 		<style type="text/css">
@@ -51,7 +52,7 @@
 	dat += "Tonight, I have taken the role of \a [owner.mind.assigned_role]."
 	dat += ""
 	SEND_SIGNAL(src, COMSIG_MEMORY_SPLAT_TEXT, owner, is_own_memories)
-	
+
 	dat += "<b>Physique</b>: [owner.physique] + [owner.additional_physique]"
 	dat += "<b>Stamina</b>: [owner.stamina] + [owner.additional_stamina]"
 	dat += "<b>Charisma</b>: [owner.charisma] + [owner.additional_charisma]"
@@ -102,34 +103,17 @@
 				dat += "<b>My bank account code is: [account.code]</b>"
 				break
 	
-	if(is_own_memories && owner?.mind?.character_connections?.len)
-		dat += " "
-		dat += "<b>I've made some connections in the city:</b>"
-		for(var/datum/character_connection/connection in owner.mind.character_connections)
-			dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(source)];delete_connection=[connection.group_id]'>Delete</a>"
-		dat += " "
+	if(is_own_memories && owner.mind)
+		if(length(owner.mind.character_connections) || length(owner.mind.fake_character_connections))
+			dat += " "
+			dat += "<b>I've made some connections in the city:</b>"
+		if(length(owner.mind.character_connections))
+			for(var/datum/character_connection/connection in owner.mind.character_connections)
+				dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(source)];delete_connection=[connection.group_id]'>Delete</a>"
+			dat += " "
+		if(length(owner.mind.fake_character_connections))
+			for(var/datum/character_connection/connection in owner.mind.fake_character_connections)
+				dat += "<b>[connection.connection_desc]</b> <a style='white-space:nowrap;' href='byond://?src=[REF(source)];delete_connection=[connection.group_id]'>Delete</a>"
+			dat += " "
 	
 	return dat
-
-
-
-/datum/action/memory_button
-	name = "About Me"
-	desc = "Check things that you know about yourself."
-	button_icon_state = "masquerade"
-	check_flags = NONE
-	var/datum/component/base_memory/parent_component
-
-/datum/action/memory_button/New(Target, datum/component/base_memory/parent_component)
-	..(Target)
-	src.parent_component = parent_component
-
-/datum/action/memory_button/Trigger()
-	var/list/memory_data = parent_component.get_memory_data(src, TRUE)
-	owner << browse(memory_data.Join("<br>"), "window=vampire;size=500x450;border=1;can_resize=1;can_minimize=0")
-
-/datum/action/memory_button/Topic(href, href_list)
-	if(href_list["delete_connection"])
-		var/mob/living/owner_human = owner
-		owner_human.retire_connection(text2num(href_list["delete_connection"]))
-		Trigger()

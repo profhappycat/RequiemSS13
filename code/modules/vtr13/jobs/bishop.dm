@@ -15,8 +15,12 @@
 
 	exp_type = EXP_TYPE_CREW
 	exp_type_department = EXP_TYPE_LANCEA
+	
+	endorsement_required = TRUE
 
 	display_order = JOB_DISPLAY_ORDER_BISHOP
+
+	minimum_vamp_rank = VAMP_RANK_ANCILLAE
 
 	allowed_species = list("Vampire")
 	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")

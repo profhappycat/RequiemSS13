@@ -2,6 +2,7 @@
 	//limit - The amount of jobs allowed per column. Defaults to 17 to make it look nice.
 	//widthPerColumn - Screen's width for every column.
 	//height - Screen's height.
+	character_connections = SScharacter_connection.get_character_connections(parent.ckey, src.real_name)
 	var/limit = 9
 	var/widthPerColumn = 295
 	
@@ -41,7 +42,7 @@
 				HTML += "<font color=red><b>[rank]</b></font></td><td width='75%' align='center'><a href='byond://?_src_=prefs;bancheck=[rank]'> BANNED</a></td></tr>"
 				continue
 			var/required_playtime_remaining = job.required_playtime_remaining(user.client)
-			//<font color=red>text</font> (Zamenil potomu chto slishkom rezhet glaza
+
 			if(required_playtime_remaining && !bypass)
 				HTML += "<font color=#290204><b>[rank]</b></font></td><td width='75%' align='center'><b><font color=#290204> \[ [get_exp_format(required_playtime_remaining)] as [job.get_exp_req_type()] \]</font></b></td></tr>"
 				continue
@@ -57,6 +58,11 @@
 				continue
 			if((pref_species.name == "Vampire" || pref_species.name == "Ghoul") && job.minimum_vamp_rank && vamp_rank < job.minimum_vamp_rank && !bypass)
 				HTML += "<font color=#290204><b>[rank]</b></font></td><td width='75%' align='center'><b><font color=#290204> \[[GLOB.vampire_rank_names[vamp_rank]] RESTRICTED\]</font></b></td></tr>"
+				continue
+			if(masquerade < job.minimal_masquerade && !bypass)
+				HTML += "<font color=#290204><b>[rank]</b></font></td><td width='75%' align='center'><b><font color=#290204> \[[job.minimal_masquerade] MASQUERADE REQUIRED\]</font></b></td></tr>"
+			if(job.endorsement_required && endorsement_roles_eligable && !endorsement_roles_eligable.Find(job.title) && !bypass)
+				HTML += "<font color=#290204><b>[rank]</b></font></td><td width='75%' align='center'><b><font color=#290204> \[[job.title == "Seneschal"? "[SENESCHAL_SPECIAL_ENDORSEMENT_MIN + FACTION_HEAD_ENDORSEMENT_MIN]": "[FACTION_HEAD_ENDORSEMENT_MIN]"] ENDORSEMENTS NEEDED\]</font></b></td></tr>"
 				continue
 			if((job_preferences[SSjob.overflow_role] == JP_LOW) && (rank != SSjob.overflow_role) && !is_banned_from(user.ckey, SSjob.overflow_role))
 				HTML += "<font color=orange><b>[rank]</b></font></td><td width='75%' align='center'></td></tr>"
