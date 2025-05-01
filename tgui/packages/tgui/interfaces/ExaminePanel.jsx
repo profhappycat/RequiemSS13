@@ -47,7 +47,8 @@ export const ExaminePanel = (props) => {
     ooc_link,
     ooc_embrace_pref,
     ooc_ghoul_pref,
-    ooc_bond_pref
+    ooc_bond_pref,
+    ooc_escalation_pref
   } = data;
   return (
     <Window
@@ -141,11 +142,17 @@ export const ExaminePanel = (props) => {
                   <Stack.Item>
                     Embracing Preference: {ooc_embrace_pref}
                   </Stack.Item>
+                  <Stack.Item> </Stack.Item>
                   <Stack.Item>
                     Ghouling Preference: {ooc_ghoul_pref}
                   </Stack.Item>
+                  <Stack.Item> </Stack.Item>
                   <Stack.Item>
                     Blood-bonding Preference: {ooc_bond_pref}
+                  </Stack.Item>
+                  <Stack.Item> </Stack.Item>
+                  <Stack.Item>
+                    Unprovoked Violence: {ooc_escalation_pref}
                   </Stack.Item>
                 </Stack>
               </Section>
