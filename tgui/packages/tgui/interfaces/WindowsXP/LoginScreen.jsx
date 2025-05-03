@@ -39,7 +39,7 @@ export const LoginScreen = (props) => {
                 <div className="login-copy">
                   Copyright ©1985-2004
                   <br />
-                  Microsoft Corporation
+                  Microsoft Corporacion
                 </div>
                 <div className="login-logo">
                   <img width="100%" src={logo} alt="windows-logo" />
