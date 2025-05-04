@@ -5356,6 +5356,10 @@
 	},
 /turf/open/floor/plating/parquetry,
 /area/vtm/vtr/elysium/interior/floor_two/central/castle_elysium)
+"ePM" = (
+/obj/item/supplypod_beacon_vtr,
+/turf/open/floor/plating/asphalt,
+/area/vtm/vtr/masquerade/interior/ground_floor/southwest/warehouse)
 "eQa" = (
 /obj/structure/vampfence/corner/rich,
 /turf/open/floor/plating/vampgrass,
@@ -17390,6 +17394,12 @@
 "pKb" = (
 /turf/closed/wall/vampwall/rich/old/low/window/reinforced,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/bank)
+"pKh" = (
+/obj/machinery/computer/cargo/express_vtr{
+	dir = 4
+	},
+/turf/open/floor/plating/asphalt,
+/area/vtm/vtr/masquerade/interior/ground_floor/southwest/warehouse)
 "pKo" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -104246,7 +104256,7 @@ ekg
 fxO
 rnH
 wLV
-qiZ
+pKh
 qiZ
 qiZ
 qiZ
@@ -104765,7 +104775,7 @@ qiZ
 rHE
 qiZ
 qiZ
-rHE
+qiZ
 qiZ
 qiZ
 cxH
@@ -105021,7 +105031,7 @@ lRj
 qiZ
 qiZ
 qiZ
-qiZ
+ePM
 qiZ
 qiZ
 dqG
@@ -105793,7 +105803,7 @@ qiZ
 qiZ
 qiZ
 qiZ
-yjW
+qiZ
 qiZ
 qiZ
 qiZ
@@ -106820,7 +106830,7 @@ qiZ
 qiZ
 qiZ
 qiZ
-qiZ
+yjW
 qiZ
 qiZ
 yjW
