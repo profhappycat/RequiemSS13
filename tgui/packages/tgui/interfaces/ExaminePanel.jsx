@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { ByondUi, Section, Stack, Tabs } from 'tgui-core/components';
+import { ByondUi, Section, Stack, Tabs, Link } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 const formatURLs = (text) => {
@@ -42,7 +42,13 @@ export const ExaminePanel = (props) => {
     character_name,
     obscured,
     flavor_text,
+    headshot,
     ooc_notes,
+    ooc_link,
+    ooc_embrace_pref,
+    ooc_ghoul_pref,
+    ooc_bond_pref,
+    ooc_escalation_pref
   } = data;
   return (
     <Window
@@ -52,6 +58,19 @@ export const ExaminePanel = (props) => {
     >
       <Window.Content>
         <Stack fill>
+          <Stack.Item width="30%">
+            <Section height="310px" title="Headshot">
+              <img
+                src={
+                  tabIndex === 2
+                    ? resolveAsset(headshot)
+                    : resolveAsset(headshot)
+                }
+                height="250px"
+                width="250px"
+              />
+            </Section>
+          </Stack.Item>
           <Stack.Item grow>
             <Tabs fluid>
               <Tabs.Tab
@@ -59,6 +78,12 @@ export const ExaminePanel = (props) => {
                 onClick={() => setTabIndex(1)}
               >
                 <Section fitted title={'Flavor Text'} />
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={tabIndex === 2}
+                onClick={() => setTabIndex(2)}
+              >
+                <Section fitted title={'Character Link'} />
               </Tabs.Tab>
             </Tabs>
             {tabIndex === 1 && (
@@ -75,15 +100,64 @@ export const ExaminePanel = (props) => {
                 {formatURLs(flavor_text)}
               </Section>
             )}
+            {tabIndex === 2 && (
+              <Section
+                style={{ 'overflow-y': 'scroll' }}
+                fitted
+                preserveWhitespace
+                minHeight="50%"
+                maxHeight="50%"
+                fontSize="14px"
+                lineHeight="1.7"
+                textIndent="3em"
+              >
+                Character Link: {formatURLs(ooc_link)}
+              </Section>
+            )}
             <Tabs fluid>
               <Tabs.Tab
                 selected={lowerTabIndex === 1}
                 onClick={() => setLowerTabIndex(1)}
               >
+                <Section fitted title={'OOC Preferences'} />
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={lowerTabIndex === 2}
+                onClick={() => setLowerTabIndex(2)}
+              >
                 <Section fitted title={'OOC Notes'} />
               </Tabs.Tab>
-              </Tabs>
-              {lowerTabIndex === 1 && (
+            </Tabs>
+            {lowerTabIndex === 1 && (
+              <Section
+                style={{ 'overflow-y': 'scroll' }}
+                preserveWhitespace
+                fitted
+                minHeight="35%"
+                maxHeight="35%"
+                fontSize="14px"
+                lineHeight="1.5">
+                <Stack direction = "column">
+                  <Stack.Item> </Stack.Item>
+                  <Stack.Item>
+                    Embracing Preference: {ooc_embrace_pref}
+                  </Stack.Item>
+                  <Stack.Item> </Stack.Item>
+                  <Stack.Item>
+                    Ghouling Preference: {ooc_ghoul_pref}
+                  </Stack.Item>
+                  <Stack.Item> </Stack.Item>
+                  <Stack.Item>
+                    Blood-bonding Preference: {ooc_bond_pref}
+                  </Stack.Item>
+                  <Stack.Item> </Stack.Item>
+                  <Stack.Item>
+                    Unprovoked Violence: {ooc_escalation_pref}
+                  </Stack.Item>
+                </Stack>
+              </Section>
+            )}
+            {lowerTabIndex === 2 && (
               <Section
                 style={{ 'overflow-y': 'scroll' }}
                 preserveWhitespace
