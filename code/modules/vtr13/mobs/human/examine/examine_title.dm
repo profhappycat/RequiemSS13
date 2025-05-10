@@ -7,20 +7,23 @@
 			obscure_name = TRUE
 
 	var/my_gender = "male"
-	if(gender == MALE)
-		switch(age)
-			if(16 to 24)
-				my_gender = "guy"
-			if(24 to INFINITY)
-				my_gender = "man"
-	if(gender == FEMALE)
-		my_gender = "female"
-		switch(age)
-			if(16 to 24)
-				my_gender = "lady"
-			if(24 to INFINITY)
-				my_gender = "woman"
-	
+	switch(gender)
+		if(MALE)
+			switch(age)
+				if(16 to 24)
+					my_gender = "guy"
+				if(24 to INFINITY)
+					my_gender = "man"
+		if(FEMALE)
+			my_gender = "female"
+			switch(age)
+				if(16 to 24)
+					my_gender = "lady"
+				if(24 to INFINITY)
+					my_gender = "woman"
+		if(PLURAL, NEUTER)
+			my_gender = "person"
+
 	var/social_descriptor = "godlike"
 	if(!is_face_visible())
 		social_descriptor = "shrouded"
