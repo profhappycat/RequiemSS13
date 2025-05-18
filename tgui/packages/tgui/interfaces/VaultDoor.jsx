@@ -45,11 +45,38 @@ export class VaultDoor extends Component {
                 <Box>
                   <Box>{inputCode}</Box>
                   <Box>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
+                    {[1, 2, 3].map((num) => (
                       <Button
                         key={num}
                         content={num}
                         onClick={() => this.handleButtonClick(num.toString())}
+                      />
+                    ))}
+                  </Box>
+                  <Box>
+                    {[4, 5, 6].map((num) => (
+                      <Button
+                        key={num}
+                        content={num}
+                        onClick={() => this.handleButtonClick(num.toString())}
+                      />
+                    ))}
+                  </Box>
+                  <Box>
+                    {[7, 8, 9].map((num) => (
+                      <Button
+                        key={num}
+                        content={num}
+                        onClick={() => this.handleButtonClick(num.toString())}
+                      />
+                    ))}
+                  </Box>
+                  <Box>
+                    {[0].map((num) => (
+                      <Button
+                        key={num}
+                        content={"0"}
+                        onClick={() => this.handleButtonClick("0")}
                       />
                     ))}
                   </Box>
