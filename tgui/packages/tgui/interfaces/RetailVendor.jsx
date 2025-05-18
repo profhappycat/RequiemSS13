@@ -37,7 +37,7 @@ export const RetailVendor = (props) => {
                 <Table.Row key={product.name}>
                   <Table.Cell>
                     <span
-                      className={classes(['vending32x32', product.path])}
+                      className={classes(['retail32x32', product.path])}
                       style={{
                         'vertical-align': 'middle',
                       }}
