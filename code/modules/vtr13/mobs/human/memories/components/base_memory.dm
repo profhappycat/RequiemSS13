@@ -87,12 +87,12 @@
 		for(var/mob/charmer in owner.status_traits[TRAIT_CHARMED])
 			dat += "I find myself trusting [charmer]."
 
-	dat += "<b>Physique</b>: [owner.physique] + [owner.additional_physique]"
-	dat += "<b>Stamina</b>: [owner.stamina] + [owner.additional_stamina]"
-	dat += "<b>Charisma</b>: [owner.charisma] + [owner.additional_charisma]"
-	dat += "<b>Composure</b>: [owner.composure] + [owner.additional_composure]"
-	dat += "<b>Wits</b>: [owner.wits] + [owner.additional_wits]"
-	dat += "<b>Resolve</b>: [owner.resolve] + [owner.additional_resolve]"
+	dat += "<b>Physique</b>: [owner.stats.get_stat(PHYSIQUE)]"
+	dat += "<b>Stamina</b>: [owner.stats.get_stat(VITALITY)]"
+	dat += "<b>Charisma</b>: [owner.stats.get_stat(CHARISMA)]"
+	dat += "<b>Composure</b>: [owner.stats.get_stat(COMPOSURE)]"
+	dat += "<b>Wits</b>: [owner.stats.get_stat(WITS)]"
+	dat += "<b>Resolve</b>: [owner.stats.get_stat(RESOLVE)]"
 	dat += "<hr>"
 	SEND_SIGNAL(src, COMSIG_MEMORY_DISCIPLINE_TEXT, owner, is_own_memories)
 
