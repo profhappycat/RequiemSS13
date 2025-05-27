@@ -3,7 +3,7 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 /obj/vampire_computer
 	name = "computer"
 	desc = "See the Internet."
-	icon = 'code/modules/ziggers/props.dmi'
+	icon = 'code/modules/wod13/props.dmi'
 	icon_state = "computer"
 	plane = GAME_PLANE
 	layer = CAR_LAYER
@@ -28,7 +28,8 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 	password = gen_pass()
 	var/obj/item/paper/password_paper = new (loc)
 	password_paper.name = "don't forget your password!"
-	password_paper.info = "<center><h2>Hello, [username]!</h2></center><br>I have to remind you about it again, but please don't forget your password - <b>[password]</b>"
+	password_paper.add_raw_text("<center><h2>Hello, [username]!</h2></center><br>I have to remind you about it again, but please don't forget your password - <b>[password]</b>")
+	password_paper.update_icon()
 	var/datum/app/icq/icq = new ()
 	var/datum/app/notepad/notepad = new ()
 	var/datum/app/gmail/gmail = new ()
@@ -167,13 +168,16 @@ GLOBAL_LIST_EMPTY(vampire_computers)
 			if(params["message"] != "" && params["message"])
 				for(var/obj/vampire_computer/C in GLOB.vampire_computers)
 					var/datum/app/news/news = C.apps[4]
-					news.text = params["message"]
-					message_admins("[usr]([usr.key]) send an announcement:\"- [params["message"]]\"")
+					var/message = trim(copytext_char(sanitize(params["message"]), 1, MAX_MESSAGE_LEN))
+					news.text = message
+					message_admins("[key_name(usr)] sent an announcement:\"- [message]\"")
 					if(!C.main)
 						C.say("New announcement from Prince!")
 						C.icon_state = "computermessage"
 					else
 						C.say("Announcement sent.")
+				for(var/obj/item/vamp/phone/P in GLOB.phones_list)
+					P.say("New announcement!")
 			return TRUE
 		if("delete_email")
 			var/datum/app/gmail/gmail = apps[3]

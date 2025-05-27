@@ -113,7 +113,7 @@
 	if(usr.client.prefs.tgui_fancy) //some browsers (IE8) have trouble with unsupported css3 elements and DOM methods that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
 		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 		panel.add_script("banpaneljs", 'html/admin/banpanel.js')
-	var/list/output = list("<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]")
+	var/list/output = list("<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]")
 	output += {"<input type='hidden' name='src' value='[REF(src)]'>
 	<label class='inputlabel checkbox'>Key:
 	<input type='checkbox' id='keycheck' name='keycheck' value='1'[player_key ? " checked": ""]>
@@ -166,6 +166,10 @@
 			<label class='inputlabel radio'>Server
 			<input type='radio' id='server' name='radioban' value='server'[role == "Server" ? " checked" : ""][edit_id ? " disabled" : ""]>
 			<div class='inputbox'></div></label>
+			<br>
+			<label class='inputlabel radio'>Role
+			<input type='radio' id='role' name='radioban' value='role'[role == "Server" ? "" : " checked"][edit_id ? " disabled" : ""]>
+			<div class='inputbox'></div></label>
 		</div>
 		<div class='column right'>
 			Severity
@@ -207,6 +211,47 @@
 		<br>
 		When ticked, edits here will also affect bans created with matching ckey, IP, CID and time. Use this to edit all role bans which were made at the same time.
 		"}
+	else
+		output += "<input type='hidden' name='roleban_delimiter' value='1'>"
+		//there's not always a client to use the bancache of so to avoid many individual queries from using is_banned_form we'll build a cache to use here
+		var/banned_from = list()
+		if(player_key)
+			var/datum/db_query/query_get_banned_roles = SSdbcore.NewQuery({"
+				SELECT role
+				FROM [format_table_name("ban")]
+				WHERE
+					ckey = :player_ckey AND
+					role <> 'server'
+					AND unbanned_datetime IS NULL
+					AND (expiration_time IS NULL OR expiration_time > NOW())
+			"}, list("player_ckey" = ckey(player_key)))
+			if(!query_get_banned_roles.warn_execute())
+				qdel(query_get_banned_roles)
+				return
+			while(query_get_banned_roles.NextRow())
+				banned_from += query_get_banned_roles.item[1]
+			qdel(query_get_banned_roles)
+		var/break_counter = 0
+		var/list/job_lists = list("Invictus" = GLOB.command_positions,
+							"Lancea et Sanctum" = GLOB.lancea_positions,
+							"Ordo Dracul" = GLOB.ordo_positions,
+							"Circle of the Crone" = GLOB.crone_positions,
+							"Carthian Movement" = GLOB.carthian_positions,
+							"Law Enforcement" = GLOB.police_positions,
+							"Other" = GLOB.citizen_positions + GLOB.services_positions + GLOB.clinic_positions)
+		for(var/department in job_lists)
+			output += "<div class='column'><label class='rolegroup [ckey(department)]'><input type='checkbox' name='[department]' class='hidden' [usr.client.prefs.tgui_fancy ? " onClick='toggle_checkboxes(this, \"_com\")'" : ""]>[department]</label><div class='content'>"
+			break_counter = 0
+			for(var/job in job_lists[department])
+				if(break_counter > 0 && (break_counter % 3 == 0))
+					output += "<br>"
+				output += {"<label class='inputlabel checkbox'>[job]
+							<input type='checkbox' name='[job]' class='[department]' value='1'>
+							<div class='inputbox[(job in banned_from) ? " banned" : ""]'></div></label>
+				"}
+				break_counter++
+			output += "</div></div>"
+		output += "</div>"
 	output += "</form>"
 	panel.set_content(jointext(output, ""))
 	panel.open()
@@ -434,6 +479,7 @@
 	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
 	log_admin_private("[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
 	message_admins("[kna] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join("\n")]"]\nReason: [reason]")
+	SSoverwatch.record_action(usr, "[kn] [msg][roles_to_ban[1] == "Server" ? "" : " Roles: [roles_to_ban.Join(", ")]"] Reason: [reason]")
 	if(applies_to_admins)
 		send2adminchat("BAN ALERT","[kn] [msg]")
 	if(player_ckey)
@@ -470,7 +516,7 @@
 	var/datum/browser/unban_panel = new(usr, "unbanpanel", "Unbanning Panel", 850, 600)
 	unban_panel.add_stylesheet("unbanpanelcss", 'html/admin/unbanpanel.css')
 	var/list/output = list("<div class='searchbar'>")
-	output += {"<form method='get' action='?src=[REF(src)]'>[HrefTokenFormField()]
+	output += {"<form method='get' action='byond://?src=[REF(src)]'>[HrefTokenFormField()]
 	<input type='hidden' name='src' value='[REF(src)]'>
 	Key:<input type='text' name='searchunbankey' size='18' value='[player_key]'>
 	Admin Key:<input type='text' name='searchunbanadminkey' size='18' value='[admin_key]'>
@@ -510,7 +556,7 @@
 			var/pagecount = 1
 			var/list/pagelist = list()
 			while(bancount > 0)
-				pagelist += "<a href='?_src_=holder;[HrefToken()];unbanpagecount=[pagecount - 1];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+				pagelist += "<a href='byond://?_src_=holder;[HrefToken()];unbanpagecount=[pagecount - 1];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid]'>[pagecount == page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 				bancount -= bansperpage
 				pagecount++
 			output += pagelist.Join(" | ")
@@ -570,7 +616,7 @@
 			var/ban_round_id  = query_unban_search_bans.item[3]
 			var/role = query_unban_search_bans.item[4]
 			//make the href for unban here so only the search parameters are passed
-			var/unban_href = "<a href='?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
+			var/unban_href = "<a href='byond://?_src_=holder;[HrefToken()];unbanid=[ban_id];unbankey=[player_key];unbanadminkey=[admin_key];unbanip=[player_ip];unbancid=[player_cid];unbanrole=[role];unbanpage=[page]'>Unban</a>"
 			var/expiration_time = query_unban_search_bans.item[5]
 			//we don't cast duration as num because if the duration is large enough to be converted to scientific notation by byond then the + character gets lost when passed through href causing SQL to interpret '4.321e 007' as '4'
 			var/duration = query_unban_search_bans.item[6]
@@ -595,9 +641,9 @@
 				output += "<br>Unbanned by <b>[unban_key]</b> on <b>[unban_datetime]</b> during round <b>#[unban_round_id]</b>."
 			output += "</div><div class='container'><div class='reason'>[reason]</div><div class='edit'>"
 			if(!expired && !unban_datetime)
-				output += "<a href='?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
+				output += "<a href='byond://?_src_=holder;[HrefToken()];editbanid=[ban_id];editbankey=[player_key];editbanip=[player_ip];editbancid=[player_cid];editbanrole=[role];editbanduration=[duration];editbanadmins=[applies_to_admins];editbanreason=[url_encode(reason)];editbanpage=[page];editbanadminkey=[admin_key]'>Edit</a><br>[unban_href]"
 			if(edits)
-				output += "<br><a href='?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
+				output += "<br><a href='byond://?_src_=holder;[HrefToken()];unbanlog=[ban_id]'>Edit log</a>"
 			output += "</div></div></div>"
 		qdel(query_unban_search_bans)
 		output += "</div>"

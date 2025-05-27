@@ -26,16 +26,15 @@ SUBSYSTEM_DEF(beastmastering)
 
 		if (QDELETED(NPC)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
 			GLOB.npc_list -= NPC
+			GLOB.alive_npc_list -= NPC
+			GLOB.boring_npc_list -= NPC
 			log_world("Found a null in npc list!")
 			continue
 
-//!NPC.route_optimisation()
+		//!NPC.route_optimisation()
 		if(MC_TICK_CHECK)
 			return
 		NPC.handle_automated_beasting()
-
-/mob/living/carbon
-	var/list/beastmaster = list()
 
 /mob/living/simple_animal/hostile/beastmaster/Initialize()
 	. = ..()
@@ -71,36 +70,36 @@ SUBSYSTEM_DEF(beastmastering)
 /mob/living/simple_animal/hostile/beastmaster
 	name = "dog"
 	desc = "Woof-woof."
-	icon = 'code/modules/ziggers/mobs.dmi'
+	icon = 'code/modules/wod13/mobs.dmi'
 	icon_state = "dog"
 	icon_living = "dog"
 	icon_dead = "dog_dead"
-//	del_on_death = 1
+	del_on_death = 1
 	footstep_type = FOOTSTEP_MOB_SHOE
 	mob_biotypes = MOB_ORGANIC
 	speak_chance = 0
 	turns_per_move = 1
-	speed = 0
+	speed = 0.35
 //	move_to_delay = 3
 //	rapid = 3
 //	ranged = 1
-	maxHealth = 100
-	health = 100
+	maxHealth = 80
+	health = 85
 	harm_intent_damage = 5
-	melee_damage_lower = 50
-	melee_damage_upper = 50
+	melee_damage_lower = 10
+	melee_damage_upper = 25
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'code/modules/ziggers/sounds/dog.ogg'
+	attack_sound = 'code/modules/wod13/sounds/dog.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	bloodpool = 3
-	maxbloodpool = 3
+	bloodpool = 2
+	maxbloodpool = 2
 //	retreat_distance = 3
 //	minimum_distance = 5
 //	casingtype = /obj/item/ammo_casing/vampire/c556mm
-//	projectilesound = 'code/modules/ziggers/sounds/rifle.ogg'
+//	projectilesound = 'code/modules/wod13/sounds/rifle.ogg'
 	loot = list()
 	AIStatus = AI_OFF
 
@@ -110,7 +109,7 @@ SUBSYSTEM_DEF(beastmastering)
 	var/mob/living/targa
 
 /mob/living/simple_animal/hostile/beastmaster/proc/handle_automated_beasting()
-	if(client)
+	if(client || mind)
 		return
 	if(stat > 0)
 		GLOB.beast_list -= src
@@ -140,13 +139,13 @@ SUBSYSTEM_DEF(beastmastering)
 			ClickOn(targa)
 	else
 		if(follow && isturf(beastmaster.loc))
-			if(z != beastmaster.z)
-				forceMove(get_turf(beastmaster))
-			else if(get_dist(src, beastmaster) > 15)
+			if( (z != beastmaster.z) & (get_dist(beastmaster.loc, loc) <= 10) )
 				forceMove(get_turf(beastmaster))
 			else
 				var/reqsteps = round((SSbeastmastering.next_fire-world.time)/totalshit)
 				walk_to(src, beastmaster, reqsteps, total_multiplicative_slowdown())
+		else
+			walk(src, 0)
 
 /mob/living/simple_animal/hostile/beastmaster/proc/add_beastmaster_enemies(var/mob/living/L)
 	if(istype(L, /mob/living/simple_animal/hostile/beastmaster))

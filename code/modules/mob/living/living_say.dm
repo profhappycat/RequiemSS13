@@ -92,6 +92,22 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return new_msg
 
 /mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+	if(length(message) >= 2 && message[1] == "." && message[2] == "r")
+		var/obj/item/p25radio/radio = null
+		if(istype(get_item_by_slot(ITEM_SLOT_BELT), /obj/item/p25radio))
+			radio = get_item_by_slot(ITEM_SLOT_BELT)
+		else if(istype(get_item_by_slot(ITEM_SLOT_EARS), /obj/item/p25radio))
+			radio = get_item_by_slot(ITEM_SLOT_EARS)
+		else if(istype(get_active_held_item(), /obj/item/p25radio))
+			radio = get_active_held_item()
+		else if(istype(get_inactive_held_item(), /obj/item/p25radio))
+			radio = get_inactive_held_item()
+
+		if(radio)
+			var/p25_message = trim(copytext(message, 3))
+			radio.p25_talk_into(src, p25_message, null, spans, language)
+			return FALSE
+
 	var/ic_blocked = FALSE
 	if(client && !forced && CHAT_FILTER_CHECK(message))
 		//The filter doesn't act on the sanitized message, but the raw message.
@@ -107,6 +123,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		to_chat(src, "<span class='warning'>That message contained a word prohibited in IC chat! Consider reviewing the server rules.\n<span replaceRegex='show_filtered_ic_chat'>\"[message]\"</span></span>")
 		SSblackbox.record_feedback("tally", "ic_blocked_words", 1, lowertext(config.ic_filter_regex.match))
 		return
+
 	var/list/message_mods = list()
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
@@ -181,6 +198,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			succumbed = TRUE
 	else
 		log_talk(message, LOG_SAY, forced_by=forced)
+		last_words = message
 
 	message = treat_message(message) // unfortunately we still need this
 	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
@@ -236,10 +254,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 
 	return TRUE
 
-/mob/living
-	var/last_nigging
-	var/total_erp = 0
-
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
 	if(!client)
@@ -284,11 +298,10 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(ishuman(speaker))
 			var/mob/living/carbon/human/EX = speaker
 			if(EX.key && EX.client)
-				if(EX.last_nigging != message)
-					EX.last_nigging = message
+				if(EX.last_message != message)
+					EX.last_message = message
 //					var/datum/preferences/P = GLOB.preferences_datums[ckey(EX.key)]
 //					if(P)
-					EX.total_erp += length_char(message)
 //						P.exper = min(calculate_mob_max_exper(EX), P.exper+kal)
 //						P.save_preferences()
 //						P.save_character()
@@ -361,7 +374,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
 
 /mob/proc/binarycheck()
 	return FALSE

@@ -12,10 +12,10 @@
 		return COMPONENT_INCOMPATIBLE
 	my_parent = parent
 
-	RegisterSignal(my_parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	RegisterSignal(my_parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /datum/component/npc_controller/proc/check_move()	//Can we call the movement?
-	if(my_parent.stat >= 2)
+	if(my_parent.stat >= HARD_CRIT)
 		return FALSE
 	if(my_parent.key)
 		return FALSE
@@ -89,7 +89,7 @@
 //		current_target = A
 //
 //	!USE DEFAULT DM TABULATION AND FONT TO SEE CORRECT IMAGE!
-//	\ | /
+		\ | /
 		- . -
 		/ | \
 	Here is illustration of which pattern npc will be using while walking to the target

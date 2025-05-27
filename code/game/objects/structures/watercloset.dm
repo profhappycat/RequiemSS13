@@ -459,7 +459,7 @@
 
 /obj/structure/sinkframe/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, PROC_REF(can_be_rotated)))
 
 /obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
 	if(anchored)
@@ -633,13 +633,15 @@
 	var/icon_type = "bathroom"//used in making the icon state
 	color = "#ACD1E9" //Default color, didn't bother hardcoding other colors, mappers can and should easily change it.
 	alpha = 200 //Mappers can also just set this to 255 if they want curtains that can't be seen through
-	layer = SIGN_LAYER
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
 	var/open = TRUE
 	/// if it can be seen through when closed
 	var/opaque_closed = FALSE
+	//For window curtains, direction the window is "facing"; determines what side the curtain can't be used for.
+	var/use_restrict_dir // 1 for NORTH 2 for SOUTH 4 for EAST 8 for WEST
 
 /obj/structure/curtain/proc/toggle()
 	open = !open
@@ -648,17 +650,16 @@
 /obj/structure/curtain/update_icon()
 	if(!open)
 		icon_state = "[icon_type]-closed"
-		layer = WALL_OBJ_LAYER
-		density = TRUE
+		layer = ABOVE_ALL_MOB_LAYERS_LAYER
 		open = FALSE
 		if(opaque_closed)
 			set_opacity(TRUE)
 	else
 		icon_state = "[icon_type]-open"
-		layer = SIGN_LAYER
-		density = FALSE
+		layer = ABOVE_ALL_MOB_LAYERS_LAYER
 		open = TRUE
-		set_opacity(FALSE)
+		if(opaque_closed)
+			set_opacity(FALSE)
 
 /obj/structure/curtain/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/toy/crayon))
@@ -689,6 +690,44 @@
 	. = ..()
 	if(.)
 		return
+	var/current_turf = get_turf(src)
+	for(var/obj/structure/window/potential_window in current_turf)
+		if(use_restrict_dir && potential_window)
+			var/turf/restricted_turf
+			var/list/restricted_turfs = list()
+			var/turf/window_turf = get_turf(src)
+			switch(use_restrict_dir)
+				if(NORTH)
+					restricted_turf = locate(window_turf.x,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(SOUTH)
+					restricted_turf = locate(window_turf.x,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(WEST)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x - 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+				if(EAST)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y + 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+					restricted_turf = locate(window_turf.x + 1,window_turf.y - 1,window_turf.z)
+					restricted_turfs.Add(restricted_turf)
+			var/turf/user_turf = get_turf(user)
+			if(restricted_turfs.Find(user_turf) != 0) return
+
 	playsound(loc, 'sound/effects/curtain.ogg', 50, TRUE)
 	toggle()
 
@@ -715,6 +754,7 @@
 	alpha = 255
 	opaque_closed = TRUE
 
+
 /obj/structure/curtain/cloth
 	color = null
 	alpha = 255
@@ -724,6 +764,10 @@
 	new /obj/item/stack/sheet/cloth (loc, 4)
 	new /obj/item/stack/rods (loc, 1)
 	qdel(src)
+
+/obj/structure/curtain/cloth/fancy/mechanical/luxurious
+	icon_type = "bounty"
+	icon_state = "bounty-open"
 
 /obj/structure/curtain/cloth/fancy
 	icon_type = "cur_fancy"
@@ -745,14 +789,14 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
-	layer = SIGN_LAYER
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	density = FALSE
 	open = TRUE
 	set_opacity(FALSE)
 
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
-	layer = WALL_OBJ_LAYER
+	layer = ABOVE_ALL_MOB_LAYERS_LAYER
 	density = TRUE
 	open = FALSE
 	if(opaque_closed)

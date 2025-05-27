@@ -1,8 +1,3 @@
-/mob/living/carbon
-	var/last_gnosis_buff = 0
-	var/last_rage_penis = 0
-	var/last_veil_restore = 0
-
 /mob/living/carbon/werewolf/Life()
 	update_icons()
 	update_rage_hud()
@@ -11,7 +6,7 @@
 /mob/living/carbon/Life()
 	. = ..()
 	if(isgarou(src) || iswerewolf(src))
-		if(key && stat <= 3)
+		if(key && stat <= HARD_CRIT)
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(key)]
 			if(P)
 				if(P.masquerade != masquerade)
@@ -48,30 +43,45 @@
 			//	transformator.trans_gender(src, auspice.base_breed)
 
 			if(gaining_rage && client)
-				if(last_rage_penis+600 < world.time)
-					last_rage_penis = world.time
+				if((last_rage_gain + 1 MINUTES) < world.time)
+					last_rage_gain = world.time
 					adjust_rage(1, src, TRUE)
 
 			if(masquerade == 0)
-				var/special_role_name
-				if(mind)
-					if(mind.special_role)
-						var/datum/antagonist/A = mind.special_role
-						special_role_name = A.name
-				if(!is_special_character(src) || special_role_name == "Ambitious")
+				if(!is_special_character(src))
 					if(auspice.gnosis)
 						to_chat(src, "<span class='warning'>My Veil is too low to connect with the spirits of Umbra!</span>")
 						adjust_gnosis(-1, src, FALSE)
 
 			if(auspice.rage >= 9)
-				if(!in_frenzy)
-					if(last_frenzy_check+400 <= world.time)
-						last_frenzy_check = world.time
-						rollfrenzy()
+				if(mind && !HAS_TRAIT(mind, TRAIT_IN_FRENZY) && (last_frenzy_check + 40 SECONDS) <= world.time)
+					last_frenzy_check = world.time
+					mind.try_frenzy()
+
 			if(istype(get_area(src), /area/vtm/interior/penumbra))
-				if(last_veil_restore+600 < world.time)
+				if((last_veil_restore + 40 SECONDS) < world.time)
+					adjust_veil(1, src, TRUE)
 					last_veil_restore = world.time
-					adjust_veil(1)
+
+			switch(auspice.tribe)
+				if("Wendigo")
+					if(istype(get_area(src), /area/vtm/forest))
+						if((last_veil_restore + 50 SECONDS) <= world.time)
+							adjust_veil(1, src, TRUE)
+							last_veil_restore = world.time
+
+				if("Glasswalkers")
+					if(istype(get_area(src), /area/vtm/interior/glasswalker))
+						if((last_veil_restore + 50 SECONDS) <= world.time)
+							adjust_veil(1, src, TRUE)
+							last_veil_restore = world.time
+
+				if("Black Spiral Dancers")
+					if(istype(get_area(src), /area/vtm/interior/endron_facility))
+						if((last_veil_restore + 50 SECONDS) <= world.time)
+							adjust_veil(1, src, TRUE)
+							last_veil_restore = world.time
+
 
 /mob/living/carbon/werewolf/crinos/Life()
 	. = ..()
@@ -96,35 +106,28 @@
 		return
 	adjust_bodytemperature(BODYTEMP_HEATING_MAX) //If you're on fire, you heat up!
 
-/mob/living/carbon
-	var/last_veil_adjusting = 0
-
 /mob/living/carbon/proc/adjust_veil(var/amount)
 	if(!GLOB.canon_event)
 		return
-	if(last_veil_adjusting+100 >= world.time)
+	if(last_veil_adjusting+200 >= world.time)
 		return
 	if(amount > 0)
 		if(HAS_TRAIT(src, TRAIT_VIOLATOR))
 			return
-	if(istype(get_area(src), /area/vtm))
-		var/area/vtm/V = get_area(src)
-		if(V.zone_type != "masquerade")
-			return
+	if(amount < 0)
+		if(istype(get_area(src), /area/vtm))
+			var/area/vtm/V = get_area(src)
+			if(V.zone_type != "masquerade")
+				return
 	last_veil_adjusting = world.time
-	var/special_role_name
-	if(mind)
-		if(mind.special_role)
-			var/datum/antagonist/A = mind.special_role
-			special_role_name = A.name
-	if(!is_special_character(src) || special_role_name == "Ambitious")
+	if(!is_special_character(src))
 		if(amount < 0)
 			if(masquerade > 0)
-				SEND_SOUND(src, sound('code/modules/ziggers/sounds/veil_violation.ogg', 0, 0, 75))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/veil_violation.ogg', 0, 0, 75))
 				to_chat(src, "<span class='boldnotice'><b>VEIL VIOLATION</b></span>")
 				masquerade = max(0, masquerade+amount)
 		if(amount > 0)
 			if(masquerade < 5)
-				SEND_SOUND(src, sound('code/modules/ziggers/sounds/humanity_gain.ogg', 0, 0, 75))
+				SEND_SOUND(src, sound('code/modules/wod13/sounds/humanity_gain.ogg', 0, 0, 75))
 				to_chat(src, "<span class='boldnotice'><b>VEIL REINFORCEMENT</b></span>")
-				masquerade = max(0, masquerade-amount)
+				masquerade = min(5, masquerade+amount)

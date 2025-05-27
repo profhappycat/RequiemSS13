@@ -56,9 +56,6 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
 	dna.species.handle_mutant_bodyparts(src)
 
-/mob/living/carbon/human
-	var/given_penis = FALSE
-
 /mob/living/carbon/human/update_body()
 	if(dna.species.id == "mannequin")
 		base_body_mod = ""
@@ -66,20 +63,16 @@ There are several things that need to be remembered:
 	else
 		dna.species.limbs_id = "[base_body_mod]human"
 
-	if(clane)
-		if(clane.alt_sprite)
-			dna.species.limbs_id = "[base_body_mod][clane.alt_sprite]"
-
 	if(unique_body_sprite)
 		dna.species.limbs_id = "[base_body_mod][unique_body_sprite]"
 
 	if(base_body_mod == "s")
 		if(gender == FEMALE)
-			body_sprite = 'code/modules/ziggers/worn_slim_f.dmi'
+			body_sprite = 'code/modules/wod13/worn_slim_f.dmi'
 		else
-			body_sprite = 'code/modules/ziggers/worn_slim_m.dmi'
+			body_sprite = 'code/modules/wod13/worn_slim_m.dmi'
 	if(base_body_mod == "f")
-		body_sprite = 'code/modules/ziggers/worn_fat.dmi'
+		body_sprite = 'code/modules/wod13/worn_fat.dmi'
 	if(base_body_mod == "")
 		body_sprite = null
 	for(var/obj/item/I in GetAllContents())
@@ -102,6 +95,7 @@ There are several things that need to be remembered:
 //	update_body_parts_head_only()
 	remove_overlay(BODY_LAYER)
 	dna.species.handle_body(src)
+	/*
 	if(gender == MALE)
 		if(!given_penis)
 			var/obj/item/organ/replacement = new /obj/item/organ/penis()
@@ -113,6 +107,7 @@ There are several things that need to be remembered:
 		if(I)
 			I.Remove(src)
 			QDEL_NULL(I)
+	*/
 	..()
 
 /mob/living/carbon/human/update_fire()
@@ -336,7 +331,8 @@ There are several things that need to be remembered:
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_SUITSTORE) + 1]
-		inv.update_icon()
+		if (inv) //inv can be null when joining, causing runtimes
+			inv.update_icon()
 
 	if(s_store)
 		s_store.screen_loc = ui_sstore1

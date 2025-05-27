@@ -155,7 +155,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, "<span class='boldnotice'>Welcome to [station_name()]!</span>")
+			to_chat(world, "<span class='boldnotice'>Welcome to [SSmapping.config.map_name]!</span>")
 			send2chat("New round starting on [SSmapping.config.map_name]!", CONFIG_GET(string/chat_announce_new_game))
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
@@ -297,7 +297,7 @@ SUBSYSTEM_DEF(ticker)
 	SSdbcore.SetRoundStart()
 
 	to_chat(world, "<span class='notice'><B>[station_name()] is calling you. Farewell, vampire!</B></span>")
-	SEND_SOUND(world, sound('code/modules/ziggers/sounds/announce.ogg'))
+	SEND_SOUND(world, sound('code/modules/wod13/sounds/announce.ogg'))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -387,7 +387,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/N = i
 		var/mob/living/carbon/human/player = N.new_character
 		if(istype(player) && player.mind && player.mind.assigned_role)
-			if(player.mind.assigned_role == "Captain")
+			if(player.mind.assigned_role == "Seneschal")
 				captainless=0
 			if(player.mind.assigned_role != player.mind.special_role)
 				SSjob.EquipRank(N, player.mind.assigned_role, 0)
@@ -398,7 +398,7 @@ SUBSYSTEM_DEF(ticker)
 		for(var/i in GLOB.new_player_list)
 			var/mob/dead/new_player/N = i
 			if(N.new_character)
-				to_chat(N, "<span class='notice'>Captainship not forced on anyone.</span>")
+				to_chat(N, span_notice("The Seneschal is not currently present."))
 			CHECK_TICK
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
@@ -415,7 +415,7 @@ SUBSYSTEM_DEF(ticker)
 				living.client.init_verbs()
 			livings += living
 	if(livings.len)
-		addtimer(CALLBACK(src, .proc/release_characters, livings), 30, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/I in livings)
@@ -444,7 +444,7 @@ SUBSYSTEM_DEF(ticker)
 	if(!hpc)
 		listclearnulls(queued_players)
 		for (var/mob/dead/new_player/NP in queued_players)
-			to_chat(NP, "<span class='userdanger'>The alive players limit has been released!<br><a href='?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a></span>")
+			to_chat(NP, "<span class='userdanger'>The alive players limit has been released!<br><a href='byond://?src=[REF(NP)];late_join=override'>[html_encode(">>Join Game<<")]</a></span>")
 			SEND_SOUND(NP, sound('sound/misc/notice1.ogg'))
 			NP.LateChoices()
 		queued_players.len = 0
@@ -459,7 +459,7 @@ SUBSYSTEM_DEF(ticker)
 			listclearnulls(queued_players)
 			if(living_player_count() < hpc)
 				if(next_in_line?.client)
-					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
+					to_chat(next_in_line, "<span class='userdanger'>A slot has opened! You have approximately 20 seconds to join. <a href='byond://?src=[REF(next_in_line)];late_join=override'>\>\>Join Game\<\<</a></span>")
 					SEND_SOUND(next_in_line, sound('sound/misc/notice1.ogg'))
 					next_in_line.LateChoices()
 					return
@@ -475,7 +475,7 @@ SUBSYSTEM_DEF(ticker)
 		return
 	if(world.time - SSticker.round_start_time < 10 MINUTES) //Not forcing map rotation for very short rounds.
 		return
-	INVOKE_ASYNC(SSmapping, /datum/controller/subsystem/mapping/.proc/maprotate)
+	INVOKE_ASYNC(SSmapping, TYPE_PROC_REF(/datum/controller/subsystem/mapping, maprotate))
 
 /datum/controller/subsystem/ticker/proc/HasRoundStarted()
 	return current_state >= GAME_STATE_PLAYING
@@ -593,7 +593,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_OBSERVE && player.mind)
 			//Break chain since this has a sleep input in it
-			addtimer(CALLBACK(player, /mob/dead/new_player.proc/make_me_an_observer), 1)
+			addtimer(CALLBACK(player, TYPE_PROC_REF(/mob/dead/new_player, make_me_an_observer)), 1)
 
 /datum/controller/subsystem/ticker/proc/load_mode()
 	var/mode = trim(file2text("data/mode.txt"))
@@ -627,6 +627,10 @@ SUBSYSTEM_DEF(ticker)
 	set waitfor = FALSE
 	if(usr && !check_rights(R_SERVER, TRUE))
 		return
+	// Make sure to set json_conversion_path in config/config.txt! You can't set this in-game!
+	if(CONFIG_GET(string/json_conversion_path))
+		// Buckle up, we're gonna json it...
+		world.convert_saves_to_json(CONFIG_GET(string/json_conversion_path))
 
 	if(!delay)
 		delay = CONFIG_GET(number/round_end_countdown) * 10
@@ -665,15 +669,9 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 	if(!round_end_sound)
 		round_end_sound = pick(\
-		'sound/roundend/9year.ogg',
-		'sound/roundend/diablery.ogg',
-		'sound/roundend/nuke.ogg',
 		'sound/roundend/malkavian.ogg',
 		'sound/roundend/cain.ogg',
-		'sound/roundend/huynia.ogg',
-		'sound/roundend/die.ogg',
-		'sound/roundend/punisher.ogg',
-		'sound/roundend/paradigma.ogg'\
+		'sound/roundend/die.ogg'\
 		)
 	///The reference to the end of round sound that we have chosen.
 	var/sound/end_of_round_sound_ref = sound(round_end_sound)

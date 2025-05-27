@@ -79,7 +79,7 @@
 		if (GUILLOTINE_BLADE_DROPPED)
 			blade_status = GUILLOTINE_BLADE_MOVING
 			icon_state = "guillotine_raise"
-			addtimer(CALLBACK(src, .proc/raise_blade), GUILLOTINE_ANIMATION_LENGTH)
+			addtimer(CALLBACK(src, PROC_REF(raise_blade)), GUILLOTINE_ANIMATION_LENGTH)
 			return
 		if (GUILLOTINE_BLADE_RAISED)
 			if (LAZYLEN(buckled_mobs))
@@ -92,7 +92,7 @@
 						current_action = 0
 						blade_status = GUILLOTINE_BLADE_MOVING
 						icon_state = "guillotine_drop"
-						addtimer(CALLBACK(src, .proc/drop_blade, user), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
+						addtimer(CALLBACK(src, PROC_REF(drop_blade), user), GUILLOTINE_ANIMATION_LENGTH - 2) // Minus two so we play the sound and decap faster
 					else
 						current_action = 0
 				else
@@ -105,7 +105,7 @@
 			else
 				blade_status = GUILLOTINE_BLADE_MOVING
 				icon_state = "guillotine_drop"
-				addtimer(CALLBACK(src, .proc/drop_blade), GUILLOTINE_ANIMATION_LENGTH)
+				addtimer(CALLBACK(src, PROC_REF(drop_blade)), GUILLOTINE_ANIMATION_LENGTH)
 
 /obj/structure/guillotine/proc/raise_blade()
 	blade_status = GUILLOTINE_BLADE_RAISED
@@ -125,66 +125,7 @@
 
 		playsound(src, 'sound/weapons/guillotine.ogg', 100, TRUE)
 		if (blade_sharpness >= GUILLOTINE_DECAP_MIN_SHARP || head.brute_dam >= 100)
-			for(var/mob/living/carbon/human/M in viewers(src, 7))
-				if(M.stat == 0)
-					var/loved = TRUE
-					var/datum/preferences/P1 = GLOB.preferences_datums[ckey(M.key)]
-					if(H in GLOB.masquerade_breakers_list)
-						if(M.frakcja == "Sabbat")
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-							loved = FALSE
-						else
-							to_chat(M, "<span class='userhelp'><b>Violator was punished</b></span>")
-							if(P1)
-								P1.add_experience(1)
-					if(H.diablerist)
-						if(M.frakcja == "Camarilla")
-							to_chat(M, "<span class='userhelp'><b>Diablerist was punished</b></span>")
-							if(P1)
-								P1.add_experience(1)
-						else if(M.frakcja)
-							loved = FALSE
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-					if(H.bloodhunted)
-						if(M.frakcja == "Camarilla")
-							to_chat(M, "<span class='userhelp'><b>Blood Hunt after [H] is over</b></span>")
-							if(P1)
-								P1.add_experience(1)
-						else if(M.frakcja)
-							loved = FALSE
-							to_chat(M, "<span class='userdanger'><b>You feel your interests being ignored</b></span>")
-					if("[H.mind.assigned_role]" == "Prince" || "[H.mind.assigned_role]" == "Sheriff" || "[H.mind.assigned_role]" == "Seneschal" || "[H.mind.assigned_role]" == "Chantry Regent" || "[H.mind.assigned_role]" == "Baron" || "[H.mind.assigned_role]" == "Dealer")
-						if(M.frakcja == "Sabbat")
-							to_chat(M, "<span class='userhelp'><b>Authority increased</b></span>")
-							loved = TRUE
-							if(P1)
-								P1.add_experience(1)
-					if(loved)
-						M.emote("clap")
 			var/datum/preferences/P = GLOB.preferences_datums[ckey(H.key)]
-			var/how_much = max(1, 5-H.masquerade)
-			if(H in GLOB.masquerade_breakers_list)
-				if(P)
-					P.last_torpor = world.time
-					H.generation = min(13, H.generation+1)
-					P.generation = H.generation
-					if(!HAS_TRAIT(H, TRAIT_PHOENIX))
-						P.discipline1level = max(1, P.discipline1level-1*how_much)
-						P.discipline2level = max(1, P.discipline2level-1*how_much)
-						P.discipline3level = max(1, P.discipline3level-1*how_much)
-						P.discipline4level = max(1, P.discipline4level-1*how_much)
-						P.physique = max(1, P.physique-1*how_much)
-						P.social = max(1, P.social-1*how_much)
-						P.mentality = max(1, P.mentality-1*how_much)
-					P.torpor_count = 0
-			if(H.diablerist)
-				if(P)
-					P.last_torpor = world.time
-					H.generation = 13
-					P.generation = H.generation
-					P.torpor_count = 0
-					P.diablerist = 0
-					H.diablerist = 0
 			head.dismember()
 			log_combat(user, H, "beheaded", src)
 			H.regenerate_icons()
@@ -192,7 +133,6 @@
 			kill_count += 1
 			var/blood_overlay = "bloody"
 			if(P)
-				P.torpor_count = 0
 				P.reason_of_death = "Executed to sustain the Traditions ([time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")])."
 			if (kill_count == 2)
 				blood_overlay = "bloodier"
@@ -210,9 +150,6 @@
 			H.apply_damage(15 * blade_sharpness, BRUTE, head)
 			log_combat(user, H, "dropped the blade on", src, " non-fatally")
 			H.emote("scream")
-
-//		if (blade_sharpness > 1)
-//			blade_sharpness -= 1
 
 	blade_status = GUILLOTINE_BLADE_DROPPED
 	icon_state = "guillotine"

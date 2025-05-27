@@ -7,10 +7,12 @@ SUBSYSTEM_DEF(humannpcpool)
 	wait = 30
 
 	var/list/currentrun = list()
+	var/npc_max = 100
 
 /datum/controller/subsystem/humannpcpool/stat_entry(msg)
 	var/list/activelist = GLOB.npc_list
-	msg = "NPCS:[length(activelist)]"
+	var/list/living_list = GLOB.alive_npc_list
+	msg = "NPCS:[length(activelist)] Living: [length(living_list)]"
 	return ..()
 
 /datum/controller/subsystem/humannpcpool/fire(resumed = FALSE)
@@ -27,17 +29,25 @@ SUBSYSTEM_DEF(humannpcpool)
 		--currentrun.len
 
 		if (QDELETED(NPC)) // Some issue causes nulls to get into this list some times. This keeps it running, but the bug is still there.
-			GLOB.npc_list -= NPC
+			GLOB.npc_list -= NPC		//HUH??? A BUG? NO WAY
+			GLOB.alive_npc_list -= NPC
+			GLOB.boring_npc_list -= NPC
 			log_world("Found a null in npc list!")
 			continue
 
-//!NPC.route_optimisation()
+		//!NPC.route_optimisation()
 		if(MC_TICK_CHECK)
 			return
 		NPC.handle_automated_movement()
 
 /datum/controller/subsystem/humannpcpool/proc/npclost()
-	var/atom/kal = pick(GLOB.npc_spawn_points)
-	var/NEPIS = pick(/mob/living/carbon/human/npc/police, /mob/living/carbon/human/npc/bandit, /mob/living/carbon/human/npc/hobo, /mob/living/carbon/human/npc/walkby, /mob/living/carbon/human/npc/business)
-	new NEPIS(get_turf(kal))
-	log_world("new npc spawned")
+	while(length(GLOB.alive_npc_list) < npc_max)
+		var/atom/kal = pick(GLOB.npc_spawn_points)
+		var/NEPIS = pick(
+			5;/mob/living/carbon/human/npc/police,
+			5;/mob/living/carbon/human/npc/bandit,
+			5;/mob/living/carbon/human/npc/hobo,
+			45;/mob/living/carbon/human/npc/walkby,
+			10;/mob/living/carbon/human/npc/business)
+		new NEPIS(get_turf(kal))
+

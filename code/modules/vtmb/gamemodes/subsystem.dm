@@ -5,10 +5,12 @@
 SUBSYSTEM_DEF(bad_guys_party)
 	name = "Bad Guys Party"
 	init_order = INIT_ORDER_DEFAULT
-	wait = 12000
+	wait = 4000
 	priority = FIRE_PRIORITY_DEFAULT
 
 	var/threat = 0	//Bigger number - less chance
+
+	var/setting
 
 	var/list/candidates = list()
 	var/max_candidates = 0
@@ -30,59 +32,94 @@ SUBSYSTEM_DEF(bad_guys_party)
 /datum/controller/subsystem/bad_guys_party/proc/GetAntagJob(var/rank)
 	return jobs[rank]
 
-/datum/controller/subsystem/bad_guys_party/proc/get_niggers(var/level)
-	switch(level)
-		if(1)
-			if(prob(20))
-				//spiral
+/datum/controller/subsystem/bad_guys_party/proc/set_badguys(var/new_setting)
+	if(new_setting in list("caitiff", "sabbat", "hunter"))
+		SSbad_guys_party.setting = new_setting
+	else
+		setting = null
+
+
+
+/datum/controller/subsystem/bad_guys_party/proc/get_badguys(var/level)
+	if(setting)
+		switch(setting)
+			if("caitiff")
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
-				max_candidates = 2
+				max_candidates = 1
 				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/spiral()
-			else
-				//caitiff
+				Next = new /datum/outfit/job/caitiff()
+				setting = null
+			if("sabbat")
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+30)
-				max_candidates = 3
+				max_candidates = 2
 				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/caitiff()
-		if(2)
-			if(prob(30))
-				//spiral
-				if(Next)
-					qdel(Next)
-				threat = min(100, threat+60)
-				max_candidates = 4
-				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/spiral()
-			else
-				//hunt
+				Next = new /datum/outfit/job/sabbatist()
+				setting = null
+			if("hunter")
 				if(Next)
 					qdel(Next)
 				threat = min(100, threat+60)
 				max_candidates = 5
 				go_on_next_fire = TRUE
 				Next = new /datum/outfit/job/hunter()
-		if(3)
-			if(prob(50))
-				//spiral
-				if(Next)
-					qdel(Next)
-				threat = min(100, threat+60)
-				max_candidates = 6
-				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/spiral()
-			else
-				//sabbat
-				if(Next)
-					qdel(Next)
-				threat = min(100, threat+90)
-				max_candidates = 7
-				go_on_next_fire = TRUE
-				Next = new /datum/outfit/job/sabbatist()
+				setting = null
+	else if(setting == null)
+		switch(level)
+			if(1)
+				if(prob(20))
+					//caitiff
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+60)
+					max_candidates = 1
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/caitiff()
+				else
+					//sabbat
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+30)
+					max_candidates = 2
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/sabbatist()
+			if(2)
+				if(prob(30))
+					//sabbat
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+90)
+					max_candidates = 4
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/sabbatist()
+				else
+					//hunt
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+60)
+					max_candidates = 2
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/hunter()
+			/*if(3)
+				if(prob(50))
+					//hunt
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+60)
+					max_candidates = 2
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/hunter()
+				else
+					//sabbat
+					if(Next)
+						qdel(Next)
+					threat = min(100, threat+90)
+					max_candidates = 3
+					go_on_next_fire = TRUE
+					Next = new /datum/outfit/job/sabbatist()*/
 
 /mob/dead/new_player/proc/ForceLateSpawn()
 	if(SSticker.late_join_disabled)
@@ -133,18 +170,18 @@ SUBSYSTEM_DEF(bad_guys_party)
 			return
 		else
 			if(SSmasquerade.total_level <= 500)
-				get_niggers(2)
+				get_badguys(2)
 			else
 				switch(threat)
 					if(0 to 10)
 						//ANYONE
 						if(prob(100-threat))
-							get_niggers(rand(1, 3))
+							get_badguys(rand(1, 3))
 					if(11 to 40)
 						//HUNT OR CAITIFF
 						if(prob(100-threat))
-							get_niggers(rand(1, 2))
+							get_badguys(rand(1, 2))
 					if(41 to 70)
 						//CAITIFF ONLY
 						if(prob(100-threat))
-							get_niggers(1)
+							get_badguys(1)

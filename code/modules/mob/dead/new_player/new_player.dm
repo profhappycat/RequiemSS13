@@ -66,7 +66,7 @@
 			if(PLAYER_READY_TO_OBSERVE)
 				output += "<p>\[ [LINKIFY_READY("Ready", PLAYER_READY_TO_PLAY)] | [LINKIFY_READY("Not Ready", PLAYER_NOT_READY)] | <b> Observe </b> \]</p>"
 	else
-//		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
+		output += "<p><a href='byond://?src=[REF(src)];manifest=1'>View the Kindred Population</a></p>"
 		output += "<p><a href='byond://?src=[REF(src)];late_join=1'>Join Game!</a></p>"
 		output += "<p>[LINKIFY_READY("Observe", PLAYER_READY_TO_OBSERVE)]</p>"
 
@@ -75,7 +75,10 @@
 
 	output += "</center>"
 
-	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>[make_font_cool("NEW PLAYER")]</div>", 250, 265)
+	
+
+
+	var/datum/browser/popup = new(src, "playersetup", "<div align='center'>[make_font_cool("NEW PLAYER")]</div>", 265, 280)
 	popup.set_window_options("can_close=0")
 	popup.set_content(output.Join())
 	popup.open(FALSE)
@@ -158,6 +161,10 @@
 		new_player_panel()
 
 	if(href_list["late_party"])
+		if (!can_respawn())
+			to_chat(src, "<span class='boldwarning'>You cannot respawn yet.</span>")
+			return
+
 		ready = PLAYER_NOT_READY
 		if(late_ready)
 			late_ready = FALSE
@@ -167,6 +174,10 @@
 			SSbad_guys_party.candidates += src
 
 	if(href_list["late_join"])
+		if (!can_respawn())
+			to_chat(usr, "<span class='boldwarning'>You cannot respawn yet.</span>")
+			return
+
 		SSbad_guys_party.candidates -= src
 		late_ready = FALSE
 		if(!SSticker?.IsRoundInProgress())
@@ -290,55 +301,53 @@
 			return "[jobtitle] is already filled to capacity."
 		if(JOB_UNAVAILABLE_GENERATION)
 			return "Your generation is too young for [jobtitle]."
+		if(JOB_UNAVAILABLE_FACTION)
+			return "You are in the wrong faction for [jobtitle]."
+		if(JOB_UNAVAILABLE_SPECIES)
+			return "Your species cannot be [jobtitle]."
+		if(JOB_UNAVAILABLE_ENDORSEMENT)
+			return "You need more endorsments for [jobtitle]."
+		if(JOB_UNAVAILABLE_SPECIES_LIMITED)
+			return "Your species has a limit on how many can be [jobtitle]."
 	return "Error: Unknown job availability."
 
 /mob/dead/new_player/proc/IsJobUnavailable(rank, latejoin = FALSE)
-	var/datum/job/job = SSjob.GetJob(rank)
+	var/bypass = FALSE
+
+	/*
+	if (check_rights_for(client, R_ADMIN))
+		bypass = TRUE
+	*/
+
+	var/datum/job/vamp/vtr/job = SSjob.GetJob(rank)
 	if(!job)
 		return JOB_UNAVAILABLE_GENERIC
-	if((job.current_positions >= job.total_positions) && job.total_positions != -1)
-		if(job.title == "Citizen")
-			if(isnum(client.player_age) && client.player_age <= 14) //Newbies can always be assistants
-				return JOB_AVAILABLE
-			for(var/datum/job/J in SSjob.occupations)
-				if(J && J.current_positions < J.total_positions && J.title != job.title)
-					return JOB_UNAVAILABLE_SLOTFULL
-		else
-			return JOB_UNAVAILABLE_SLOTFULL
+	if (job.title == "Citizen")
+		return JOB_AVAILABLE
+	if((job.current_positions >= job.total_positions) && (job.total_positions != -1))
+		return JOB_UNAVAILABLE_SLOTFULL
 	if(is_banned_from(ckey, rank))
 		return JOB_UNAVAILABLE_BANNED
 	if(QDELETED(src))
 		return JOB_UNAVAILABLE_GENERIC
-	if(!job.player_old_enough(client))
+	if(!job.player_old_enough(client) && !bypass)
 		return JOB_UNAVAILABLE_ACCOUNTAGE
-	if(job.required_playtime_remaining(client))
+	if(job.required_playtime_remaining(client) && !bypass)
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
-	if(client.prefs.generation > job.minimal_generation)
+	if((client.prefs.pref_species.name == "Vampire" || client.prefs.pref_species.name == "Ghoul") && job.minimum_vamp_rank && (client.prefs.vamp_rank < job.minimum_vamp_rank) && !bypass)
 		return JOB_UNAVAILABLE_GENERATION
-	if(client.prefs.masquerade < job.minimal_masquerade)
+	if((client.prefs.pref_species.name == "Vampire" || client.prefs.pref_species.name == "Ghoul") && GLOB.vampire_factions_list.Find(job.exp_type_department) && client.prefs.vamp_faction?.name != job.exp_type_department)
+		return JOB_UNAVAILABLE_FACTION
+	if((client.prefs.masquerade < job.minimal_masquerade) && !bypass)
 		return JOB_UNAVAILABLE_MASQUERADE
-	if(client.prefs.age < job.minimal_age)
-		return JOB_UNAVAILABLE_AGE
-	if(job.kindred_only)
-		if(client.prefs.pref_species.name != "Vampire")
-			return JOB_UNAVAILABLE_SPECIES
-	if(!job.garou_allowed)
-		if(client.prefs.pref_species.name == "Werewolf")
-			return JOB_UNAVAILABLE_SPECIES
-	if(job.human_only)
-		if(client.prefs.pref_species.name != "Human")
-			return JOB_UNAVAILABLE_SPECIES
-	if(!job.humans_accessible)
-		if(client.prefs.pref_species.name == "Human")
-			return JOB_UNAVAILABLE_SPECIES
-	if(client.prefs.pref_species.name == "Vampire")
-		if(client.prefs.clane)
-			for(var/i in job.allowed_bloodlines)
-				if(i == client.prefs.clane.name)
-					return JOB_AVAILABLE
-			return JOB_UNAVAILABLE_CLAN
+	if(!job.allowed_species.Find(client.prefs.pref_species.name) && !bypass)
+		return JOB_UNAVAILABLE_SPECIES
+	if(job.endorsement_required && (!client.prefs.endorsement_roles_eligable || !client.prefs.endorsement_roles_eligable.Find(job.title)) && !bypass)
+		return JOB_UNAVAILABLE_ENDORSEMENT
+	if((job.species_slots[client.prefs.pref_species.name] == 0) && !bypass)
+		return JOB_UNAVAILABLE_SPECIES_LIMITED
 	return JOB_AVAILABLE
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -400,7 +409,6 @@
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
 			AnnounceArrival(humanc, rank)
-//		humanc.create_disciplines()
 		AddEmploymentContract(humanc)
 		if(GLOB.highlander)
 			to_chat(humanc, "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>")
@@ -465,24 +473,29 @@
 		var/list/dept_dat = list()
 		for(var/job in GLOB.position_categories[category]["jobs"])
 			var/datum/job/job_datum = SSjob.name_occupations[job]
+			// TFN EDIT START: alt job titles
 			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
+				var/altjobline = ""
 				var/command_bold = ""
+				if(client && client.prefs && client.prefs.alt_titles_preferences[job_datum.title])//tegu edit - alt job titles
+					altjobline = "(as [client.prefs.alt_titles_preferences[job_datum.title]])"//tegu edit - alt job titles
 				if(job in GLOB.leader_positions)
 					command_bold = " command"
 				if(job_datum in SSjob.prioritized_jobs)
-					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] ([job_datum.current_positions])</span></a>"
+					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'><span class='priority'>[job_datum.title] [altjobline] ([job_datum.current_positions])</span></a>"
 				else
-					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] ([job_datum.current_positions])</a>"
+					dept_dat += "<a class='job[command_bold]' href='byond://?src=[REF(src)];SelectedJob=[job_datum.title]'>[job_datum.title] [altjobline] ([job_datum.current_positions])</a>"
+			// TFN EDIT END
 		if(!dept_dat.len)
 			dept_dat += "<span class='nopositions'>No positions open.</span>"
 		dat += jointext(dept_dat, "")
 		dat += "</fieldset><br>"
 		column_counter++
-		if(column_counter > 0 && (column_counter % 3 == 0))
+		if(column_counter > 0 && (column_counter % 4 == 0))
 			dat += "</td><td valign='top'>"
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
-	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 680, 580)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Profession", 900, 650)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
 	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
@@ -519,8 +532,9 @@
 			mind.late_joiner = TRUE
 		mind.active = FALSE					//we wish to transfer the key manually
 		mind.original_character_slot_index = client.prefs.default_slot
-		mind.transfer_to(H)					//won't transfer key since the mind is not active
+		mind.tempted_mod = client.prefs.tempted
 		mind.original_character = H
+		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
 	H.name = real_name
 	client.init_verbs()
@@ -528,8 +542,7 @@
 	new_character = .
 	if(transfer_after)
 		transfer_character()
-//	if(client.prefs.archtype)
-//		H.__archetype = new client.prefs.archtype
+
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
@@ -538,21 +551,15 @@
 		if(ishuman(new_character))
 			var/mob/living/carbon/human/H = new_character
 			if(H.client)
-				if(H.age < 16)
-					H.add_quirk(/datum/quirk/freerunning)
-					H.add_quirk(/datum/quirk/light_step)
-					H.add_quirk(/datum/quirk/skittish)
-					H.add_quirk(/datum/quirk/pushover)
+				H.true_real_name = H.client.prefs.real_name
 				H.create_disciplines()
 				if(isgarou(H))
 					for(var/obj/structure/werewolf_totem/S in GLOB.totems)
 						if(S.tribe == H.auspice.tribe)
 							H.forceMove(get_turf(S))
-				if(H.client.prefs.ambitious)
-					if(H.mind)
-						H.mind.add_antag_datum(/datum/antagonist/ambitious)
-				H.generate_friends()
 				GLOB.fucking_joined |= H.client.prefs.real_name
+		if(new_character.mind)
+			new_character.mind.character_connections = SScharacter_connection.get_character_connections(ckey, new_character.true_real_name)
 		new_character = null
 		qdel(src)
 
@@ -617,14 +624,12 @@
 	// First we detain them by removing all the verbs they have on client
 	for (var/v in client.verbs)
 		var/procpath/verb_path = v
-		if (!(verb_path in GLOB.stat_panel_verbs))
-			remove_verb(client, verb_path)
+		remove_verb(client, verb_path)
 
 	// Then remove those on their mob as well
 	for (var/v in verbs)
 		var/procpath/verb_path = v
-		if (!(verb_path in GLOB.stat_panel_verbs))
-			remove_verb(src, verb_path)
+		remove_verb(src, verb_path)
 
 	// Then we create the interview form and show it to the client
 	var/datum/interview/I = GLOB.interviews.interview_for_client(client)

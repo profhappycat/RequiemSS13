@@ -1,40 +1,30 @@
 //Speech verbs.
-
+/mob/verb/input_say()
+	set name = "inputSay"
+	set category = null
+	var/message = input("What are you trying to say?") as text|null
+	say_verb(message)
 ///Say verb
-/mob/verb/say_verb()
+/mob/verb/say_verb(message as text|null)
 	set name = "Say"
 	set category = "IC"
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.remove_overlay(SAY_LAYER)
-		var/mutable_appearance/say_overlay = mutable_appearance('icons/mob/talk.dmi', "default0", -SAY_LAYER)
-		H.overlays_standing[SAY_LAYER] = say_overlay
-		H.apply_overlay(SAY_LAYER)
-		var/mess = input("What are you trying to say?") as text|null
-		if(say(mess))
-			H.remove_overlay(SAY_LAYER)
-		else
-			H.remove_overlay(SAY_LAYER)
-//				H.remove_overlay(SAY_LAYER)
-//			else
-//				H.remove_overlay(SAY_LAYER)
-	else
-		var/mess = input("What are you trying to say?") as text|null
-		if(mess)
-			say(mess)
+	if(!message)
+		return
+	say(message)
 
+// TFN EDIT START
 /mob/living/verb/flavor_verb()
 	set name = "Flavor Text"
 	set category = "IC"
-	var/flavor = input("Choose your new flavor text:") as text|null
-	if(flavor)
-		if(length(flavor) > 3 * 512)
-			to_chat(src, "Too long...")
-		else
-			flavor_text = sanitize_text(flavor)
+	var/flavor = tgui_input_text(usr, "Choose your character's flavor text:", "Flavor Text", max_length = MAX_MESSAGE_LEN, multiline = TRUE, encode = FALSE)
+
+	if(!length(flavor))
+		return
+	flavor_text = flavor // We don't have to worry about flavor text length due to examine overflow.
+// TFN EDIT END
 
 ///Whisper verb
 /mob/verb/whisper_verb(message as text)
@@ -49,18 +39,20 @@
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
 
+// TFN EDIT START
 ///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
 
-	if(GLOB.say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+	if(GLOB.say_disabled) //This is here to try to identify lag problems
+		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
-	usr.emote("me",1,message,TRUE)
+	usr.emote("me", EMOTE_VISIBLE, message, TRUE)
+// TFN EDIT END
 
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
@@ -90,6 +82,8 @@
 			return
 
 	var/mob/dead/observer/O = src
+	if(isobserver(src) && O.auspex_ghosted) //[Lucifernix] - Makes it so you can't talk to ghosts in auspex
+		return
 	if(isobserver(src) && O.deadchat_name)
 		name = "[O.deadchat_name]"
 	else
@@ -100,7 +94,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(message)
+	var/spanned = say_quote(say_emphasis(message))
 	var/source = "<span class='game'><span class='name'>[name]</span>[alt_name]" //<span class='prefix'>DEAD:</span> [ChillRaccoon] - removed due to a maggot developer
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")

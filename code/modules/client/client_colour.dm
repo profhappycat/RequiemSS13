@@ -164,6 +164,10 @@
 /datum/client_colour/glass_colour/lightblue
 	colour = "#ccccff"
 
+/datum/client_colour/glass_colour/darkblue
+	colour = "#3e3e7a"
+
+
 /datum/client_colour/glass_colour/yellow
 	colour = "#ffff66"
 
@@ -205,7 +209,7 @@
 
 /datum/client_colour/bloodlust/New(mob/_owner)
 	..()
-	addtimer(CALLBACK(src, .proc/update_colour, list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
+	addtimer(CALLBACK(src, PROC_REF(update_colour), list(1,0,0,0.8,0.2,0, 0.8,0,0.2,0.1,0,0), 10, SINE_EASING|EASE_OUT), 1)
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH

@@ -368,13 +368,9 @@
 	switch(fitting)
 		if("tube")
 			brightness = 8
-			if(prob(2))
-				break_light_tube(1)
 		if("bulb")
 			brightness = 4
-			if(prob(5))
-				break_light_tube(1)
-	addtimer(CALLBACK(src, .proc/update, 0), 1)
+	addtimer(CALLBACK(src, PROC_REF(update), 0), 1)
 
 /obj/machinery/light/ComponentInitialize()
 	. = ..()
@@ -481,11 +477,11 @@
 	update()
 
 /obj/machinery/light/proc/broken_sparks(start_only=FALSE)
-	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power() && Master.current_runlevel)
+	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power() && MC_RUNNING())
 		if(!start_only)
 			do_sparks(3, TRUE, src)
 		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
-		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
+		addtimer(CALLBACK(src, PROC_REF(broken_sparks)), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
 	if (!cell)
@@ -893,7 +889,7 @@
 	inhand_icon_state = "c_tube"
 	brightness = 8
 	custom_price = PAYCHECK_EASY * 0.5
-	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 /obj/item/light/tube/broken
 	status = LIGHT_BROKEN
@@ -908,7 +904,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	brightness = 4
 	custom_price = PAYCHECK_EASY * 0.4
-	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 
 /obj/item/light/bulb/broken
 	status = LIGHT_BROKEN
@@ -949,8 +945,8 @@
 
 /obj/item/light/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, PROC_REF(on_reagents_del))
 
 /**
  * Handles rigging the cell if it contains enough plasma.

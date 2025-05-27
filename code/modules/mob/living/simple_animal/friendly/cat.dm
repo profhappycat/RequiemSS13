@@ -285,9 +285,10 @@
 		L.reagents.add_reagent(/datum/reagent/consumable/nutriment/vitamin, 0.4)
 
 /mob/living/simple_animal/pet/cat/vampire
-	icon = 'code/modules/ziggers/mobs.dmi'
-	bloodpool = 1
-	maxbloodpool = 1
+	icon = 'code/modules/wod13/mobs.dmi'
+	bloodpool = 2
+	maxbloodpool = 2
+	mob_size = MOB_SIZE_SMALL
 
 /mob/living/simple_animal/pet/cat/vampire/Initialize()
 	. = ..()
@@ -299,7 +300,7 @@
 /mob/living/simple_animal/hostile/beastmaster/cat
 	name = "cat"
 	desc = "Kitty!!"
-	icon = 'code/modules/ziggers/mobs.dmi'
+	icon = 'code/modules/wod13/mobs.dmi'
 	icon_state = "cat2"
 	icon_living = "cat2"
 	icon_dead = "cat2_dead"
@@ -309,9 +310,9 @@
 	emote_see = list("shakes its head.", "shivers.")
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'code/modules/ziggers/sounds/cat.ogg'
+	attack_sound = 'code/modules/wod13/sounds/cat.ogg'
 	speak_chance = 0
-	turns_per_move = 5
+	turns_per_move = 3
 	see_in_dark = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
 	pass_flags = PASSTABLE
@@ -345,12 +346,13 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	bloodpool = 1
 	maxbloodpool = 1
-	maxHealth = 40
-	health = 40
+	maxHealth = 30
+	health = 30
 	harm_intent_damage = 20
-	melee_damage_lower = 20
-	melee_damage_upper = 20
-	speed = 0
+	melee_damage_lower = 15
+	melee_damage_upper = 30
+	speed = -0.1
+	dodging = TRUE
 
 /mob/living/simple_animal/hostile/beastmaster/cat/Initialize()
 	. = ..()

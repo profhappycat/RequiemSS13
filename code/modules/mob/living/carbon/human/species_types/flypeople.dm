@@ -102,10 +102,12 @@
 /obj/item/organ/fly/groin //appendix is the only groin organ so we gotta have one of these too lol
 	zone = BODY_ZONE_PRECISE_GROIN
 
+/*
 /obj/item/organ/penis
 	name = "penis"
 	desc = "Fallic object of flesh."
-	icon = 'code/modules/ziggers/onfloor.dmi'
-	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon = 'code/modules/wod13/onfloor.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	icon_state = "penis"
 	zone = BODY_ZONE_PRECISE_GROIN
+*/

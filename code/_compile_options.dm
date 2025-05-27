@@ -12,6 +12,12 @@
 #define DATUMVAR_DEBUGGING_MODE
 
 /*
+	Enables tools for the AreaGrouper's pathfinding
+*/
+#define AREA_GROUPER_DEBUGGING
+
+
+/*
 * Enables extools-powered reference tracking system, letting you see what is referencing objects that refuse to hard delete.
 *
 * * Requires TESTING to be defined to work.
@@ -40,16 +46,13 @@
 								//	2 for preloading absolutely everything;
 
 #ifdef LOWMEMORYMODE
-#define FORCE_MAP "_maps/runtimestation.json"
+#define FORCE_MAP "_maps/runtimetown.json"
 #endif
 
-//Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 513
-#define MIN_COMPILER_BUILD 1514
-#if DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD
+#if (DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD) && !defined(SPACEMAN_DMM)
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 513.1514 or higher
+#error You need version 516.1658 or higher
 #endif
 
 //Additional code for the above flags.

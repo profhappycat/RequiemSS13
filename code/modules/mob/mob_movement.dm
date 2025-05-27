@@ -87,14 +87,18 @@
 	if(!isliving(mob))
 		return mob.Move(n, direct)
 	if(mob.stat == DEAD)
-//		mob.ghostize()
+		mob.ghostize()
 		return FALSE
-	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		if(H.in_frenzy)
-			return FALSE
+	if(mob.mind && HAS_TRAIT(mob.mind, TRAIT_IN_FRENZY))
+		return FALSE
 	if(mob.force_moving)
 		return FALSE
+
+	if(mob.shifting)
+		mob.pixel_shift(direct)
+		return FALSE
+	else if(mob.is_shifted)
+		mob.unpixel_shift()
 
 	var/mob/living/L = mob  //Already checked for isliving earlier // [ChillRaccoon] - actually didn't know why does it should work only for living
 	if(L.incorporeal_move)	//Move though walls
@@ -159,6 +163,10 @@
 	if(.) // If mob is null here, we deserve the runtime
 		if(mob.throwing)
 			mob.throwing.finalize(FALSE)
+
+		// At this point we've moved the client's attached mob. This is one of the only ways to guess that a move was done
+		// as a result of player input and not because they were pulled or any other magic.
+		SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_MOVED)
 
 	var/atom/movable/P = mob.pulling
 	if(P && !ismob(P) && P.density)
@@ -559,9 +567,9 @@
 	if(istype(src, /mob/dead/observer))
 		O = src
 
-	var/add_delay = 2
+	var/add_delay = 0.1
 
-	if(O != null)
+	if(O.movement_delay != 0)
 		add_delay = O.movement_delay
 
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
@@ -572,5 +580,3 @@
 	..()
 
 	glide_size = (world.icon_size / ceil(add_delay / world.tick_lag))
-
-	// to_chat(src, "Observer Movement called, add_delay = [add_delay], move_delay = [move_delay]")

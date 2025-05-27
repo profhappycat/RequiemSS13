@@ -10,9 +10,11 @@
 
 
 #define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -4 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -3 //Black square just over openspace plane to guaranteed cover all in openspace turf
+#define OPENSPACE_PLANE -5 //Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -4 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
+#define DISPLACEMENT_PLATE_RENDER_LAYER -3
+#define DISPLACEMENT_PLATE_RENDER_TARGET "*DISPLACEMENT_PLATE_RENDER_TARGET"
 
 #define FLOOR_PLANE -2
 #define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE"
@@ -132,10 +134,19 @@
 #define CAMERA_STATIC_LAYER 19
 #define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_PLANE"
 
-#define RUNECHAT_PLANE 20
+#define FAKE_SHADOW_LAYER 20
+#define FAKE_SHADOW_PLANE 20
 
-#define ATMOS_GROUP_PLANE 21
-#define ATMOS_GROUP_LAYER 21
+
+///Popup Chat Messages
+#define RUNECHAT_PLANE 21
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 22
+
+#define ATMOS_GROUP_PLANE 23
+#define ATMOS_GROUP_LAYER 23
+
+#define TYPING_LAYER 24
 
 //HUD layer defines
 

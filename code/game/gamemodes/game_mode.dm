@@ -88,7 +88,7 @@
 /datum/game_mode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
 		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
@@ -96,7 +96,7 @@
 			delay = (delay SECONDS)
 		else
 			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
 
 	if(SSdbcore.Connect())
 		var/list/to_set = list()
@@ -184,7 +184,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		replacementmode.restricted_jobs += "Assistant"
 
-	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
+	message_admins("The roundtype will be converted. If you have other plans for the station or feel the station is too messed up to inhabit <A HREF='byond://?_src_=holder;[HrefToken()];toggle_midround_antag=[REF(usr)]'>stop the creation of antags</A> or <A HREF='byond://?_src_=holder;[HrefToken()];end_round=[REF(usr)]'>end the round now</A>.")
 	log_game("Roundtype converted to [replacementmode.name]")
 
 	. = 1
@@ -379,12 +379,12 @@
 
 /proc/reopen_roundstart_suicide_roles()
 	var/list/valid_positions = list()
-	valid_positions += GLOB.engineering_positions
-	valid_positions += GLOB.medical_positions
-	valid_positions += GLOB.anarch_positions
-	valid_positions += GLOB.supply_positions
+	valid_positions += GLOB.ss13
+	valid_positions += GLOB.ss13
+	valid_positions += GLOB.ss13
+	valid_positions += GLOB.ss13
 	valid_positions += GLOB.neutral_positions
-	valid_positions += GLOB.security_positions
+	valid_positions += GLOB.ss13
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles_command_positions))
 		valid_positions += GLOB.command_positions //add any remaining command positions
 	else

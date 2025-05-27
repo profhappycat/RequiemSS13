@@ -45,11 +45,6 @@
 				log_access("Failed Login: [key] - Not on whitelist")
 				return list("reason"="whitelist", "desc" = "\nReason: You are not on the white list for this server")
 
-	for(var/i in GLOB.niggers)
-		if(i == "[ckey]")
-			addclientmessage(ckey,"<span class='userdanger'>YOU NIGGER</span>")
-			return list("reason"="Banned", "desc" = "\nReason: Go fuck yourself.")
-
 	//Guest Checking
 	if(!real_bans_only && !C && IsGuestKey(key))
 		if (CONFIG_GET(flag/guest_ban))
@@ -114,7 +109,7 @@
 			return
 		GLOB.stickybanadminexemptions[ckey] = world.time
 		stoplag() // sleep a byond tick
-		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(restore_stickybans)), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
 		return
 	var/list/ban = ..()	//default pager ban stuff
 
@@ -199,7 +194,7 @@
 
 		if (ban["fromdb"])
 			if(SSdbcore.Connect())
-				INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc.QuerySelect, list(
+				INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, QuerySelect), list(
 					SSdbcore.NewQuery(
 						"INSERT INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES (:ckey, :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
 						list("ckey" = ckey, "bannedckey" = bannedckey)

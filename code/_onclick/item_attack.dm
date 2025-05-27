@@ -62,6 +62,8 @@
 	if(..())
 		return TRUE
 	user.changeNext_move(CLICK_CD_MELEE)
+	SEND_SIGNAL(user, COMSIG_MOB_ATTACKING_MELEE, /*target =*/src, /*item =*/I, /*params =*/params)
+	SEND_SIGNAL(src, COMSIG_MOB_ATTACKED_BY_MELEE, /*attacker =*/user, /*item =*/I, /*params =*/params)
 	return I.attack(src, user)
 
 /**
@@ -86,10 +88,6 @@
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-
-	if(force)
-		user.check_elysium(FALSE)
-
 	if(item_flags & EYE_STAB && user.zone_selected == BODY_ZONE_PRECISE_EYES)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user

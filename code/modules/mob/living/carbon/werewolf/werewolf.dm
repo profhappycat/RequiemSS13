@@ -14,15 +14,15 @@
 //		message = get_message_mods(message, message_mods)
 //		if(message_mods[WHISPER_MODE] != MODE_WHISPER)
 //			if(ending == "?")
-//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_ask.ogg', 75, TRUE)
+//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_ask.ogg', 75, TRUE)
 //			else if(ending == "!")
-//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_yell.ogg', 100, TRUE)
+//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_yell.ogg', 100, TRUE)
 //			else
-//				playsound(get_turf(src), 'code/modules/ziggers/sounds/wolf_speak.ogg', 75, TRUE)
+//				playsound(get_turf(src), 'code/modules/wod13/sounds/wolf_speak.ogg', 75, TRUE)
 
 /mob/living/carbon/werewolf
 	name = "werewolf"
-	icon = 'code/modules/ziggers/werewolf.dmi'
+	icon = 'code/modules/wod13/werewolf.dmi'
 	gender = MALE
 	dna = null
 	faction = list("Gaia")
@@ -31,14 +31,12 @@
 //	sight = SEE_MOBS
 	see_in_dark = 2
 	verb_say = "woofs"
-	density = TRUE
-	anchored = TRUE
 	rotate_on_lying = 0
 
 	movement_type = GROUND // [ChillRaccoon] - fucking flying werewolfes is a meme
 
-	bloodpool = 10
-	maxbloodpool = 10
+	bloodpool = 20
+	maxbloodpool = 20
 
 	var/move_delay_add = 0 // movement delay to add
 
@@ -55,9 +53,9 @@
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	layer = LARGE_MOB_LAYER
 	var/obj_damage = 30
-	var/wound_bonus = 30
-	var/bare_wound_bonus = 30
-	var/sharpness = 100
+	var/wound_bonus = 20
+	var/bare_wound_bonus = 25
+	var/sharpness = 50
 	var/armour_penetration = 100
 	var/melee_damage_type = BRUTE
 	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
@@ -65,7 +63,7 @@
 	var/attack_verb_simple = "attack"
 	var/friendly_verb_continuous = "nuzzles"
 	var/friendly_verb_simple = "nuzzle"
-	var/attack_sound = 'code/modules/ziggers/sounds/werewolf_bite.ogg'
+	var/attack_sound = 'code/modules/wod13/sounds/werewolf_bite.ogg'
 
 	var/sprite_color = "black"
 	var/sprite_scar = 0
@@ -92,17 +90,19 @@
 		step_variable = step_variable+1
 		if(step_variable == 2)
 			step_variable = 0
-			playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_step.ogg', 50, FALSE)
+			playsound(get_turf(src), 'code/modules/wod13/sounds/werewolf_step.ogg', 50, FALSE)
 	..()
 
-/mob/living/carbon/proc/epic_fall()
-	playsound(get_turf(src), 'code/modules/ziggers/sounds/werewolf_fall.ogg', 100, FALSE)
+/mob/living/carbon/proc/epic_fall(var/apply_stun_self = TRUE, var/apply_stun_others = TRUE)
+	playsound(get_turf(src), 'code/modules/wod13/sounds/werewolf_fall.ogg', 100, FALSE)
 	new /obj/effect/temp_visual/dir_setting/crack_effect(get_turf(src))
 	new /obj/effect/temp_visual/dir_setting/fall_effect(get_turf(src))
 	for(var/mob/living/carbon/C in range(5, src))
-		C.Stun(30)
+		if(apply_stun_others)
+			C.Stun(30)
 		shake_camera(C, (6-get_dist(C, src))+1, (6-get_dist(C, src)))
-	Stun(20)
+	if(apply_stun_self)
+		Stun(20)
 	shake_camera(src, 5, 4)
 
 /mob/living/carbon/werewolf/Initialize()
@@ -181,15 +181,16 @@
 /mob/living/carbon/werewolf/crinos
 	name = "werewolf"
 	icon_state = "black"
-	mob_size = MOB_SIZE_LARGE
+	mob_size = MOB_SIZE_HUGE
 	butcher_results = list(/obj/item/food/meat/slab = 5)
 	possible_a_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	limb_destroyer = 1
 	hud_type = /datum/hud/werewolf
-	melee_damage_lower = 40
-	melee_damage_upper = 40
-	health = 200
-	maxHealth = 200
+	melee_damage_lower = 35
+	melee_damage_upper = 65
+	health = 250
+	maxHealth = 250
+//	speed = -1  doesn't work on carbons
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/pounce_cooldown = 0
@@ -205,7 +206,13 @@
 		/obj/item/bodypart/l_leg,
 		)
 
-	werewolf_armor = 25
+	werewolf_armor = 30
+
+/datum/movespeed_modifier/crinosform
+	multiplicative_slowdown = -0.2
+
+/datum/movespeed_modifier/silver_slowdown
+	multiplicative_slowdown = 0.3
 
 /mob/living/carbon/werewolf/crinos/Initialize()
 	. = ..()
@@ -216,6 +223,8 @@
 /mob/living/carbon/werewolf/lupus/Initialize()
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
+	var/datum/action/gift/hispo/hispo = new()
+	hispo.Grant(src)
 
 /mob/living/carbon/werewolf/crinos/show_inv(mob/user)
 	user.set_machine(src)
@@ -223,12 +232,12 @@
 	dat += "<table>"
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
+		dat += "<tr><td><B>[get_held_index_name(i)]:</B></td><td><A href='byond://?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a></td></tr>"
 	dat += "</td></tr><tr><td>&nbsp;</td></tr>"
-	dat += "<tr><td><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A></td></tr>"
+	dat += "<tr><td><A href='byond://?src=[REF(src)];pouches=1'>Empty Pouches</A></td></tr>"
 
 	dat += {"</table>
-	<A href='?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
+	<A href='byond://?src=[REF(user)];mach_close=mob[REF(src)]'>Close</A>
 	"}
 
 	var/datum/browser/popup = new(user, "mob[REF(src)]", "[src]", 440, 510)

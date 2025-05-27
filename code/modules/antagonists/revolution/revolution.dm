@@ -93,7 +93,7 @@
 
 /datum/antagonist/rev/get_admin_commands()
 	. = ..()
-	.["Promote"] = CALLBACK(src,.proc/admin_promote)
+	.["Promote"] = CALLBACK(src, PROC_REF(admin_promote))
 
 /datum/antagonist/rev/proc/admin_promote(mob/admin)
 	var/datum/mind/O = owner
@@ -113,10 +113,10 @@
 /datum/antagonist/rev/head/get_admin_commands()
 	. = ..()
 	. -= "Promote"
-	.["Take flash"] = CALLBACK(src,.proc/admin_take_flash)
-	.["Give flash"] = CALLBACK(src,.proc/admin_give_flash)
-	.["Repair flash"] = CALLBACK(src,.proc/admin_repair_flash)
-	.["Demote"] = CALLBACK(src,.proc/admin_demote)
+	.["Take flash"] = CALLBACK(src, PROC_REF(admin_take_flash))
+	.["Give flash"] = CALLBACK(src, PROC_REF(admin_give_flash))
+	.["Repair flash"] = CALLBACK(src, PROC_REF(admin_repair_flash))
+	.["Demote"] = CALLBACK(src, PROC_REF(admin_demote))
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
@@ -308,7 +308,7 @@
 		var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 		R.objectives |= objectives
 
-	addtimer(CALLBACK(src,.proc/update_objectives),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(update_objectives)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/team/sabbat/proc/head_revolutionaries()
 	. = list()
@@ -340,7 +340,7 @@
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
 				rev.promote()
 
-	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(update_heads)),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
 /datum/team/sabbat/proc/save_members()
 	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
@@ -402,7 +402,7 @@
 			if (isnull(mind))
 				continue
 
-			if (!(mind.assigned_role in GLOB.command_positions + GLOB.security_positions))
+			if (!(mind.assigned_role in GLOB.command_positions + GLOB.ss13))
 				continue
 
 			var/mob/living/carbon/target_body = mind.current
@@ -417,7 +417,7 @@
 			else
 				mind.announce_objectives()
 
-		for (var/job_name in GLOB.command_positions + GLOB.security_positions)
+		for (var/job_name in GLOB.command_positions + GLOB.ss13)
 			var/datum/job/job = SSjob.GetJob(job_name)
 			job.allow_bureaucratic_error = FALSE
 			job.total_positions = 0
@@ -521,14 +521,14 @@
 	for(var/datum/mind/N in SSjob.get_living_heads())
 		var/mob/M = N.current
 		if(M)
-			heads_report += "<tr><td><a href='?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-			heads_report += "<td><A href='?priv_msg=[M.ckey]'>PM</A></td>"
-			heads_report += "<td><A href='?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
+			heads_report += "<tr><td><a href='byond://?_src_=holder;[HrefToken()];adminplayeropts=[REF(M)]'>[M.real_name]</a>[M.client ? "" : " <i>(No Client)</i>"][M.stat == DEAD ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
+			heads_report += "<td><A href='byond://?priv_msg=[M.ckey]'>PM</A></td>"
+			heads_report += "<td><A href='byond://?_src_=holder;[HrefToken()];adminplayerobservefollow=[REF(M)]'>FLW</a></td>"
 			var/turf/mob_loc = get_turf(M)
 			heads_report += "<td>[mob_loc.loc]</td></tr>"
 		else
-			heads_report += "<tr><td><a href='?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
-			heads_report += "<td><A href='?priv_msg=[N.key]'>PM</A></td></tr>"
+			heads_report += "<tr><td><a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(N)]'>[N.name]([N.key])</a><i>Head body destroyed!</i></td>"
+			heads_report += "<td><A href='byond://?priv_msg=[N.key]'>PM</A></td></tr>"
 	heads_report += "</table>"
 	return common_part + heads_report
 

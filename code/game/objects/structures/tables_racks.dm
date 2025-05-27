@@ -75,6 +75,8 @@
 					return
 				if(user.grab_state >= GRAB_NECK)
 					tablelimbsmash(user, pushed_mob)
+					if(ishuman(pushed_mob) && pushed_mob.stat != DEAD)
+						call_dharma("torture", user)
 				else
 					tablepush(user, pushed_mob)
 			if(user.a_intent == INTENT_HELP)
@@ -106,11 +108,16 @@
 		return TRUE
 	if(locate(/obj/structure/table) in get_turf(mover))
 		return TRUE
+	//Roughly the same elevation
+	if(istype(mover.loc, /turf/closed/wall/vampwall)) //Because "low" type walls aren't standardized and are subtypes of different wall types
+		var/turf/closed/wall/vampwall/vw = mover.loc
+		if(vw.low)
+			return TRUE
 
-/obj/structure/table/CanAStarPass(ID, dir, caller)
+/obj/structure/table/CanAStarPass(ID, dir, pathfinding_atom)
 	. = !density
-	if(ismovable(caller))
-		var/atom/movable/mover = caller
+	if(ismovable(pathfinding_atom))
+		var/atom/movable/mover = pathfinding_atom
 		. = . || (mover.pass_flags & PASSTABLE)
 
 /obj/structure/table/proc/tableplace(mob/living/user, mob/living/pushed_mob)
@@ -124,9 +131,8 @@
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='danger'>Throwing [pushed_mob] onto the table might hurt them!</span>")
 		return
-	user.check_elysium(FALSE)
 	var/added_passtable = FALSE
-	if(!pushed_mob.pass_flags & PASSTABLE)
+	if((!pushed_mob.pass_flags) & PASSTABLE)
 		added_passtable = TRUE
 		pushed_mob.pass_flags |= PASSTABLE
 	pushed_mob.Move(src.loc)
@@ -285,7 +291,7 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	RegisterSignal(I, COMSIG_MOVABLE_MOVED, PROC_REF(RemoveItemFromTable)) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
 /obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
 	SIGNAL_HANDLER
@@ -338,7 +344,7 @@
 		return
 	// Don't break if they're just flying past
 	if(AM.throwing)
-		addtimer(CALLBACK(src, .proc/throw_check, AM), 5)
+		addtimer(CALLBACK(src, PROC_REF(throw_check), AM), 5)
 	else
 		check_break(AM)
 
@@ -552,8 +558,8 @@
 /obj/structure/table/optable
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
-	icon = 'icons/obj/surgery.dmi'
-	icon_state = "optable"
+	icon = 'code/modules/wod13/props.dmi'
+	icon_state = "surgeonchair"
 	buildstack = /obj/item/stack/sheet/mineral/silver
 	smoothing_flags = NONE
 	smoothing_groups = null

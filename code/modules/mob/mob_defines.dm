@@ -237,3 +237,16 @@
 
 	///Override for sound_environments. If this is set the user will always hear a specific type of reverb (Instead of the area defined reverb)
 	var/sound_environment_override = SOUND_ENVIRONMENT_NONE
+
+	//imported variables from all around the code
+	var/taxist = FALSE
+
+	///If the blood cell cursor is currently active due to a Discipline being targeted
+	var/discipline_targeting = FALSE
+
+	///the icon currently used for the typing indicator's bubble
+	var/active_typing_indicator
+	///the icon currently used for the thinking indicator's bubble
+	var/active_thinking_indicator
+	/// User is thinking in character. Used to revert to thinking state after stop_typing
+	var/thinking_IC = FALSE

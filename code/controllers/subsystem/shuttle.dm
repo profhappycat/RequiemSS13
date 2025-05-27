@@ -79,6 +79,8 @@ SUBSYSTEM_DEF(shuttle)
 			continue
 		supply_packs[P.type] = P
 
+	//[Lucia] removed this because we literally don't use any of these
+	/*
 	if(!arrivals)
 		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
@@ -87,9 +89,8 @@ SUBSYSTEM_DEF(shuttle)
 		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
 		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
+	*/
 	return ..()
-
-	initial_load()
 
 /datum/controller/subsystem/shuttle/proc/initial_load()
 	for(var/s in stationary)
@@ -164,10 +165,10 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
 	if(adminEmergencyNoRecall)
 		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
-		addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
+		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
 		return
 	emergencyNoRecall = TRUE
-	addtimer(CALLBACK(src, .proc/unblock_recall), lockout_timer)
+	addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
 
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
 	if(adminEmergencyNoRecall)
@@ -260,7 +261,7 @@ SUBSYSTEM_DEF(shuttle)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)

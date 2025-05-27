@@ -109,6 +109,7 @@
 			var/obj/effect/fire/F = locate() in get_turf(src)
 			if(!F)
 				new /obj/effect/fire(get_turf(src))
+	..(AM)
 
 /obj/effect/decal/cleanable/gasoline/Initialize()
 	. = ..()
@@ -134,6 +135,7 @@
 /obj/effect/decal/cleanable/gasoline/attackby(obj/item/I, mob/living/user)
 	var/attacked_by_hot_thing = I.get_temperature()
 	if(attacked_by_hot_thing)
+		call_dharma("grief", user)
 		visible_message("<span class='warning'>[user] tries to ignite [src] with [I]!</span>", "<span class='warning'>You try to ignite [src] with [I].</span>")
 		log_combat(user, src, (attacked_by_hot_thing < 480) ? "tried to ignite" : "ignited", I)
 		fire_act(attacked_by_hot_thing)
@@ -348,6 +350,7 @@
 
 /turf/open/floor/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()
+	/*
 	if(GLOB.winter)
 		if(istype(get_area(src), /area/vtm))
 			var/area/vtm/V = get_area(src)
@@ -374,3 +377,4 @@
 					if(car.on)
 						var/obj/effect/decal/cleanable/car_trail/trail = new(src)
 						trail.dir = Obj.dir
+	*/

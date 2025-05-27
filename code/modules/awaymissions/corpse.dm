@@ -62,7 +62,7 @@
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
 	if(instant || (roundstart && (mapload || (SSticker && SSticker.current_state > GAME_STATE_SETTING_UP))))
-		INVOKE_ASYNC(src, .proc/create)
+		INVOKE_ASYNC(src, PROC_REF(create))
 	else if(ghost_usable)
 		AddElement(/datum/element/point_of_interest)
 		LAZYADD(GLOB.mob_spawners[name], src)
@@ -118,13 +118,7 @@
 				H.hair_color = P.hair_color
 				H.facial_hair_color = P.facial_hair_color
 				H.skin_tone = P.skin_tone
-				switch(P.body_model)
-					if(1)
-						H.base_body_mod = "s"
-					if(2)
-						H.base_body_mod = ""
-					if(3)
-						H.base_body_mod = "f"
+				H.base_body_mod = ""
 				H.update_hair()
 				H.update_body()
 

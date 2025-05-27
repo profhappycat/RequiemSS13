@@ -1,16 +1,16 @@
 /datum/component/personal_crafting/Initialize()
 	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, PROC_REF(create_mob_button))
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	SIGNAL_HANDLER
 
 	var/datum/hud/H = user.hud_used
 	var/atom/movable/screen/craft/C = new()
-	C.icon = H.ui_style
+	C.icon = 'code/modules/wod13/UI/buttons_wide.dmi'
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
+	RegisterSignal(C, COMSIG_CLICK, PROC_REF(component_ui_interact))
 
 /datum/component/personal_crafting
 	var/busy
@@ -178,7 +178,7 @@
 	if(check_contents(a, R, contents))
 		if(check_tools(a, R, contents))
 			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
-			if(ismob(a) && !do_after(a, R.time*max(1, (5-PIS.mentality)), target = a))
+			if(ismob(a) && !do_after(a, R.time*max(1, 5-PIS.wits), target = a))
 				return "."
 			contents = get_surroundings(a,R.blacklist)
 			if(!check_contents(a, R, contents))
@@ -342,15 +342,15 @@
 	SIGNAL_HANDLER
 
 	if(user == parent)
-		INVOKE_ASYNC(src, .proc/ui_interact, user)
+		INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
 /datum/component/personal_crafting/ui_state(mob/user)
 	return GLOB.not_incapacitated_turf_state
 
 //For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
-/datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui)
+/datum/component/personal_crafting/ui_interact(mob/user, datum/tgui/ui, var/open_ui = TRUE)
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
+	if(!ui && open_ui)
 		cur_category = categories[1]
 		if(islist(categories[cur_category]))
 			var/list/subcats = categories[cur_category]
@@ -431,6 +431,7 @@
 			else
 				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
+			ui_interact(user, open_ui = FALSE) //Update the UI again as soon as possible after the UI is no longer busy, but don't open it again if it got closed.
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
 			. = TRUE

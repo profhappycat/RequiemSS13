@@ -1,14 +1,11 @@
-// [ChillRaccon] - maybe remove it? Looks like shit with new design
-
-/* // [ChillRaccoon] - removed due to approved request
 
 /atom/movable/screen/ghost
-	icon = 'icons/hud/screen_ghost.dmi'
+	icon = 'code/modules/wod13/UI/buttons32.dmi'
 	plane = 45 // [ChillRaccoon] - 42 was a value by default
-
+/*
 /atom/movable/screen/ghost/MouseEntered()
 	flick(icon_state + "_anim", src)
-
+*/
 /atom/movable/screen/ghost/jumptomob
 	name = "Jump to mob"
 	icon_state = "jumptomob"
@@ -48,10 +45,11 @@
 /atom/movable/screen/ghost/pai/Click()
 	var/mob/dead/observer/G = usr
 	G.register_pai()
-*/
+
 
 // [ChillRaccoon] - LFWB like ghost GUI
 
+/*
 /atom/movable/screen/fullscreen/ghost/lfwbLike
 	icon = 'icons/hud/fullscreen.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -73,13 +71,10 @@
 	icon_state = "ghost2"
 	alpha = 100
 	plane = 42
-
+*/
 /datum/hud/ghost/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
-
-/* // [ChillRaccoon] - removed due to approved request
-
 	using = new /atom/movable/screen/ghost/jumptomob()
 	using.screen_loc = ui_ghost_jumptomob
 	using.hud = src
@@ -100,19 +95,20 @@
 	using.hud = src
 	static_inventory += using
 
-	using = new /atom/movable/screen/ghost/pai()
-	using.screen_loc = ui_ghost_pai
-	using.hud = src
-	static_inventory += using
+//	using = new /atom/movable/screen/ghost/pai()
+//	using.screen_loc = ui_ghost_pai
+//	using.hud = src
+//	static_inventory += using
 
-	using = new /atom/movable/screen/language_menu
-	using.icon = ui_style
-	using.hud = src
-	static_inventory += using
+//	using = new /atom/movable/screen/language_menu
+//	using.icon = ui_style
+//	using.hud = src
+//	static_inventory += using
 
-*/
+
 	// [ChillRaccoon] - LFWB like GUI implementation
 
+/*
 	using = new /atom/movable/screen/fullscreen/ghost/lfwbLike/screenLayer1
 	using.hud = src
 	using.screen_loc = "CENTER-7,CENTER-7"
@@ -122,7 +118,7 @@
 	using.hud = src
 	using.screen_loc = "CENTER-7,CENTER-7"
 	static_inventory += using
-
+*/
 /datum/hud/ghost/show_hud(version = 0, mob/viewmob)
 	// don't show this HUD if observing; show the HUD of the observee
 	var/mob/dead/observer/O = mymob

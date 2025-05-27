@@ -26,9 +26,10 @@
 	name = "unidentified occult fetish"
 	desc = "Who knows what secrets it could contain..."
 	icon_state = "arcane"
-	icon = 'code/modules/ziggers/items.dmi'
-	onflooricon = 'code/modules/ziggers/onfloor.dmi'
+	icon = 'code/modules/wod13/items.dmi'
+	onflooricon = 'code/modules/wod13/onfloor.dmi'
 	w_class = WEIGHT_CLASS_SMALL
+	is_magic = TRUE
 	var/mob/living/owner
 	var/true_name = "artifact"
 	var/true_desc = "Debug"
@@ -66,19 +67,6 @@
 	H.physiology.armor.melee = H.physiology.armor.melee-10
 	H.physiology.armor.bullet = H.physiology.armor.bullet-10
 
-/obj/item/vtm_artifact/tarulfang
-	true_name = "Tarulfang"
-	true_desc = "Decreases chance of frenzy."
-	icon_state = "tarulfang"
-
-/obj/item/vtm_artifact/weekapaug_thistle/get_powers()
-	..()
-	owner.frenzy_chance_boost = 5
-
-/obj/item/vtm_artifact/weekapaug_thistle/remove_powers()
-	..()
-	owner.frenzy_chance_boost = 10
-
 /obj/item/vtm_artifact/mummywrap_fetish
 	true_name = "Mummywrap Fetish"
 	true_desc = "Passive health regeneration."
@@ -97,12 +85,6 @@
 	true_name = "Saulocept"
 	true_desc = "More experience points."
 	icon_state = "saulocept"
-
-/mob/living
-	var/experience_plus = 0
-	var/discipline_time_plus = 0
-	var/bloodpower_time_plus = 0
-	var/thaum_damage_plus = 0
 
 /obj/item/vtm_artifact/saulocept/get_powers()
 	..()
@@ -192,6 +174,8 @@
 /obj/item/vtm_artifact/key_of_alamut/get_powers()
 	..()
 	var/mob/living/carbon/human/H = owner
+	if(H.dna.species.brutemod == 0.3)
+		return
 	if(H.dna)
 		H.dna.species.brutemod = H.dna.species.brutemod-0.2
 		H.dna.species.burnmod = H.dna.species.burnmod-0.2
@@ -199,6 +183,8 @@
 /obj/item/vtm_artifact/key_of_alamut/remove_powers()
 	..()
 	var/mob/living/carbon/human/H = owner
+	if(H.dna.species.brutemod == 0.5)
+		return
 	if(H.dna)
 		H.dna.species.brutemod = H.dna.species.brutemod+0.2
 		H.dna.species.burnmod = H.dna.species.burnmod+0.2
@@ -234,6 +220,11 @@
 
 /obj/item/vtm_artifact/rand/Initialize()
 	. = ..()
-	var/spawn_artifact = pick(/obj/item/vtm_artifact/odious_chalice, /obj/item/vtm_artifact/key_of_alamut, /obj/item/vtm_artifact/daimonori, /obj/item/vtm_artifact/bloodstar, /obj/item/vtm_artifact/heart_of_eliza, /obj/item/vtm_artifact/fae_charm, /obj/item/vtm_artifact/galdjum, /obj/item/vtm_artifact/saulocept, /obj/item/vtm_artifact/mummywrap_fetish, /obj/item/vtm_artifact/weekapaug_thistle)
-	new spawn_artifact(loc)
+	if (prob(50)) //50% chance of spawning something
+		var/spawn_artifact = pick(/obj/item/vtm_artifact/odious_chalice, /obj/item/vtm_artifact/key_of_alamut,
+									/obj/item/vtm_artifact/daimonori, /obj/item/vtm_artifact/bloodstar,
+									/obj/item/vtm_artifact/heart_of_eliza, /obj/item/vtm_artifact/fae_charm,
+									/obj/item/vtm_artifact/galdjum, /obj/item/vtm_artifact/mummywrap_fetish,
+									/obj/item/vtm_artifact/weekapaug_thistle)
+		new spawn_artifact(loc)
 	qdel(src)

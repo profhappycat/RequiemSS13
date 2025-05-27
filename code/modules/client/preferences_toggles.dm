@@ -33,7 +33,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/settings/ghost/chatterbox, toggle_ghost_ears)(
 	set name = "Show/Hide GhostEars"
 	set category = "Preferences"
 	set desc = "See All Speech"
-	// usr.client.prefs.chat_toggles ^= CHAT_GHOSTEARS // [ChillRacoon] - you will not
+	usr.client.prefs.chat_toggles ^= CHAT_GHOSTEARS
 	to_chat(usr, "As a ghost, you will now [(usr.client.prefs.chat_toggles & CHAT_GHOSTEARS) ? "see all speech in the world" : "only see speech from nearby mobs"].")
 	usr.client.prefs.save_preferences()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle Ghost Ears", "[usr.client.prefs.chat_toggles & CHAT_GHOSTEARS ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -297,9 +297,6 @@ GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","ske
 							"ghost_dcyan","ghost_grey","ghost_dyellow","ghost_dpink", "ghost_purpleswirl","ghost_funkypurp","ghost_pinksherbert","ghost_blazeit",\
 							"ghost_mellow","ghost_rainbow","ghost_camo","ghost_fire", "catghost")))
 /client/proc/pick_form()
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
 	var/new_form = input(src, "Thanks for supporting BYOND - Choose your ghostly form:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_forms
 	if(new_form)
 		prefs.ghost_form = new_form
@@ -311,9 +308,6 @@ GLOBAL_LIST_INIT(ghost_forms, sortList(list("ghost","ghostking","ghostian2","ske
 GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOST_ORBIT_SQUARE,GHOST_ORBIT_HEXAGON,GHOST_ORBIT_PENTAGON))
 
 /client/proc/pick_ghost_orbit()
-	if(!is_content_unlocked())
-		alert("This setting is for accounts with BYOND premium only.")
-		return
 	var/new_orbit = input(src, "Thanks for supporting BYOND - Choose your ghostly orbit:","Thanks for supporting BYOND",null) as null|anything in GLOB.ghost_orbits
 	if(new_orbit)
 		prefs.ghost_orbit = new_orbit
@@ -341,16 +335,13 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	set name = "Ghost Customization"
 	set category = "Preferences"
 	set desc = "Customize your ghastly appearance."
-	if(is_content_unlocked())
-		switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
-			if("Ghost Form")
-				pick_form()
-			if("Ghost Orbit")
-				pick_ghost_orbit()
-			if("Ghost Accessories")
-				pick_ghost_accs()
-	else
-		pick_ghost_accs()
+	switch(alert("Which setting do you want to change?",,"Ghost Form","Ghost Orbit","Ghost Accessories"))
+		if("Ghost Form")
+			pick_form()
+		if("Ghost Orbit")
+			pick_ghost_orbit()
+		if("Ghost Accessories")
+			pick_ghost_accs()
 
 /client/verb/pick_ghost_others()
 	set name = "Ghosts of Others"

@@ -61,26 +61,11 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 
+		//Sorry, you can't see yourself in front of the mirror!
 		if(H.clane)
 			if(H.clane.name == "Lasombra")
-				if(H.bloodpool > 2)
-					var/new_mirror = input(user, "Choose the mirror to travel:","Enter Mirror",null) as null|anything in GLOB.las_mirrors
-					if(new_mirror)
-						if(istype(new_mirror, /obj/structure/mirror))
-							var/obj/structure/mirror/M = new_mirror
-							H.bloodpool = max(0, H.bloodpool-2)
-							H.Stun(10)
-							animate(H, color = "#000000", time = 10)
-							playsound(user.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, FALSE)
-							spawn(10)
-								H.forceMove(M.loc)
-								H.Stun(10)
-								animate(H, color = initial(H.color), time = 10)
-								playsound(user.loc, 'code/modules/ziggers/sounds/necromancy.ogg', 50, FALSE)
-					return
-				else
-					to_chat(H, "<span class='warning'>You need more <b>BLOOD</b> to activate that.</span>")
 				return
+
 		//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 		//this is largely copypasted from there.
 
@@ -181,7 +166,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
-	choosable_races = GLOB.roundstart_races.Copy()
+	choosable_races = get_roundstart_species().Copy()
 	..()
 
 /obj/structure/mirror/magic/badmin/New()
@@ -218,7 +203,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 				H.dna.real_name = newname
 			if(H.mind)
 				H.mind.name = newname
-
+/*
 		if("race")
 			var/newrace
 			var/racechoice = input(H, "What are we again?", "Race change") as null|anything in choosable_races
@@ -238,7 +223,7 @@ GLOBAL_LIST_EMPTY(las_mirrors)
 				if(new_s_tone)
 					H.skin_tone = new_s_tone
 					H.dna.update_ui_block(DNA_SKIN_TONE_BLOCK)
-
+*/
 			if(MUTCOLORS in H.dna.species.species_traits)
 				var/new_mutantcolor = input(user, "Choose your skin color:", "Race change","#"+H.dna.features["mcolor"]) as color|null
 				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

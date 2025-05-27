@@ -19,10 +19,13 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
 	var/L = user.loc
+
 	if(istype(user.loc, /obj/effect/dummy/phased_mob/shadow))
 		var/obj/effect/dummy/phased_mob/shadow/S = L
 		S.end_jaunt(FALSE)
 		return
+
+	//If activated on a dark tile, makes you invisible and lets you phase through walls until you hit a lit up tile
 	else
 		var/turf/T = get_turf(user)
 		var/light_amount = T.get_lumcount()

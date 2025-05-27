@@ -162,7 +162,9 @@ GENE SCANNER
 	var/brute_loss = M.getBruteLoss()
 	var/mob_status = (M.stat == DEAD ? "<span class='alert'><b>Deceased</b></span>" : "<b>[round(M.health/M.maxHealth,0.01)*100]% healthy</b>")
 
-	if(iskindred(M))
+	var/mob/living/carbon/human/humhum = M
+
+	if(iskindred(M) || (iscathayan(M) && !humhum.check_kuei_jin_alive()))
 		mob_status = "<span class='alert'><b>Deceased</b></span>"
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss)))
 
@@ -239,7 +241,7 @@ GENE SCANNER
 //			if(advanced)
 //				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [C.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY)].</span>\n"
 	if(advanced)
-		if(iskindred(M))
+		if(iskindred(M) || (iscathayan(M) && !humhum.check_kuei_jin_alive()))
 			render_list += "<span class='info ml-1'>Brain Activity Level: 0%.</span>\n"
 		else
 			render_list += "<span class='info ml-1'>Brain Activity Level: [(200 - M.getOrganLoss(ORGAN_SLOT_BRAIN))/2]%.</span>\n"
@@ -331,7 +333,7 @@ GENE SCANNER
 
 			for(var/obj/item/organ/organ in H.internal_organs)
 				var/status = ""
-				if (iskindred(H)) status = "<font color='#E42426'>Non-Functional</font>"
+				if (iskindred(H) || (iscathayan(H) && !H.check_kuei_jin_alive())) status = "<font color='#E42426'>Non-Functional</font>"
 				else if (organ.organ_flags & ORGAN_FAILING) status = "<font color='#E42426'>Non-Functional</font>"
 				else if (organ.damage > organ.high_threshold) status = "<font color='#EC6224'>Severely Damaged</font>"
 				else if (organ.damage > organ.low_threshold) status = "<font color='#F28F1F'>Mildly Damaged</font>"
@@ -349,8 +351,9 @@ GENE SCANNER
 			render_list += "<span class='info ml-1'>Genetic Stability: [H.dna.stability]%.</span>\n"
 
 		// Species and body temperature
-//		var/datum/species/S = H.dna.species
-//		var/mutant = H.dna.check_mutation(HULK) \
+		/*
+		var/datum/species/S = H.dna.species
+		var/mutant = H.dna.check_mutation(HULK) \
 			|| S.mutantlungs != initial(S.mutantlungs) \
 			|| S.mutantbrain != initial(S.mutantbrain) \
 			|| S.mutantheart != initial(S.mutantheart) \
@@ -362,6 +365,7 @@ GENE SCANNER
 			|| S.mutantstomach != initial(S.mutantstomach) \
 			|| S.mutantappendix != initial(S.mutantappendix) \
 			|| S.flying_species != initial(S.flying_species)
+		*/
 
 //		render_list += "<span class='info ml-1'>Species: [S.name][mutant ? "-derived mutant" : ""]</span>\n"
 		render_list += "<span class='info ml-1'>Core temperature: [round(H.coretemperature-T0C,0.1)] &deg;C ([round(H.coretemperature*1.8-459.67,0.1)] &deg;F)</span>\n"
@@ -663,7 +667,7 @@ GENE SCANNER
 			else
 				to_chat(user, "<span class='warning'>[src]'s barometer function says a storm will land in approximately [butchertime(fixed)].</span>")
 		cooldown = TRUE
-		addtimer(CALLBACK(src,/obj/item/analyzer/proc/ping), cooldown_time)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/analyzer, ping)), cooldown_time)
 
 /obj/item/analyzer/proc/ping()
 	if(isliving(loc))
@@ -899,7 +903,7 @@ GENE SCANNER
 
 		ready = FALSE
 		icon_state = "[icon_state]_recharging"
-		addtimer(CALLBACK(src, .proc/recharge), cooldown, TIMER_UNIQUE)
+		addtimer(CALLBACK(src, PROC_REF(recharge)), cooldown, TIMER_UNIQUE)
 
 /obj/item/sequence_scanner/proc/recharge()
 	icon_state = initial(icon_state)

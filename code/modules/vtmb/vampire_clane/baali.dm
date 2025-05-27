@@ -2,56 +2,27 @@
 	name = "Baali"
 	desc = "The Baali are a bloodline of vampires associated with demon worship. Because of their affinity with the unholy, the Baali are particularly vulnerable to holy iconography, holy ground and holy water. They are highly vulnerable to True Faith."
 	curse = "Fear of the Religion."
-	clane_disciplines = list(/datum/discipline/obfuscate = 1,
-														/datum/discipline/obtenebration = 2,
-														/datum/discipline/daimonion = 3)
-	male_clothes = "/obj/item/clothing/under/vampire/baali"
-	female_clothes = "/obj/item/clothing/under/vampire/baali/female"
-	whitelist = list("badteammate", "meomoor", "leonko", "raikyh", "xilvahphyre", "homuhomu", "lemshake", "notaspider", "themaskedman2", "ifrickfracki", "feudeytf", "misteronion", "gomesx", "gruesomeborg68915", "altraragazza", "kommando", "suriyel", "ivanzarax", "dangitmaster", "d6ll1r10um", "noxesdeadwish")
-	enlightement = TRUE
+	clane_disciplines = list(
+		/datum/discipline/obfuscate,
+		/datum/discipline/presence,
+		/datum/discipline/daimonion
+	)
+	male_clothes = /obj/item/clothing/under/vampire/baali
+	female_clothes = /obj/item/clothing/under/vampire/baali/female
+	enlightenment = TRUE
+	whitelisted = TRUE
+	clan_keys = /obj/item/vamp/keys/baali
 
 /datum/vampireclane/baali/on_gain(mob/living/carbon/human/H)
 	..()
 	H.faction |= "Baali"
-	var/datum/brain_trauma/mild/phobia/security/T = new()
-	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
-
-/datum/discipline/daimonion/post_gain(mob/living/carbon/human/H)
-	H.put_in_r_hand(new /obj/item/vamp/keys/baali(H))
-	var/obj/item/organ/eyes/night_vision/NV = new()
-	NV.Insert(H, TRUE, FALSE)
-	if(level >= 3)
-		var/obj/effect/proc_holder/spell/aimed/fireball/baali/S = new(H)
-		H.mind.AddSpell(S)
-	if(level >= 5)
-		var/datum/action/antifrenzy/A = new()
-		A.Grant(H)
-
-/datum/action/antifrenzy
-	name = "Resist Beast"
-	desc = "Resist Frenzy and Rotshreck by signing a contract with Demons."
-	button_icon_state = "resist"
-	check_flags = AB_CHECK_HANDS_BLOCKED|AB_CHECK_IMMOBILE|AB_CHECK_LYING|AB_CHECK_CONSCIOUS
-	vampiric = TRUE
-	var/used = FALSE
-
-/datum/action/antifrenzy/Trigger()
-	var/mob/living/carbon/human/NG = owner
-	if(NG.stat > 1 || NG.IsSleeping() || NG.IsUnconscious() || NG.IsParalyzed() || NG.IsKnockdown() || NG.IsStun() || HAS_TRAIT(NG, TRAIT_RESTRAINED) || !isturf(NG.loc))
-		return
-	if(used)
-		to_chat(owner, "<span class='warning'>You've already signed this contract!</span>")
-		return
-	used = TRUE
-	var/mob/living/carbon/human/H = owner
-	H.antifrenzy = TRUE
-	SEND_SOUND(owner, sound('sound/magic/curse.ogg', 0, 0, 50))
-	to_chat(owner, "<span class='warning'>You feel control over your Beast, but at what cost...</span>")
+	var/datum/brain_trauma/mild/phobia/security/religious_trauma = new()
+	H.gain_trauma(religious_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /mob/living/simple_animal/hostile/baali_guard
 	name = "Infernal Creature"
 	desc = "The peak of abominations armor. Unbelievably undamagable..."
-	icon = 'code/modules/ziggers/32x48.dmi'
+	icon = 'code/modules/wod13/32x48.dmi'
 	icon_state = "baali"
 	icon_living = "baali"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
