@@ -6,8 +6,11 @@
 	/// A dictionary of modifiers to this attribute.
 	var/list/modifiers = list()
 
-/datum/attribute/proc/get()
-	return score + bonus_score
+/datum/attribute/proc/get(include_bonus = TRUE)
+	if(include_bonus)
+		return score + bonus_score
+	else
+		return score
 
 /datum/attribute/proc/setter(amount)
 	score = amount

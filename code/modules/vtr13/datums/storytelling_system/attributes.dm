@@ -12,10 +12,10 @@
 	. = ..()
 	attributes = null
 
-/// Return the score of the given attribute.
-/datum/attributes/proc/get_stat(attribute)
+/// Return the total or pure score of the given attribute.
+/datum/attributes/proc/get_stat(attribute, include_bonus = TRUE)
 	var/datum/attribute/A = attributes[attribute]
-	return A.get()
+	return A.get(include_bonus)
 
 /// Sets the score of the given attribute.
 /datum/attributes/proc/set_stat(amount, attribute)
