@@ -376,7 +376,7 @@
 /mob/living/carbon/human/npc/proc/AssignSocialRole(datum/socialrole/S, dont_random = FALSE)
 	if(!S)
 		return
-	stats = new(src)
+	stats = new()
 	stats.set_stat(rand(1, max_stat), PHYSIQUE)
 	stats.set_stat(rand(1, max_stat), VITALITY)
 	stats.set_stat(rand(1, max_stat), WITS)
