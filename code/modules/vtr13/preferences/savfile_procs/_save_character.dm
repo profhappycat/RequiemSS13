@@ -43,12 +43,12 @@
 	WRITE_FILE(S["all_quirks"], all_quirks)
 
 	//STATS
-	WRITE_FILE(S["physique"], physique)
-	WRITE_FILE(S["stamina"], stamina)
-	WRITE_FILE(S["charisma"], charisma)
-	WRITE_FILE(S["composure"], composure)
-	WRITE_FILE(S["wits"], wits)
-	WRITE_FILE(S["resolve"], resolve)
+	WRITE_FILE(S["physique"], stats.get_stat(PHYSIQUE, FALSE))
+	WRITE_FILE(S["stamina"], stats.get_stat(VITALITY, FALSE))
+	WRITE_FILE(S["charisma"], stats.get_stat(CHARISMA, FALSE))
+	WRITE_FILE(S["composure"], stats.get_stat(COMPOSURE, FALSE))
+	WRITE_FILE(S["wits"], stats.get_stat(WITS, FALSE))
+	WRITE_FILE(S["resolve"], stats.get_stat(RESOLVE, FALSE))
 
 	WRITE_FILE(S["equipped_gear"], equipped_gear)
 

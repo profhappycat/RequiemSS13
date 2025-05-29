@@ -2,8 +2,8 @@
 	if(body_position != STANDING_UP || HAS_TRAIT(src, TRAIT_LEANING))
 		return
 	if(above_turf && istype(above_turf, /turf/open/openspace))
-		var/total_wits = get_total_wits()
-		var/total_physique = get_total_physique()
+		var/total_wits = stats.get_stat(WITS)
+		var/total_physique = stats.get_stat(PHYSIQUE)
 		var/has_gecko_grip = HAS_TRAIT(src, TRAIT_GECKO_GRIP) && !gloves
 		if(has_gecko_grip)
 			to_chat(src, span_notice("You scuttle up the wall unnaturally quick!"))
@@ -16,7 +16,7 @@
 				to_chat(src, span_warning("You were interrupted and failed to climb up."))
 				animate(src, pixel_y = 0, time = 0)
 				return
-      
+
 			animate(src, pixel_y = 0, time = 0)
 
 		var/success = 0
