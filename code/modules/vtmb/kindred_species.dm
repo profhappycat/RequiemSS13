@@ -114,8 +114,8 @@
 			BD.dna.species.punchdamagehigh = BD.dna.species.punchdamagehigh+5
 			BD.physiology.armor.melee = BD.physiology.armor.melee+15
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet+15
-			BD.stats.set_buff(2, PHYSIQUE, "bloodpower")
-			BD.stats.set_buff(2, VITALITY, "bloodpower")
+			BD.add_physique_mod(2, "bloodpower")
+			BD.add_stamina_mod(2, "bloodpower")
 
 			if(!HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				ADD_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
@@ -136,8 +136,8 @@
 			BD.physiology.armor.bullet = BD.physiology.armor.bullet-15
 			if(HAS_TRAIT(BD, TRAIT_IGNORESLOWDOWN))
 				REMOVE_TRAIT(BD, TRAIT_IGNORESLOWDOWN, SPECIES_TRAIT)
-		BD.stats.remove_buff(PHYSIQUE, "bloodpower")
-		BD.stats.remove_buff(VITALITY, "bloodpower")
+		BD.remove_physique_mod("bloodpower")
+		BD.remove_stamina_mod("bloodpower")
 
 /datum/action/give_vitae
 	name = "Give Vitae"

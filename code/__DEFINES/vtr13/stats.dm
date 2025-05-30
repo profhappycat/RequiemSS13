@@ -1,6 +1,6 @@
-#define PHYSIQUE /datum/attribute/physique
-#define VITALITY /datum/attribute/stamina
-#define CHARISMA /datum/attribute/charisma
-#define COMPOSURE /datum/attribute/composure
-#define WITS /datum/attribute/wits
-#define RESOLVE /datum/attribute/resolve
+#define STAT_PHYSIQUE /datum/attribute/physique
+#define STAT_STAMINA /datum/attribute/stamina
+#define STAT_CHARISMA /datum/attribute/charisma
+#define STAT_COMPOSURE /datum/attribute/composure
+#define STAT_WITS /datum/attribute/wits
+#define STAT_RESOLVE /datum/attribute/resolve

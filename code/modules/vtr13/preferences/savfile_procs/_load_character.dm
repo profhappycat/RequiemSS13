@@ -119,27 +119,27 @@
 	if(!stats)
 		stats = new()
 
-	var/datum/attribute/physique/physique = stats.get_attribute(PHYSIQUE)
+	var/datum/attribute/physique/physique = stats.get_attribute(STAT_PHYSIQUE)
 	READ_FILE(S["physique"], physique.score)
 	physique.score = sanitize_integer(physique.score, 1, 5, 1)
 	//-----------NEW ITEMS-----------
-	var/datum/attribute/stamina/stamina = stats.get_attribute(VITALITY)
+	var/datum/attribute/stamina/stamina = stats.get_attribute(STAT_STAMINA)
 	READ_FILE(S["stamina"], stamina.score)
 	stamina.score = sanitize_integer(stamina.score, 1, 5, 1)
 
-	var/datum/attribute/charisma/charisma = stats.get_attribute(CHARISMA)
+	var/datum/attribute/charisma/charisma = stats.get_attribute(STAT_CHARISMA)
 	READ_FILE(S["charisma"], charisma.score)
 	charisma.score = sanitize_integer(charisma.score, 1, 5, 1)
 
-	var/datum/attribute/composure/composure = stats.get_attribute(COMPOSURE)
+	var/datum/attribute/composure/composure = stats.get_attribute(STAT_COMPOSURE)
 	READ_FILE(S["composure"], composure.score)
 	composure.score = sanitize_integer(composure.score, 1, 5, 1)
 
-	var/datum/attribute/wits/wits = stats.get_attribute(WITS)
+	var/datum/attribute/wits/wits = stats.get_attribute(STAT_WITS)
 	READ_FILE(S["wits"], wits.score)
 	wits.score = sanitize_integer(wits.score, 1, 5, 1)
 
-	var/datum/attribute/resolve/resolve = stats.get_attribute(RESOLVE)
+	var/datum/attribute/resolve/resolve = stats.get_attribute(STAT_RESOLVE)
 	READ_FILE(S["resolve"], resolve.score)
 	resolve.score = sanitize_integer(resolve.score, 1, 5, 1)
 

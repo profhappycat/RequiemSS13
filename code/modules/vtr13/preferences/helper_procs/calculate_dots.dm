@@ -21,12 +21,12 @@
 		else
 			character_dots = CHARACTER_DOTS_DEFAULT
 
-	character_dots -= clamp(stats.get_stat(PHYSIQUE)-1, 5, 0)
-	character_dots -= clamp(stats.get_stat(VITALITY)-1, 5, 0)
-	character_dots -= clamp(stats.get_stat(CHARISMA)-1, 5, 0)
-	character_dots -= clamp(stats.get_stat(COMPOSURE)-1, 5, 0)
-	character_dots -= clamp(stats.get_stat(WITS)-1, 5, 0)
-	character_dots -= clamp(stats.get_stat(RESOLVE)-1, 5, 0)
+	character_dots -= clamp(get_physique()-1, 5, 0)
+	character_dots -= clamp(get_stamina()-1, 5, 0)
+	character_dots -= clamp(get_charisma()-1, 5, 0)
+	character_dots -= clamp(get_composure()-1, 5, 0)
+	character_dots -= clamp(get_wits()-1, 5, 0)
+	character_dots -= clamp(get_resolve()-1, 5, 0)
 	character_dots -= max(auspice_level - 1, 0)
 	if(character_dots < 0)
 		CRASH("Error - More character dots have been taken than there are dots to have!")

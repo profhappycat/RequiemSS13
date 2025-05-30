@@ -56,17 +56,17 @@
 		character.clane.current_accessory = clane_accessory
 		character.maxbloodpool = 9 + character.blood_potency
 		if(character.clane.name == "Revenant")
-			character.bloodpool = character.stats.get_stat(COMPOSURE)
+			character.bloodpool = character.get_composure()
 		else
-			character.bloodpool = rand(character.stats.get_stat(COMPOSURE), character.maxbloodpool)
+			character.bloodpool = rand(character.get_composure(), character.maxbloodpool)
 		character.humanity = humanity
 		character.vtr_faction = vamp_faction
 	else if(pref_species.name == "Ghoul")
 		character.clane = null
 		var/datum/vampireclane/CLN = new regent_clan.type()
 		character.regent_clan = CLN
-		character.maxbloodpool = 5 + character.stats.get_stat(VITALITY)
-		character.bloodpool = rand(character.stats.get_stat(COMPOSURE), character.maxbloodpool)
+		character.maxbloodpool = 5 + character.get_stamina()
+		character.bloodpool = rand(character.get_composure(), character.maxbloodpool)
 		character.vtr_faction = vamp_faction
 	else if(pref_species.name == "Werewolf")
 		character.blood_potency = 5
@@ -176,9 +176,9 @@
 				character.transformator.crinos_form.stats = stats
 				character.transformator.lupus_form.stats = stats
 
-				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*(character.stats.get_stat(PHYSIQUE))))+(character.auspice.level-1)*50
+				character.transformator.lupus_form.maxHealth = round((initial(character.transformator.lupus_form.maxHealth)+(initial(character.maxHealth)/4)*(character.get_physique())))+(character.auspice.level-1)*50
 				character.transformator.lupus_form.health = character.transformator.lupus_form.maxHealth
-				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.stats.get_stat(PHYSIQUE))))+(character.auspice.level-1)*50
+				character.transformator.crinos_form.maxHealth = round((initial(character.transformator.crinos_form.maxHealth)+(initial(character.maxHealth)/4)*(character.get_physique())))+(character.auspice.level-1)*50
 				character.transformator.crinos_form.health = character.transformator.crinos_form.maxHealth
 	if(icon_updates)
 		character.update_body()
