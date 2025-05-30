@@ -44,7 +44,7 @@
 
 	SEND_SOUND(current, sound('code/modules/wod13/sounds/bloodneed.ogg', 0, 0, 50))
 
-	var/frenzy_dice = current.stats.get_stat(RESOLVE) + current.stats.get_stat(COMPOSURE) + situational_modifier - brain.tempted_mod
+	var/frenzy_dice = current.get_resolve() + current.get_composure() + situational_modifier - brain.tempted_mod
 
 	var/check = SSroll.storyteller_roll(frenzy_dice, 3)
 
@@ -78,9 +78,9 @@
 		current.toggle_move_intent()
 
 	var/blood_potency = current.blood_potency
-	current.stats.set_buff(blood_potency, WITS, TRAIT_IN_FRENZY)
-	current.stats.set_buff(blood_potency, PHYSIQUE, TRAIT_IN_FRENZY)
-	current.stats.set_buff(blood_potency, VITALITY, TRAIT_IN_FRENZY)
+	current.add_wits_mod(blood_potency, TRAIT_IN_FRENZY)
+	current.add_physique_mod(blood_potency, TRAIT_IN_FRENZY)
+	current.add_stamina_mod(blood_potency, TRAIT_IN_FRENZY)
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/current_human = current
@@ -109,9 +109,9 @@
 	UnregisterSignal(current, COMSIG_LIVING_DEATH)
 	UnregisterSignal(SSfrenzypool, COMSIG_HANDLE_AUTOMATED_FRENZY)
 
-	current.stats.remove_buff(WITS, TRAIT_IN_FRENZY)
-	current.stats.remove_buff(PHYSIQUE, TRAIT_IN_FRENZY)
-	current.stats.remove_buff(VITALITY, TRAIT_IN_FRENZY)
+	current.remove_wits_mod(TRAIT_IN_FRENZY)
+	current.remove_physique_mod(TRAIT_IN_FRENZY)
+	current.remove_stamina_mod(TRAIT_IN_FRENZY)
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/current_human = current
@@ -245,18 +245,18 @@
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(handle_current_death))
 
 	var/blood_potency = current.blood_potency
-	current.stats.remove_buff(WITS, TRAIT_IN_FRENZY)
-	current.stats.remove_buff(PHYSIQUE, TRAIT_IN_FRENZY)
-	current.stats.remove_buff(VITALITY, TRAIT_IN_FRENZY)
+	current.remove_wits_mod(TRAIT_IN_FRENZY)
+	current.remove_physique_mod(TRAIT_IN_FRENZY)
+	current.remove_stamina_mod(TRAIT_IN_FRENZY)
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/current_human = current
 		current_human.recalculate_max_health()
 
 	blood_potency = new_character.blood_potency
-	new_character.stats.set_buff(blood_potency, WITS, TRAIT_IN_FRENZY)
-	new_character.stats.set_buff(blood_potency, PHYSIQUE, TRAIT_IN_FRENZY)
-	new_character.stats.set_buff(blood_potency, VITALITY, TRAIT_IN_FRENZY)
+	current.add_wits_mod(blood_potency, TRAIT_IN_FRENZY)
+	current.add_physique_mod(blood_potency, TRAIT_IN_FRENZY)
+	current.add_stamina_mod(blood_potency, TRAIT_IN_FRENZY)
 
 	if(ishuman(current))
 		var/mob/living/carbon/human/new_character_human = new_character

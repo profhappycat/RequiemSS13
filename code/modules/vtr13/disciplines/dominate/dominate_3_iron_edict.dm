@@ -46,8 +46,8 @@
 	if(!SSroll.opposed_roll(
 		owner,
 		target,
-		dice_a = owner.stats.get_stat(CHARISMA) + discipline.level,
-		dice_b = target.stats.get_stat(COMPOSURE) + target.blood_potency,
+		dice_a = owner.get_charisma() + discipline.level,
+		dice_b = target.get_composure() + target.blood_potency,
 		alert_atom = target,
 		show_player_a = FALSE,
 		show_player_b = FALSE))

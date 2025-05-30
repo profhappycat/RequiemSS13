@@ -377,12 +377,12 @@
 	if(!S)
 		return
 	stats = new()
-	stats.set_stat(rand(1, max_stat), PHYSIQUE)
-	stats.set_stat(rand(1, max_stat), VITALITY)
-	stats.set_stat(rand(1, max_stat), WITS)
-	stats.set_stat(rand(1, max_stat), RESOLVE)
-	stats.set_stat(rand(1, max_stat), CHARISMA)
-	stats.set_stat(rand(1, max_stat), COMPOSURE)
+	stats.set_stat(rand(1, max_stat), STAT_PHYSIQUE)
+	stats.set_stat(rand(1, max_stat), STAT_STAMINA)
+	stats.set_stat(rand(1, max_stat), STAT_CHARISMA)
+	stats.set_stat(rand(1, max_stat), STAT_COMPOSURE)
+	stats.set_stat(rand(1, max_stat), STAT_WITS)
+	stats.set_stat(rand(1, max_stat), STAT_RESOLVE)
 
 	recalculate_max_health(TRUE)
 

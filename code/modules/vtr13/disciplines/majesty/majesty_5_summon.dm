@@ -41,8 +41,8 @@
 	if(!SSroll.opposed_roll(
 		owner,
 		victim,
-		dice_a = owner.stats.get_stat(CHARISMA) + discipline.level,
-		dice_b = victim.stats.get_stat(COMPOSURE) + victim.blood_potency - HAS_TRAIT_FROM(victim, TRAIT_CHARMED, owner) ? charmed_status_debuff : 0,
+		dice_a = owner.get_charisma() + discipline.level,
+		dice_b = victim.get_composure() + victim.blood_potency - HAS_TRAIT_FROM(victim, TRAIT_CHARMED, owner) ? charmed_status_debuff : 0,
 		alert_atom = owner,
 		show_player_a = TRUE,
 		show_player_b = FALSE))

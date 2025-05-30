@@ -45,7 +45,7 @@
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 
 	var/successes = SSroll.storyteller_roll(
-		dice = stats.get_stat(COMPOSURE)*2,
+		dice = get_composure()*2,
 		difficulty = levels+1,
 		mobs_to_show_output = list(src),
 		alert_atom = src)

@@ -28,12 +28,12 @@
 	var/datum/attribute/A = attributes[attribute]
 	return A
 
-/datum/attributes/proc/set_buff(amount, attribute, source)
+/datum/attributes/proc/add_modifier(amount, attribute, source)
 	var/datum/attribute/A = get_attribute(attribute)
 	LAZYSET(A.modifiers, source, amount)
 	A.update_modifiers()
 
-/datum/attributes/proc/remove_buff(attribute, source)
+/datum/attributes/proc/remove_modifier(attribute, source)
 	var/datum/attribute/A = get_attribute(attribute)
 	if(LAZYACCESS(A.modifiers, source))
 		A.modifiers -= source

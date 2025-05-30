@@ -20,8 +20,8 @@
 	)
 
 /datum/discipline_power/vtr/auspex/lay_open_the_mind/pre_activation_checks(mob/living/carbon/human/target)
-	var/mypower = owner.stats.get_stat(WITS) + discipline.level
-	var/theirpower = target.stats.get_stat(RESOLVE) + target.blood_potency
+	var/mypower = owner.get_wits() + discipline.level
+	var/theirpower = target.get_resolve() + target.blood_potency
 
 	to_chat(owner, span_danger("You probe [target]'s mind..."))
 
