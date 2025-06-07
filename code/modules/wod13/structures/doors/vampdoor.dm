@@ -171,7 +171,7 @@
 				if(P)
 					P.Aggro(user)
 			if(do_mob(user, src, max((lockpick_timer - user.get_wits() * 3), 2) SECONDS))
-				switch(SSroll.storyteller_roll(user.get_wits() * 2 - lockpick_difficulty, 2, list(user), src))
+				switch(SSroll.storyteller_roll(user.get_wits() * 2, lockpick_difficulty, list(user), src))
 					if(0)
 						to_chat(user, "<span class='warning'>Your lockpick broke!</span>")
 						qdel(W)
