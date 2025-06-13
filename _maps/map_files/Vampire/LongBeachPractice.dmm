@@ -3573,11 +3573,6 @@
 "cZZ" = (
 /turf/closed/wall/vampwall/redbrick,
 /area/vtm/vtr/masquerade/exterior/ground_floor/northwest/northwest_long_beach)
-"dah" = (
-/obj/structure/table,
-/obj/structure/retail/hot_ishu,
-/turf/open/floor/plating/vampcarpet,
-/area/vtm/vtr/masquerade/interior/ground_floor/northeast/hot_ishu)
 "dak" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/flora/ausbushes/genericbush,
@@ -13101,6 +13096,11 @@
 	},
 /turf/open/floor/plating/circled,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/laundromat)
+"liz" = (
+/obj/structure/table,
+/obj/structure/retail/costume_store,
+/turf/open/floor/plating/vampcarpet,
+/area/vtm/vtr/masquerade/interior/ground_floor/northeast/hot_ishu)
 "liK" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/item/drinkable_bloodpack,
@@ -14981,6 +14981,10 @@
 "mMU" = (
 /turf/open/openspace,
 /area/vtm/vtr/masquerade/interior/floor_two/northwest/apartment)
+"mNi" = (
+/obj/structure/retail/hot_ishu,
+/turf/open/floor/plating/sidewalk,
+/area/vtm/vtr/masquerade/exterior/ground_floor/northwest/northwest_long_beach/inaccessible)
 "mNy" = (
 /turf/closed/wall/vampwall/city,
 /area/vtm/vtr/masquerade/interior/ground_floor/southeast/abandoned_store)
@@ -24650,6 +24654,11 @@
 	},
 /turf/open/floor/plating/sidewalk,
 /area/vtm/vtr/masquerade/exterior/ground_floor/park/shoreline_park)
+"uyl" = (
+/obj/structure/table,
+/obj/structure/retail/hot_ishu,
+/turf/open/floor/plating/vampcarpet,
+/area/vtm/vtr/masquerade/interior/ground_floor/northeast/hot_ishu)
 "uyo" = (
 /obj/machinery/light/prince{
 	dir = 8
@@ -26890,6 +26899,11 @@
 /obj/structure/window,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/ground_floor/northwest/coffee_shop)
+"wtF" = (
+/obj/structure/table/wood,
+/obj/structure/retail/hardware_store,
+/turf/open/floor/plating/parquetry/old,
+/area/vtm/vtr/masquerade/interior/ground_floor/northwest/aro_hardware)
 "wub" = (
 /obj/structure/safe{
 	pixel_x = 7;
@@ -27980,11 +27994,6 @@
 /obj/structure/window_frame/city,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/pawn_shop)
-"xiD" = (
-/obj/structure/table/wood,
-/obj/structure/retail/hardware_store,
-/turf/open/floor/plating/parquetry/old,
-/area/vtm/vtr/masquerade/interior/ground_floor/northwest/aro_hardware)
 "xiE" = (
 /obj/effect/decal/wallpaper/light/low,
 /obj/structure/window_frame/old{
@@ -95329,7 +95338,7 @@ egR
 egR
 egR
 egR
-egR
+mNi
 egR
 egR
 egR
@@ -107150,7 +107159,7 @@ rIR
 dwW
 dwW
 dwW
-xiD
+wtF
 eaH
 dwW
 odA
@@ -138997,7 +139006,7 @@ qFA
 qFA
 mWa
 lep
-wQE
+liz
 lep
 lep
 lep
@@ -139254,7 +139263,7 @@ qFA
 qFA
 gsn
 pyB
-dah
+uyl
 lep
 lep
 lep
