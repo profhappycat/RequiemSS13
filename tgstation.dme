@@ -3876,6 +3876,7 @@
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_general.dm"
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_gloves.dm"
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_hat.dm"
+#include "code\modules\vtr13\preferences\loadouts\gear\loadout_masks.dm"
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_neck.dm"
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_suit.dm"
 #include "code\modules\vtr13\preferences\loadouts\gear\loadout_uniform.dm"

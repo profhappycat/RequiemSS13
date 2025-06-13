@@ -20,6 +20,5 @@
 		new /datum/data/retail_product("jester mask",	/obj/item/clothing/mask/vampire/venetian_mask/jester,	50),
 		new /datum/data/retail_product("bloody mask",	/obj/item/clothing/mask/vampire/venetian_mask/scary,	30),
 		new /datum/data/retail_product("comedy mask", /obj/item/clothing/mask/vampire/comedy,	25),
-		new /datum/data/retail_product("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25),
-		new /datum/data/retail_product("shemagh",	 /obj/item/clothing/mask/vampire/shemagh,	20),
+		new /datum/data/retail_product("tragedy mask", /obj/item/clothing/mask/vampire/tragedy,	25)
 	)
