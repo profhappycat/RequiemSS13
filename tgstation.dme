@@ -3986,6 +3986,7 @@
 #include "code\modules\vtr13\structure\retail\stores\drink_vendor_blue.dm"
 #include "code\modules\vtr13\structure\retail\stores\flower_shop.dm"
 #include "code\modules\vtr13\structure\retail\stores\gas_station.dm"
+#include "code\modules\vtr13\structure\retail\stores\grocery_store.dm"
 #include "code\modules\vtr13\structure\retail\stores\gummaguts_menu.dm"
 #include "code\modules\vtr13\structure\retail\stores\gun_store.dm"
 #include "code\modules\vtr13\structure\retail\stores\hotel_desk.dm"
