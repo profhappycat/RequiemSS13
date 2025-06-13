@@ -12,7 +12,7 @@
 			player_ckey = :ckey_daeva AND \
 			character_name = :char_name_daeva AND \
 			date_ended IS NULL AND \
-			member_type = :member_type AND \
+			member_type = :member_type_daeva AND \
 			group_id IN ( \
 				SELECT group_id \
 				FROM [format_table_name("character_connection")] \
