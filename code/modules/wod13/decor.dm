@@ -356,7 +356,7 @@
 
 /obj/effect/decal/painting
 	name = "painting"
-	icon = 'icons/wod13/icons.dmi'
+	icon = 'icons/vtr13/effect/paintings.dmi'
 	icon_state = "painting1"
 	plane = GAME_PLANE
 	layer = ABOVE_ALL_MOB_LAYER
@@ -1158,7 +1158,7 @@
 	if(!large)
 		icon_state = "graffiti[rand(1, 15)]"
 	else
-		icon_state = "graffiti[rand(1, 3)]"
+		icon_state = "graffiti[rand(1, 5)]"
 
 /obj/structure/roofstuff
 	name = "roof ventilation"
