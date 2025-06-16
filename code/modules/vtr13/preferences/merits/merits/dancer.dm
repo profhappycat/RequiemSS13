@@ -2,14 +2,14 @@
 /datum/merit/dancer
 	name = "Dancer"
 	desc = "You can dance to lower your humanity. NOTE: This merit is NOT a permanent fixture, and will be REMOVED during the humanity rework."
-	value = 4
+	dots = 4
 	mob_trait = TRAIT_DANCER
 	gain_text = "<span class='notice'>You want to dance.</span>"
 	lose_text = "<span class='warning'>You don't want to dance anymore.</span>"
 
 /datum/merit/dancer/on_spawn()
-	var/mob/living/carbon/H = quirk_holder
-	var/datum/action/dance/DA = new()
+	var/mob/living/carbon/H = merit_holder
+	var/datum/action/dance/DA = new(H)
 	DA.Grant(H)
 
 /datum/action/dance

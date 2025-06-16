@@ -16,9 +16,10 @@ SUBSYSTEM_DEF(tides)
 	if(surfers.Find(flotsam))
 		return
 	
-	surfers += flotsam
-	playsound(get_turf(flotsam), 'sound/vtr13/water_splash.ogg', 100, TRUE)
-	if(isliving(flotsam))
+	
+	if(ismob(flotsam))
+		if(!isliving(flotsam))
+			return
 		var/mob/living/soggy_lad = flotsam
 		soggy_lad.Immobilize(130, TRUE)
 		addtimer(CALLBACK(src, PROC_REF(knock_down), flotsam), 90)
@@ -32,6 +33,11 @@ SUBSYSTEM_DEF(tides)
 	else if(isobj(flotsam))
 		var/obj/driftwood = flotsam
 		driftwood.extinguish()
+	else
+		return
+	
+	surfers += flotsam
+	playsound(get_turf(flotsam), 'sound/vtr13/water_splash.ogg', 100, TRUE)
 	flotsam.alpha -= 255
 	addtimer(CALLBACK(src, PROC_REF(wash_up), flotsam), 100)
 
