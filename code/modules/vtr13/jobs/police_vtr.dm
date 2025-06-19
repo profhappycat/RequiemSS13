@@ -4,7 +4,7 @@
 	faction = "Vampire"
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = " the SFPD Chief and your Sergeant."
+	supervisors = " the LBPD Chief and your Sergeant."
 	selection_color = "#7e7e7e"
 
 	outfit = /datum/outfit/job/police_officer_vtr
@@ -34,11 +34,9 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest/police
 	belt = /obj/item/storage/belt/holster/detective/vampire/police
-	gloves = /obj/item/cockclock
 	id = /obj/item/card/id/police //sticking with wod13 version as it integrates with npc code
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/vamp/keys/police_vtr
-	backpack_contents = list(/obj/item/vamp/creditcard/police=1, /obj/item/ammo_box/vampire/c9mm = 1, /obj/item/restraints/handcuffs = 1,/obj/item/melee/classic_baton/vampire = 1, /obj/item/storage/firstaid/ifak = 1, /obj/item/gun/energy/taser/twoshot = 1)
+	backpack_contents = list(/obj/item/vamp/creditcard/police=1, /obj/item/restraints/handcuffs=1, /obj/item/melee/classic_baton/vampire=1, /obj/item/gun/energy/taser/twoshot=1, /obj/item/vamp/keys/police_vtr=1)
 
 /datum/outfit/job/police_officer_vtr/post_equip(mob/living/carbon/human/H)
 	..()

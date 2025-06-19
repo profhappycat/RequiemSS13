@@ -130,6 +130,33 @@
 	worn_icon = 'icons/wod13/worn.dmi'
 	worn_icon_state = "id12"
 
+/obj/item/card/id/sworn
+	name = "laboratory tech's ID"
+	id_type_name = "laboratory tech ID"
+	desc = "An ID issued to members of a local UCLA research lab."
+	icon = 'icons/wod13/items.dmi'
+	icon_state = "id12"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	worn_icon_state = "id12"
+
+/obj/item/card/id/librarian
+	name = "librarian tech's ID"
+	id_type_name = "librarian ID"
+	desc = "An ID issued to workers at the UCLA library."
+	icon = 'icons/wod13/items.dmi'
+	icon_state = "id12"
+	inhand_icon_state = "card-id"
+	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
+	onflooricon = 'icons/wod13/onfloor.dmi'
+	worn_icon = 'icons/wod13/worn.dmi'
+	worn_icon_state = "id12"
+
+
 /obj/item/card/id/invictus
 	name = "security badge"
 	id_type_name = "security badge"

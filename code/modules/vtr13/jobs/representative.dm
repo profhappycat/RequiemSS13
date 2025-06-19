@@ -24,20 +24,16 @@
 
 	v_duty = "You're the (hopefully) duly elected representative of the local Carthian movement. Make sure the Invictus respect your interests and the will of the assembly. Keep the Carthian supply network flowing and money coming in. Push your vision of the future out onto the city."
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
-	known_contacts = list("Seneschal", "Keeper of Elysium", "Sheriff")
+	known_contacts = list("Page", "Keeper of Elysium", "Sheriff")
 
 /datum/outfit/job/representative
 	name = "Carthian Representative"
 	jobtype = /datum/job/vamp/vtr/representative
-
 	id = /obj/item/card/id/representative
 	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/brown
-	glasses = /obj/item/clothing/glasses/vampire/sun
 	l_pocket = /obj/item/vamp/phone/representative
-	r_pocket = /obj/item/vamp/keys/representative
-	backpack_contents = list(/obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/head=1)
+	backpack_contents = list(/obj/item/vamp/creditcard/head=1, /obj/item/vamp/keys/representative=1)
 
 /datum/outfit/job/representative/pre_equip(mob/living/carbon/human/H)
 	..()

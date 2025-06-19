@@ -14,9 +14,9 @@
 	var/votable = FALSE
 
 	// Config actually from the JSON - should default to Meta
-	var/map_name = "San Francisco"
+	var/map_name = "Long Beach"
 	var/map_path = "map_files/Vampire"
-	var/map_file = "SanFrancisco.dmm"
+	var/map_file = "LongBeachPractice.dmm"
 
 	var/traits = null
 	var/space_ruin_levels = 0

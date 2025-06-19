@@ -14,6 +14,12 @@
 		return null
 	return format_text ? format_text(A.name) : A.name
 
+/proc/get_area_sector(atom/X, format_text = FALSE)
+	var/area/vtm/vtr/A = isarea(X) ? X : get_area(X)
+	if(!A)
+		return null
+	return format_text ? format_text(A.sector) : A.sector
+
 /proc/get_areas_in_range(dist=0, atom/center=usr)
 	if(!dist)
 		var/turf/T = get_turf(center)

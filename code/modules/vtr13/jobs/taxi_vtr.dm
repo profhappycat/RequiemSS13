@@ -29,33 +29,10 @@
 /datum/outfit/job/taxi_vtr
 	name = "Taxi Driver"
 	jobtype = /datum/job/vamp/vtr/taxi_vtr
-
-	id = /obj/item/cockclock
-	glasses = /obj/item/clothing/glasses/vampire/sun
-	uniform = /obj/item/clothing/under/vampire/suit
+	uniform = /obj/item/clothing/under/vampire/sport
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/vamp/keys/taxi_vtr
-	backpack_contents = list(/obj/item/flashlight=1, /obj/item/vamp/creditcard=1, /obj/item/melee/vampirearms/tire=1)
-
-/datum/outfit/job/taxi_vtr/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
-		if(H.gender == MALE)
-			shoes = /obj/item/clothing/shoes/vampire
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
-		else
-			shoes = /obj/item/clothing/shoes/vampire/heels
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
-	else
-		if(H.gender == MALE)
-			shoes = /obj/item/clothing/shoes/vampire
-			uniform = /obj/item/clothing/under/vampire/sport
-		else
-			shoes = /obj/item/clothing/shoes/vampire/heels
-			uniform = /obj/item/clothing/under/vampire/red
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/melee/vampirearms/tire=1, /obj/item/vamp/keys/taxi_vtr=1)
 
 /obj/effect/landmark/start/vtr/taxi_vtr
 	name = "Taxi Driver"

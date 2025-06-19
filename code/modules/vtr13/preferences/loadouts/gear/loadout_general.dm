@@ -79,3 +79,12 @@
 /datum/gear/general/hair_spray
 	display_name = "hair spray"
 	path = /obj/item/dyespray
+
+/datum/gear/general/wristwatch
+	display_name = "wrist watch"
+	path = /obj/item/cockclock
+
+/datum/gear/general/flashlight
+	display_name = "flashlight"
+	path = /obj/item/flashlight
+

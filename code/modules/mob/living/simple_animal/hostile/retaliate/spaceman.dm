@@ -76,7 +76,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/nanotrasenpeace/vampire
 	name = "SWAT Soldier"
-	desc = "An officer part of SFPD's private security force."
+	desc = "An officer part of LBPD's private security force."
 	icon = 'icons/wod13/mobs.dmi'
 	icon_state = "swat"
 	icon_living = "swat"

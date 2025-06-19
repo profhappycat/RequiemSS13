@@ -19,7 +19,6 @@
 	exp_type_department = EXP_TYPE_ORDO
 
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
 
 	minimum_vamp_rank = VAMP_RANK_ANCILLAE
 
@@ -34,14 +33,11 @@
 	name = "Voivode"
 	jobtype = /datum/job/vamp/vtr/voivode_vtr
 	id = /obj/item/card/id/voivode_vtr
-	//glasses = /obj/item/clothing/glasses/vampire/yellow
 	uniform = /obj/item/clothing/under/vampire/voivode
 	suit = /obj/item/clothing/suit/vampire/trench/voivode
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	belt = /obj/item/storage/belt/vampire/sheathe/longsword
 	l_pocket = /obj/item/vamp/phone
-	//r_pocket =
-	backpack_contents = list(/obj/item/melee/vampirearms/eguitar=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/head=1)
+	backpack_contents = list(/obj/item/vamp/creditcard/head=1)
 
 /obj/effect/landmark/start/vtr/voivode_vtr
 	name = "Voivode"

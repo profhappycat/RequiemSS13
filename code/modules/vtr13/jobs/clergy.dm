@@ -19,31 +19,16 @@
 	allowed_species = list("Human")
 
 	duty = "you are a human priest in a very human house of god, no evil - such as vampires or bad descriptions elge has not gotten to - could ever taint this place"
-	known_contacts = list("Seneschal", "Keeper of Elysium", "Sheriff")
-	my_contact_is_important = TRUE
+	known_contacts = list("Bishop")
 
 /datum/outfit/job/clergy
 	name = "Clergy"
 	jobtype = /datum/job/vamp/vtr/clergy
-
 	uniform = /obj/item/clothing/under/vampire/graveyard
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	id = /obj/item/card/id/sanctified
 	l_pocket = /obj/item/vamp/phone/sanctified
-	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/clergy
-	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(/obj/item/vamp/creditcard=1)
-
-/datum/outfit/job/clergy/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
-		if(H.gender == MALE)
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
-		else
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/clergy=1)
 
 /obj/effect/landmark/start/vtr/clergy
 	name = "Clergy"

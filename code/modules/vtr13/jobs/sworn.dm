@@ -17,8 +17,7 @@
 	exp_type_department = EXP_TYPE_ORDO
 
 	allowed_species = list("Vampire", "Ghoul")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
-	known_contacts = list("Hierophant")
+	known_contacts = list("Voivode")
 
 	duty = "You are a ghoul bound to one of the Ordo Dracul, or to the Ordo as a whole. Assist them in their research. Keep their secrets secure. Try not to become a test subject."
 	v_duty = "You are one of the Sworn of the Mysteries, a member of the Ordo Dracul. Help your Voivode conduct their research into the occult and paranormal. Observe and catalogue everything of note in the city. Master the coils and transcend the limitations of the vampiric condition."
@@ -27,24 +26,11 @@
 /datum/outfit/job/sworn
 	name = "Sworn"
 	jobtype = /datum/job/vamp/vtr/sworn
-	id = /obj/item/cockclock
-	glasses = /obj/item/clothing/glasses/vampire/sun
-	uniform = /obj/item/clothing/under/vampire/suit
-	suit = /obj/item/clothing/suit/vampire/trench
+	id = /obj/item/card/id/sworn
+	uniform = /obj/item/clothing/under/vampire/emo
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/sworn
-	r_pocket = /obj/item/vamp/keys/sworn
-	backpack_contents = list(/obj/item/flashlight=1, /obj/item/vamp/creditcard=1)
-
-/datum/outfit/job/sworn/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
-		if(H.gender == MALE)
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
-		else
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/sworn=1)
 
 /obj/effect/landmark/start/vtr/sworn
 	name = "Sworn"

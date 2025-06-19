@@ -1219,7 +1219,7 @@
 											"Stop right there!!",
 											"Drop your weapon!",
 											"Stop there right now!!",
-											"This is SFPD, hands on your head!",
+											"This is LBPD, hands on your head!",
 											"You have the right to remain silent!",
 											"Bush gave me the right to kick your head in!",
 											"I'm gonna beat you harder than the Eagles got beat by the Patriots!",)
