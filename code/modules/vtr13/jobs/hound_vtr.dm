@@ -25,7 +25,6 @@
 	known_contacts = list("Prince", "Keeper of Elysium", "Sheriff")
 
 	v_duty = "You're a Hound, one of the Sheriff's attack dogs and a member of the Invictus. Help the Sheriff enforce the Seneschal's orders. Ensure that the Traditions are kept. Protect the Invictus and its leadership."
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
 
 /datum/outfit/job/hound_vtr
 	name = "Hound"
@@ -33,13 +32,11 @@
 
 	ears = /obj/item/p25radio
 	id = /obj/item/card/id/invictus
-	uniform = /obj/item/clothing/under/vampire/hound
-	gloves = /obj/item/clothing/gloves/vampire/work
+	uniform = /obj/item/clothing/under/vampire/suit
 	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
-	r_pocket = /obj/item/vamp/keys/hound
 	l_pocket = /obj/item/vamp/phone/invictus
-	backpack_contents = list(/obj/item/cockclock=1, /obj/item/vampire_stake=3, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/keys/hack=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/vampire_stake=1, /obj/item/vamp/creditcard=1, /obj/item/vamp/keys/hound=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel

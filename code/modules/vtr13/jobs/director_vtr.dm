@@ -1,10 +1,9 @@
 /datum/job/vamp/vtr/director_vtr
 	title = "Clinic Director"
-	department_head = list("Seneschal")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the Camarilla or the Anarchs"
+	supervisors = "Big Pharma"
 	selection_color = "#80D0F4"
 	
 	exp_type_department = EXP_TYPE_CLINIC
@@ -32,14 +31,7 @@
 	suit =  /obj/item/clothing/suit/vampire/labcoat/director
 	gloves = /obj/item/clothing/gloves/vampire/latex
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/vamp/keys/director_vtr
-	backpack_contents = list(/obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/clinic_director=1, /obj/item/storage/firstaid/medical=1)
-
-	backpack = /obj/item/storage/backpack
-	satchel = /obj/item/storage/backpack/satchel
-	duffelbag = /obj/item/storage/backpack/duffelbag
-
-	skillchips = list(/obj/item/skillchip/quickcarry)
+	backpack_contents = list(/obj/item/vamp/creditcard/clinic_director=1, /obj/item/storage/firstaid/medical=1, /obj/item/vamp/keys/director_vtr=1)
 
 /obj/effect/landmark/start/vtr/director_vtr
 	name = "Director"

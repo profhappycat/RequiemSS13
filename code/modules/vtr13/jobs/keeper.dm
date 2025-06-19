@@ -19,29 +19,22 @@
 	
 	display_order = JOB_DISPLAY_ORDER_KEEPER
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
 	
 	minimum_vamp_rank = VAMP_RANK_ANCILLAE
 
-	v_duty = "An Elysuim is an important location in kindred society. Tonight, you will rule yours like the Devil rules Hell. Keep the peace in this den of secrets, no matter the cost. While in your Elysium, only the Seneschal and the Prince have authority over you."
+	v_duty = "An Elysuim is an important location in Kindred society. Tonight, you will rule yours like the Devil rules Hell. Keep the peace in this den of secrets, no matter the cost. While in your Elysium, only the Seneschal and the Prince have authority over you."
 	my_contact_is_important = TRUE
-	known_contacts = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
+	known_contacts = list("Seneschal", "Sheriff", "Page")
 
 /datum/outfit/job/keeper
 	name = "Keeper of Elysium"
 	jobtype = /datum/job/vamp/vtr/keeper
 
 	id = /obj/item/card/id/keeper
-	glasses = /obj/item/clothing/glasses/vampire/sun
 	uniform = /obj/item/clothing/under/vampire/suit
-	suit = /obj/item/clothing/suit/vampire/trench
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/keeper
-	r_pocket = /obj/item/cockclock
-	backpack_contents = list(/obj/item/vamp/keys/keeper=1, /obj/item/flashlight=1, /obj/item/vamp/creditcard/head=1, /obj/item/card/id/whip)
-
-/datum/outfit/job/keeper/pre_equip(mob/living/carbon/human/H)
-	..()
+	backpack_contents = list(/obj/item/vamp/keys/keeper=1, /obj/item/vamp/creditcard/head=1)
 
 
 /obj/effect/landmark/start/vtr/keeper

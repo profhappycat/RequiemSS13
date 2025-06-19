@@ -23,8 +23,6 @@
 	minimum_vamp_rank = VAMP_RANK_ANCILLAE
 
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
-
 	v_duty = "You are the Sanctified Bishop, leader of the local chapter of the Lancea et Sanctum. Bear up the Lance and keep the Chapel. Direct your Sanctified to scour the wicked and protect the good. Ensure the Kindred do not fall into monstrosity."
 
 	known_contacts = list("Seneschal", "Keeper of Elysium", "Sheriff")
@@ -36,18 +34,9 @@
 
 	uniform = /obj/item/clothing/under/vampire/graveyard
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	id = /obj/item/card/id/hunter
+	id = /obj/item/card/id/sanctified
 	l_pocket = /obj/item/vamp/phone/bishop
-	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/bishop
-	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(/obj/item/vamp/creditcard/head=1)
-
-///datum/outfit/job/bishop/pre_equip(mob/living/carbon/human/H)
-//	..()
-//	H.mind.holy_role = HOLY_ROLE_PRIEST
-//	H.resistant_to_disciplines = TRUE
-//	to_chat(H, "<span class='alertsyndie'>Your faith in God is made of iron. None could shake it, and even in the darkest moments it holds you up.</span>")
+	backpack_contents = list(/obj/item/vamp/creditcard/head=1, /obj/item/vamp/keys/bishop=1)
 
 /obj/effect/landmark/start/vtr/bishop
 	name = "Bishop"

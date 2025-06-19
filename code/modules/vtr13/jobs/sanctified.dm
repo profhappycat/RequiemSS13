@@ -17,11 +17,8 @@
 	exp_type_department = EXP_TYPE_LANCEA
 
 	allowed_species = list("Vampire", "Ghoul")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
 	duty = "You're a ghoul belonging to one of the Sanctified, or to the Lancea et Sanctum itself. Help the Sanctified with their work. Dispose of corpses in the crematorium. Find salvation in the blood."
 	v_duty = "You're one of the Sacntified, the clergy of the Lancea et Sanctum. Bear up the Lance and keep the Chapel. Keep the kine faithful. Advise your fellow Kindred on matters of faith and morality. Discretely dispose of any unfortunate lapses in judgement."
-	known_contacts = list("Seneschal", "Keeper of Elysium", "Sheriff")
-	my_contact_is_important = TRUE
 
 /datum/outfit/job/sanctified
 	name = "Sanctified"
@@ -31,20 +28,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	id = /obj/item/card/id/sanctified
 	l_pocket = /obj/item/vamp/phone/sanctified
-	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/sanctified
-	back = /obj/item/storage/backpack/satchel
-	backpack_contents = list(/obj/item/vamp/creditcard=1)
-
-/datum/outfit/job/sanctified/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
-		if(H.gender == MALE)
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
-		else
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/sanctified=1)
 
 /obj/effect/landmark/start/vtr/sanctified
 	name = "Sanctified"

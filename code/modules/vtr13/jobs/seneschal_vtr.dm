@@ -1,7 +1,7 @@
 /datum/job/vamp/vtr/seneschal_vtr
 	title = "Seneschal"
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
-	department_head = list("Justicar")
+	department_head = list("Prince")
 	faction = "Vampire"
 	total_positions = 1
 	spawn_positions = 1
@@ -31,6 +31,7 @@
 
 	my_contact_is_important = TRUE
 	known_contacts = list(
+		"Page",
 		"Sheriff",
 		"Keeper of Elysium",
 		"Carthian Representative",
@@ -47,25 +48,14 @@
 
 	ears = /obj/item/p25radio
 	id = /obj/item/card/id/seneschal_vtr
-	glasses = /obj/item/clothing/glasses/vampire/sun
-	gloves = /obj/item/clothing/gloves/vampire/latex
 	uniform =  /obj/item/clothing/under/vampire/prince
 	suit = /obj/item/clothing/suit/vampire/trench/alt
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/seneschal_vtr
-	r_pocket = /obj/item/vamp/keys/seneschal_vtr
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/phone_book=1, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/creditcard/seneschal=1)
-
-
-	backpack = /obj/item/storage/backpack
-	satchel = /obj/item/storage/backpack/satchel
-	duffelbag = /obj/item/storage/backpack/duffelbag
-
-	implants = list(/obj/item/implant/mindshield)
+	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/masquerade_contract=1, /obj/item/vamp/creditcard/seneschal=1, /obj/item/vamp/keys/seneschal_vtr=1, /obj/item/melee/chainofcommand=1)
 
 /datum/outfit/job/seneschal_vtr/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.ignores_warrant = TRUE
 
 /obj/effect/landmark/start/vtr/seneschal_vtr
 	name = "Seneschal"

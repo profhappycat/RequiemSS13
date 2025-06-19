@@ -23,34 +23,14 @@
 	experience_addition = 10
 	my_contact_is_important = FALSE
 
-/datum/outfit/job/courtier/pre_equip(mob/living/carbon/human/H)
-	..()
-	if(H.clane)
-		if(H.gender == MALE)
-			shoes = /obj/item/clothing/shoes/vampire
-			if(H.clane.male_clothes)
-				uniform = H.clane.male_clothes
-		else
-			shoes = /obj/item/clothing/shoes/vampire/heels
-			if(H.clane.female_clothes)
-				uniform = H.clane.female_clothes
-	else
-		uniform = /obj/item/clothing/under/vampire/emo
-		if(H.gender == MALE)
-			shoes = /obj/item/clothing/shoes/vampire
-		else
-			shoes = /obj/item/clothing/shoes/vampire/heels
-
 /datum/outfit/job/courtier
 	name = "Courtier"
 	jobtype = /datum/job/vamp/vtr/courtier
 	uniform = /obj/item/clothing/under/vampire/suit
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	id = /obj/item/cockclock
 	l_pocket = /obj/item/vamp/phone
-	r_pocket = /obj/item/flashlight
-	l_hand = /obj/item/vamp/keys/courtier
-	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/clothing/mask/vampire/balaclava =1, /obj/item/gun/ballistic/automatic/vampire/beretta=2,/obj/item/ammo_box/magazine/semi9mm=2, /obj/item/melee/vampirearms/knife)
+	id = /obj/item/card/id/page
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/courtier=1)
 
 /obj/effect/landmark/start/vtr/courtier
 	name = "Courtier"

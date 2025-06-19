@@ -2,6 +2,7 @@
 	products_list = list(
 		new /datum/data/retail_product("\"Vase\"",	/obj/item/bong,		50),
 		new /datum/data/retail_product("cross",	/obj/item/card/id/hunter,  25),
+		new /datum/data/retail_product("electric guitar", /obj/item/melee/vampirearms/eguitar, 400),
 		new /datum/data/retail_product("backpack",	/obj/item/storage/backpack,	100),
 		new /datum/data/retail_product("black fur boots", /obj/item/clothing/shoes/vampire/vtr/blackfur, 20),
 		new /datum/data/retail_product("black grunge outfit",	/obj/item/clothing/under/vampire/black,	20),

@@ -29,10 +29,10 @@
 
 	minimum_vamp_rank = VAMP_RANK_ANCILLAE
 	allowed_species = list("Vampire")
-	allowed_bloodlines = list("Ventrue", "Daeva", "Mekhet", "Nosferatu", "Gangrel")
+
 
 	my_contact_is_important = TRUE
-	known_contacts = list("Seneschal","Keeper of Elysium", "Carthian Representative", "Bishop", "Hierophant", "Voivode")
+	known_contacts = list("Seneschal","Keeper of Elysium", "Page", "Carthian Representative", "Bishop", "Hierophant", "Voivode")
 
 	v_duty = "Protect the Seneschal and the Masquerade. You are their sword."
 
@@ -43,24 +43,14 @@
 	ears = /obj/item/p25radio
 	id = /obj/item/card/id/sheriff_vtr
 	uniform = /obj/item/clothing/under/vampire/sheriff
-	belt = /obj/item/storage/belt/vampire/sheathe/rapier
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	suit = /obj/item/clothing/suit/vampire/vest
 	gloves = /obj/item/clothing/gloves/vampire/leather
-	glasses = /obj/item/clothing/glasses/vampire/sun
-	r_pocket = /obj/item/vamp/keys/sheriff_vtr
 	l_pocket = /obj/item/vamp/phone/sheriff_vtr
-	backpack_contents = list(/obj/item/gun/ballistic/automatic/vampire/deagle=1, /obj/item/vampire_stake=3, /obj/item/cockclock=1, /obj/item/flashlight=1, /obj/item/masquerade_contract=1, /obj/item/vamp/creditcard/head=1)
-
-	backpack = /obj/item/storage/backpack
-	satchel = /obj/item/storage/backpack/satchel
-	duffelbag = /obj/item/storage/backpack/duffelbag
-
-	implants = list(/obj/item/implant/mindshield)
+	backpack_contents = list(/obj/item/vampire_stake=1, /obj/item/vamp/creditcard/head=1, /obj/item/vamp/keys/sheriff_vtr=1)
 
 /datum/outfit/job/sheriff_vtr/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.ignores_warrant = TRUE
 
 /obj/effect/landmark/start/vtr/sheriff_vtr
 	name = "Sheriff"

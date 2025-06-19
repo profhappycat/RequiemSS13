@@ -12,32 +12,11 @@
 	. = ..()
 	var/turf/T = get_turf(user)
 	if(T)
-		. += "<b>Location:</b> [T.x]:[T.y] ([get_cardinal_direction(T.x, T.y)])"
-
-/proc/get_cardinal_direction(x, y)
-	var/direction = ""
-	var/center_x = (x >= 98 && x <= 158)
-	var/center_y = (y >= 98 && y <= 158)
-	if(center_x && center_y)
-		return "Central"
-	if(center_x)
-		direction = ""
-	else if(x >= 128)
-		direction += "East"
-	else
-		direction += "West"
-	if(center_y)
-		direction = "Central [direction]"
-	else if(y >= 128)
-		direction = "North [direction]"
-	else
-		direction = "South [direction]"
-	direction += " San Francisco"
-	return direction
+		. += "<b>Location:</b> [T.x]:[T.y] ([get_area_sector(T)])"
 
 /obj/item/police_radio/proc/announce_crime(var/crime, var/atom/location)
 	var/area/crime_location = get_area(location)
-	var/direction = get_cardinal_direction(location.x, location.y)
+	var/direction = get_area_sector(location)
 	var/message = ""
 	if(!isMasqueradeEnforced(crime_location))
 		return

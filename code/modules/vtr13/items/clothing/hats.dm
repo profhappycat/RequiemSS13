@@ -1,6 +1,6 @@
 ///VTR CLOTHES
 /obj/item/clothing/head/vampire/vtr
-	name = "generic vamp suit"
+	name = "generic vamp hat"
 	icon = 'icons/vtr13/obj/clothing/hats.dmi'
 	worn_icon = 'icons/vtr13/obj/clothing/worn.dmi'
 	onflooricon = 'icons/vtr13/obj/clothing/onfloor.dmi'
@@ -17,5 +17,4 @@
 	name = "Page's cap"
 	icon_state = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
-	armor = list(MELEE = 25, BULLET = 15, LASER = 25, ENERGY = 35, BOMB = 25, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
 	dog_fashion = /datum/dog_fashion/head/hop
