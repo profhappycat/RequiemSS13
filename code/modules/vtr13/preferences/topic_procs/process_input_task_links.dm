@@ -58,7 +58,9 @@
 			var/new_age = tgui_input_number(user, "Choose your character's biological age:\n([AGE_MIN]-[AGE_MAX])", "Character Preference", age, AGE_MAX, AGE_MIN, round_value = TRUE)
 			if(new_age)
 				if(pref_species.name == "Vampire" || pref_species.name == "Ghoul")
-					age = clamp(round(new_age), min(AGE_MAX, actual_age) , AGE_MIN)
+					age = clamp(round(new_age), AGE_MIN, AGE_MAX)
+					if(age > actual_age)
+						actual_age = age
 				else
 					age = clamp(round(new_age), AGE_MAX, AGE_MIN)
 
@@ -67,7 +69,7 @@
 		if("actual_age")
 			var/new_age = tgui_input_number(user, "Choose your character's actual age:\n([age]-[6000])", "Character Preference", actual_age, 6000, age, round_value = TRUE)
 			if(new_age)
-				actual_age = clamp(new_age, age, age+1000)
+				actual_age = clamp(new_age, age, VAMP_AGE_MAX)
 				update_preview_icon()
 
 		if("info_choose")
