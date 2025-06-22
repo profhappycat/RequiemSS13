@@ -15,9 +15,13 @@
 		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
 				. += "<b>You know [t_him] as a [job] of the [clane] bloodline.</b>"
+				if(HAS_TRAIT(src, TRAIT_NOTARY))
+					. += "<b>[t_He] is an Invictus Notary.</b>"
 			if(INFO_KNOWN_CLAN_ONLY)
 				if(same_clan)
 					. += "<b>You know [t_him] as a [job]. You are of the same bloodline.</b>"
+					if(HAS_TRAIT(src, TRAIT_NOTARY))
+					. += "<b>[t_He] is an Invictus Notary.</b>"
 
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
