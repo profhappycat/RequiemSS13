@@ -4,7 +4,7 @@
 
 	if(iskindred(user) && iskindred(src) && is_face_visible())
 		var/mob/living/carbon/human/vampire = user
-		var/same_faction = vampire.vtr_faction.name == vtr_faction.name
+		var/same_faction = vampire.vtr_faction?.name == vtr_faction?.name
 		switch(info_known)
 			if(INFO_KNOWN_PUBLIC)
 				. += "<b>You know [t_him] as \a [job] of the [vtr_faction.name].</b>"

@@ -90,6 +90,7 @@
 	var/registered_age = 24 // default age for ss13 players
 
 /obj/item/card/id/New()
+	..()
 	log_admin("Made keycard.")
 
 /obj/item/card/id/Initialize(mapload)
