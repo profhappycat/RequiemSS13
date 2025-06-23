@@ -403,7 +403,7 @@
 			adjust_blood_potency()
 		
 		if("vamp_faction")
-			if((clane?.name == "Revenant"))
+			if(clane?.name == "Revenant")
 				return
 
 			if(tgui_alert(user, "WARNING: Changing faction will invalidate any endorsement you have recieved or given!", "WARNING", list("Okay", "Cancel")) == "Cancel")
@@ -411,7 +411,7 @@
 
 			var/new_faction_name = tgui_input_list(user, "Choose a Covenant:", "Character Preference", GLOB.vampire_faction_list, vamp_faction.name)
 
-			if(new_faction_name != vamp_faction.name)
+			if(new_faction_name && new_faction_name != vamp_faction.name)
 				qdel(vamp_faction)
 				var/new_faction_type = GLOB.factions_list[new_faction_name]
 				vamp_faction = new new_faction_type()
