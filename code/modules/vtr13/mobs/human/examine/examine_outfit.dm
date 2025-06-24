@@ -8,17 +8,6 @@
 	var/t_him = p_them()
 	var/obscured = check_obscured_slots()
 	. = list()
-	//faction, job, etc
-	if(iskindred(user) && iskindred(src) && is_face_visible())
-		var/mob/living/carbon/human/vampire = user
-		var/same_clan = vampire.clane == clane
-		switch(info_known)
-			if(INFO_KNOWN_PUBLIC)
-				. += "<b>You know [t_him] as a [job] of the [clane] bloodline.</b>"
-			if(INFO_KNOWN_CLAN_ONLY)
-				if(same_clan)
-					. += "<b>You know [t_him] as a [job]. You are of the same bloodline.</b>"
-
 	//uniform
 	if(w_uniform && !(obscured & ITEM_SLOT_ICLOTHING) && !(w_uniform.item_flags & EXAMINE_SKIP))
 		//accessory
