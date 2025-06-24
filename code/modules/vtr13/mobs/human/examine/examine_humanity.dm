@@ -8,7 +8,7 @@
 	var/t_s = p_s(temp_gender)
 	var/adjusted_humanity = humanity
 	if(HAS_TRAIT(src, TRAIT_LONELY_CURSE))
-		adjusted_humanity = min(0, (adjusted_humanity-2))
+		adjusted_humanity = max(0, (adjusted_humanity-2))
 
 	if(adjusted_humanity <= 3)
 		switch(adjusted_humanity)
