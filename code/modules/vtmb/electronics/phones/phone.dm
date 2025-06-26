@@ -498,11 +498,11 @@
 						to_chat(usr, "<span class='notice'>Notifications and Sounds toggled on.</span>")
 				if ("Published Numbers as Contacts Toggle")
 					if(!toggle_published_contacts)
-						var/contacts_added_lenght = published_numbers_contacts.len
+						var/contacts_added_length = published_numbers_contacts.len
 						var/list_length = min(length(GLOB.published_numbers), length(GLOB.published_number_names))
-						log_admin(contacts_added_lenght)
-						log_admin(list_length)
-						if(contacts_added_lenght < list_length)
+						log_admin("contacts_added_length[contacts_added_length]")
+						log_admin("list length:[list_length]")
+						if(contacts_added_length < list_length)
 						// checks the size difference between the GLOB published list and the phone published list
 							var/ADDED_CONTACTS = 0
 							to_chat(usr, "<span class='notice'>New contacts are being added to your contact list.</span>")
@@ -526,7 +526,7 @@
 										ADDED_CONTACTS +=1
 							if(ADDED_CONTACTS > 1)
 								to_chat(usr, "<span class='notice'>New contacts are added to your contact list.</span>")
-						else if(contacts_added_lenght == list_length)
+						else if(contacts_added_length == list_length)
 							to_chat(usr, "<span class='notice'>You have all the contacts in the published list already.</span>")
 						toggle_published_contacts = TRUE
 						to_chat(usr, "<span class='notice'>The toggle of the published numbers in contacts is active.</span>")
