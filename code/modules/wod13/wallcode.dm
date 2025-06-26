@@ -251,9 +251,10 @@
 
 /turf/closed/wall/vampwall/rock
 	name = "rock wall"
-	desc = "A huge chunk of rocks separating whole territory."
+	desc = "A huge chunk of rocks blocking the way. This looks very, very hard."
 	icon_state = "rock-0"
 	base_icon_state = "rock"
+	hardness = 60
 
 /turf/closed/wall/vampwall/city
 	name = "wall"

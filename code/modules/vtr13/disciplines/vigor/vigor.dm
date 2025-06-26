@@ -170,7 +170,22 @@
 
 	animate(attacker, pixel_x = charge_pixel_x, pixel_y = charge_pixel_y, time = 5)
 	attacker.Stun(30, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(blast_through_wall), attacker, wall, dir), 5)
+	if(wall.hardness <= 50)
+		addtimer(CALLBACK(src, PROC_REF(blast_through_wall), attacker, wall, dir), 5)
+	else
+		addtimer(CALLBACK(src, PROC_REF(wallsplat), attacker, wall), 5)
+
+/datum/discipline_power/vtr/vigor/proc/wallsplat(mob/living/carbon/human/attacker, turf/closed/wall/vampwall/wall)
+	animate(attacker, pixel_x = 0, pixel_y = 0, time = 0)
+	new /obj/effect/shockwave(get_turf(attacker), 5, 0.75, QUAD_EASING | EASE_OUT, 8)
+	attacker.visible_message(span_alert("[attacker] hits [wall] with tremendous force, and severely damages their arm! That's a fucking hard wall!"))
+	playsound(get_turf(attacker), 'code/modules/wod13/sounds/heavypunch.ogg', 80, FALSE)
+	
+	var/obj/item/bodypart/arm = attacker.get_active_hand()
+	attacker.apply_damage(30, def_zone=arm.body_zone)
+	arm.force_wound_upwards(/datum/wound/blunt/moderate)
+	
+	attacker.emote("scream")
 
 /datum/discipline_power/vtr/vigor/proc/blast_through_wall(mob/living/carbon/human/attacker, turf/closed/wall/vampwall/wall, dir)
 	attacker.visible_message(span_alert("[attacker] blows straight through the [wall], spraying debris everywhere!"))
