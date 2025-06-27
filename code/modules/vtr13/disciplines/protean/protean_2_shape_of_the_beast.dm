@@ -13,8 +13,8 @@
 #define PROTEAN_ANIMAL_FORM_WOLF "Wolf (2 Vitae)"
 #define PROTEAN_ANIMAL_FORM_WOLF_COST 2
 
-#define PROTEAN_ANIMAL_FORM_BEAR "A Fucking Bear (5 Vitae)"
-#define PROTEAN_ANIMAL_FORM_BEAR_COST 5
+#define PROTEAN_ANIMAL_FORM_BEAR "A Fucking Bear (4 Vitae)"
+#define PROTEAN_ANIMAL_FORM_BEAR_COST 4
 
 /datum/discipline_power/vtr/protean/shape_of_the_beast
 	name = "Shape of the Beast"

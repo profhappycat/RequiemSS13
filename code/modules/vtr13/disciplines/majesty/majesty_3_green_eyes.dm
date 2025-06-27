@@ -25,6 +25,8 @@
 		to_chat(owner, span_warning("You are already attempting to use this power!"))
 		return FALSE
 
+	if(!do_mob(owner, owner, 1 SECONDS))
+		return
 	power_in_use = TRUE
 	current_emotion = majesty_tgui_input_text(owner, guidelines, "Choose an emotion to instill, eg: Anger, Envy, Appreciation, etc. :", "Majesty", null, 50, FALSE, FALSE, 1)
 	power_in_use = FALSE

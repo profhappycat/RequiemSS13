@@ -1,6 +1,6 @@
 //normal duration defines
 ///Duration of one "turn", which is 5 seconds according to us
-#define TURNS * 5 SECONDS
+#define TURNS * 10 SECONDS
 ///Duration of one "scene", which is 3 minutes according to us
 #define SCENES * 3 MINUTES
 

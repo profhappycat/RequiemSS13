@@ -5,4 +5,4 @@
 
 /datum/dominate_act/command/sleepy/apply(mob/living/target)
 	..()
-	target.Sleeping(10)
+	target.Sleeping(100)

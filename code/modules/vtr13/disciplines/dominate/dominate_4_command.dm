@@ -17,6 +17,8 @@
 /datum/discipline_power/vtr/dominate/command/activate(mob/living/target)
 	. = ..()
 	playsound(target, 'code/modules/wod13/sounds/dominate.ogg', 100, FALSE)
+	if(!do_mob(owner, owner, 1 SECONDS))
+		return
 	owner.say(selected_command.phrase)
 	var/trait_bonus = (HAS_TRAIT(target, TRAIT_INDOMITABLE)?TRAIT_INDOMITABLE_MOD:0) + (HAS_TRAIT(target, TRAIT_SUSCEPTIBLE)?TRAIT_SUSCEPTIBLE_MOD:0)
 	if(!SSroll.opposed_roll(
