@@ -7,7 +7,7 @@
 
 #define FACTION_HEAD_ENDORSEMENT_MIN 3 //how many endorsements the faction head needs in order to have their role.
 #define SENESCHAL_SPECIAL_ENDORSEMENT_MIN 2 //how many endorsements a seneschal needs from other faction heads to possess their role.
-#define ENDORSEMENT_STALE_OFFSET_MONTHS 3 //how many months before an endorsement becomes stale from inactivity
+#define ENDORSEMENT_STALE_OFFSET_MONTHS 2 //how many months before an endorsement becomes stale from inactivity
 
 #define CONNECTION_ENDORSEMENT "endorsement"
 #define CONNECTION_ENDORSEMENT_SENESCHAL "Endorsement for Seneschal"
