@@ -67,24 +67,24 @@
 
 /mob/living/carbon/human/npc/proc/npc_stow_weapon()
 	if(my_weapon)
-		REMOVE_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_weapon.RemoveElement(/datum/element/sticky_item)
 		temporarilyRemoveItemFromInventory(my_weapon, TRUE)
 		equip_to_appropriate_slot(my_weapon)
-		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_weapon.AddElement(/datum/element/sticky_item)
 		spawned_weapon = FALSE
 
 /mob/living/carbon/human/npc/proc/npc_draw_weapon()
 	if(my_weapon)
-		REMOVE_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_weapon.RemoveElement(/datum/element/sticky_item)
 		temporarilyRemoveItemFromInventory(my_weapon, TRUE)
 		put_in_active_hand(my_weapon)
-		ADD_TRAIT(my_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_weapon.AddElement(/datum/element/sticky_item)
 		spawned_weapon = TRUE
 
 /mob/living/carbon/human/npc/proc/npc_draw_backup_weapon()
 	if(my_backup_weapon)
-		REMOVE_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_backup_weapon.RemoveElement(/datum/element/sticky_item)
 		temporarilyRemoveItemFromInventory(my_backup_weapon, TRUE)
 		put_in_active_hand(my_backup_weapon)
-		ADD_TRAIT(my_backup_weapon, TRAIT_NODROP, NPC_ITEM_TRAIT)
+		my_backup_weapon.AddElement(/datum/element/sticky_item)
 		spawned_weapon = TRUE

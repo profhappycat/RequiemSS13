@@ -3744,6 +3744,7 @@
 #include "code\modules\vtr13\items\clothing\under.dm"
 #include "code\modules\vtr13\items\components\heirloom_soil.dm"
 #include "code\modules\vtr13\items\components\sanctified.dm"
+#include "code\modules\vtr13\items\elements\sticky_item.dm"
 #include "code\modules\vtr13\items\keys\hotel_keys.dm"
 #include "code\modules\vtr13\items\keys\keys.dm"
 #include "code\modules\vtr13\items\melee_weapons\silver_knife.dm"
