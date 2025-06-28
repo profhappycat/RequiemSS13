@@ -7983,7 +7983,7 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/floor_two/central/library)
 "gya" = (
-/obj/structure/vampdoor/vtr_police/sergeant{
+/obj/structure/vampdoor/vtr_police/medium{
 	dir = 4
 	},
 /turf/open/floor/plating/parquetry,
@@ -22699,7 +22699,9 @@
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/vtr/elysium/interior/ground_floor/central/castle_elysium)
 "sJu" = (
-/obj/structure/vampdoor/glass,
+/obj/structure/vampdoor/glass{
+	icon_state = s
+	},
 /turf/open/floor/sepia,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/bakery)
 "sJP" = (
@@ -27051,7 +27053,9 @@
 /turf/open/floor/plating/vampocean,
 /area/vtm/vtr/masquerade/exterior/basement/river/la_river)
 "wme" = (
-/obj/structure/vampdoor/glass,
+/obj/structure/vampdoor/vtr_generic{
+	icon_state = "glass_blue-1"
+	},
 /turf/open/floor/plating/vampplating,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/tattoo)
 "wmf" = (
