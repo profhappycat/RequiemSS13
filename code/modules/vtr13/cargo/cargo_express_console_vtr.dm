@@ -203,19 +203,19 @@
 				beacon.update_status(SP_LAUNCH)
 				TIMER_COOLDOWN_START(src, COOLDOWN_EXPRESSPOD_CONSOLE, 10 SECONDS)
 
-				addtimer(CALLBACK(src, PROC_REF(deliver_cargo)), 5 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(deliver_cargo)), 3 MINUTES)
 			else
 				to_chat(usr, "The Truck cannot find the location.")
 				processing_order = FALSE
 
 
 /obj/machinery/computer/cargo/express_vtr/proc/deliver_cargo()
-
+	processing_order = FALSE
 	var/LZ = get_turf(beacon)
 	
 
 
-	var/back_up_distance = 11
+	var/back_up_distance = 13
 	var/turf/truck_start_turf = get_ranged_target_turf(LZ, WEST, back_up_distance)
 	var/obj/cargotruck/truck = new(truck_start_turf)
 	playsound(truck, 'code/modules/wod13/sounds/train_arrive.ogg', 50, FALSE)
@@ -248,7 +248,6 @@
 			spawn(trackLength * 1.2)
 				qdel(truck)
 		order_queue = list()
-		processing_order = FALSE
 	return
 
 
