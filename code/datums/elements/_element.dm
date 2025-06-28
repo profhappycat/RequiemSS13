@@ -54,4 +54,6 @@
  */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)
+	if(!ele) // We couldn't fetch the element, likely because it didn't exist.
+		return
 	ele.Detach(src)

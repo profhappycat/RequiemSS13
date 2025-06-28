@@ -105,7 +105,7 @@
 
 //====================Sticky Item Handling====================
 /mob/living/carbon/human/npc/proc/register_sticky_item(obj/item/my_item)
-	ADD_TRAIT(my_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+	my_item.AddElement(/datum/element/sticky_item)
 	if(!drop_on_death_list?.len)
 		drop_on_death_list = list()
 	drop_on_death_list += my_item
@@ -115,8 +115,7 @@
 	if(drop_on_death_list?.len)
 		for(var/obj/item/dropping_item in drop_on_death_list)
 			drop_on_death_list -= dropping_item
-			if(HAS_TRAIT_FROM(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT))
-				REMOVE_TRAIT(dropping_item, TRAIT_NODROP, NPC_ITEM_TRAIT)
+			dropping_item.RemoveElement(/datum/element/sticky_item)
 			dropItemToGround(dropping_item, TRUE)
 
 	GLOB.alive_npc_list -= src
