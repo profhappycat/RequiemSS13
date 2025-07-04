@@ -3736,6 +3736,7 @@
 #include "code\modules\vtr13\items\door_shield.dm"
 #include "code\modules\vtr13\items\grave_soil.dm"
 #include "code\modules\vtr13\items\ids.dm"
+#include "code\modules\vtr13\items\mugs.dm"
 #include "code\modules\vtr13\items\travel_brochure.dm"
 #include "code\modules\vtr13\items\clothing\hats.dm"
 #include "code\modules\vtr13\items\clothing\neck.dm"
