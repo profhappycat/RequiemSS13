@@ -609,7 +609,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			qdel(src)
 			return
 	// TFN EDIT ADDITION END
-	/*
+
 	if(!query_client_in_db.NextRow())
 		new_player = 1
 		account_join_date = findJoinDate()
@@ -629,7 +629,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		else if(ckey in GLOB.bunker_passthrough)
 			GLOB.bunker_passthrough -= ckey
 		// TFN EDIT ADDITION END
-	*/
+
 	qdel(query_client_in_db)
 	var/datum/db_query/query_get_client_age = SSdbcore.NewQuery(
 		"SELECT firstseen, DATEDIFF(Now(),firstseen), accountjoindate, DATEDIFF(Now(),accountjoindate) FROM [format_table_name("player")] WHERE ckey = :ckey",
