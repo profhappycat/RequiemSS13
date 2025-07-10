@@ -3,7 +3,7 @@
 * **Code:** https://github.com/RequiemSS13/RequiemSS13
 * **Wiki:** UNDER_CONSTRUCTION
 * **Codedocs:** https://codedocs.tgstation13.org/ + For the time being +
-* **World of Darkness 13 Discord:** https://discord.gg/WBktth6Z8j
+* **Requiem 13 Discord:** https://discord.gg/uPbGj2K2HZ
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
 * ~~**IRC:** irc://irc.rizon.net/coderbus~~ (dead)
 
