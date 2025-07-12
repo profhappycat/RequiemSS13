@@ -266,11 +266,9 @@ GLOBAL_VAR(restart_counter)
 	var/hostedby
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
-		if (server_name)
-			s += "<a href=\"https://discord.gg/invite/WU92NG2Me8\"><b>[server_name] &#8212; Werewolf-Friendly</b></a>"
 		hostedby = CONFIG_GET(string/hostedby)
-	s += "<br>Persistent roleplaying server in the World of Darkness."
-	s += "<br>Active development, pretty art, and a gothic atmosphere."
+	s += "(18+) HRP Urban Fantasy server based on Vampire: the Requiem 2e."
+	s += "<a href=\"https://discord.gg/5AS5Ms5cxP\">Apply on our Discord!</a>"
 
 	var/players = GLOB.clients.len
 
