@@ -269,7 +269,7 @@ GLOBAL_VAR(restart_counter)
 		if (server_name)
 			s += "<a href=\"https://discord.gg/invite/5AS5Ms5cxP\"><b>[server_name] &#8212; Vampires!</b></a>"
 		hostedby = CONFIG_GET(string/hostedby)
-	s += "<br>(18+) HRP Urban Fantasy server based on Vampire: the Requiem 2e, focusing on supernatural political intrigue and drama."
+	s += "<br>(18+) HRP Urban Fantasy server based on VtR 2e, focusing on supernatural political drama. Apply now! <br>"
 
 	var/players = GLOB.clients.len
 
