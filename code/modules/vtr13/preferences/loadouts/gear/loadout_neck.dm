@@ -4,6 +4,12 @@
 	sort_category = "Accessories"
 	cost = 1
 
+//Headphones
+
+/datum/gear/neck/headphones
+	display_name = "headphones"
+	path = /obj/item/instrument/piano_synth/headphones
+
 // Scarf
 /datum/gear/neck/scarf
 	subtype_path = /datum/gear/neck/scarf
@@ -93,7 +99,7 @@
 	path = /obj/item/clothing/neck/vtr/choker/collar
 
 /datum/gear/neck/choker/collar/steel
-	display_name = "collar, stainless steel"
+	display_name = "collar, silver"
 	path = /obj/item/clothing/neck/vtr/choker/collar/steel
 
 /datum/gear/neck/choker/collar/leatherg

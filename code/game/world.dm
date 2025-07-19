@@ -267,10 +267,9 @@ GLOBAL_VAR(restart_counter)
 	if(config)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
-			s += "<a href=\"https://discord.gg/invite/WU92NG2Me8\"><b>[server_name] &#8212; Werewolf-Friendly</b></a>"
+			s += "<a href=\"https://discord.gg/invite/5AS5Ms5cxP\"><b>[server_name] &#8212; Vampires!</b></a>"
 		hostedby = CONFIG_GET(string/hostedby)
-	s += "<br>Persistent roleplaying server in the World of Darkness."
-	s += "<br>Active development, pretty art, and a gothic atmosphere."
+	s += "<br>(18+) HRP Urban Fantasy server based on VtR 2e, focusing on supernatural political drama. Apply now! <br>"
 
 	var/players = GLOB.clients.len
 

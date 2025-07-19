@@ -152,7 +152,7 @@ GLOBAL_LIST_EMPTY(retail_products)
 					return
 				if(!used_account.check_pin(user, product.cost, creditcard))
 					return
-				if(!used_account.modify_balance(product.cost, user))
+				if(!used_account.modify_balance((-1 * product.cost), user))
 					return
 				used_account.process_credit_fraud(user, product.cost)
 

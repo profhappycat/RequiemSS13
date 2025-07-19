@@ -14,6 +14,8 @@
 		new /datum/data/retail_product("gothic clothes",	/obj/item/clothing/under/vampire/gothic,	20),
 		new /datum/data/retail_product("gothic attire",	/obj/item/clothing/under/vampire/brujah,	20),
 		new /datum/data/retail_product("grimey pants",	/obj/item/clothing/under/vampire/malkavian,	20),
+		new /datum/data/retail_product("black frilly dress", /obj/item/clothing/under/vampire/vtr/dress/blackfrilly, 40),
+		new /datum/data/retail_product("frilly headband", /obj/item/clothing/head/vampire/vtr/frillyheadband, 10),
 		new /datum/data/retail_product("hoodie", /obj/item/clothing/suit/hooded/hoodie, 15),
 		new /datum/data/retail_product("intruder pim hoodie", /obj/item/clothing/suit/hooded/hoodie/hoodie_pim, 20),
 		new /datum/data/retail_product("jacket",	/obj/item/clothing/suit/vampire/jacket,	15),
@@ -39,5 +41,5 @@
 		new /datum/data/retail_product("silver choker", /obj/item/clothing/neck/vtr/choker/silver, 20),
 		new /datum/data/retail_product("leather collar", /obj/item/clothing/neck/vtr/choker/collar, 50),
 		new /datum/data/retail_product("fancy leather collar", /obj/item/clothing/neck/vtr/choker/collar/leatherg, 75),
-		new /datum/data/retail_product("stainless steel collar", /obj/item/clothing/neck/vtr/choker/collar/steel, 100)
+		new /datum/data/retail_product("silver-plated collar", /obj/item/clothing/neck/vtr/choker/collar/steel, 200)
 	)
