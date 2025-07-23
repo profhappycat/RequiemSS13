@@ -34,6 +34,7 @@
 	C.maxbloodpool = 5 + C.get_stamina()
 	C.adjustBloodPool(rand(C.get_composure(), C.maxbloodpool), TRUE)
 	C.recalculate_max_health()
+	C.update_auspex_hud_vtr()
 
 /datum/species/ghoul/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -41,6 +42,7 @@
 		if(A)
 			if(A.vampiric)
 				A.Remove(C)
+	C.update_auspex_hud_vtr()
 
 /datum/action/take_vitae //unused
 	name = "Take Vitae"

@@ -68,6 +68,8 @@
 	//vampires resist vampire bites better than mortals
 	RegisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED, PROC_REF(on_vampire_bitten))
 
+	C.update_auspex_hud_vtr()
+
 /datum/species/kindred/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_VAMPIRE_SUCKED)
@@ -75,6 +77,7 @@
 		if(A)
 			if(A.vampiric)
 				A.Remove(C)
+	C.update_auspex_hud_vtr()
 
 /datum/action/blood_power
 	name = "Blood Power"

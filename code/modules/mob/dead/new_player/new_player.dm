@@ -534,8 +534,9 @@
 		mind.original_character_slot_index = client.prefs.default_slot
 		mind.tempted_mod = client.prefs.tempted
 		mind.original_character = H
+		mind.character_connections = SScharacter_connection.get_character_connections(ckey, real_name)
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
-
+		
 	H.name = real_name
 	client.init_verbs()
 	. = H
@@ -559,11 +560,7 @@
 					var/obj/effect/landmark/latejoin_masquerade/LM = pick(GLOB.masquerade_latejoin)
 					if(LM)
 						H.forceMove(LM.loc)
-		if(new_character.mind)
-			new_character.mind.character_connections = SScharacter_connection.get_character_connections(ckey, new_character.true_real_name)
-		
-		
-
+			H.refresh_character_connections()
 		new_character = null
 		qdel(src)
 
