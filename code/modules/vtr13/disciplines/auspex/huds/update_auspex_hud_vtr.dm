@@ -8,8 +8,7 @@
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "aura"
 
-	if (client || isnpc(src))
-		holder.color = "#0000ff"
+	holder.color = "#0000ff"
 
 	if (iskindred(src))
 		//pale aura for vampires
