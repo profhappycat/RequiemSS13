@@ -26,10 +26,10 @@
 			"ckey" = endorser.ckey,
 			"mem_type" = MEMBER_TYPE_ENDORSER,
 			"candidate_ckey" = candidate.ckey,
-			"candidate_name" = candidate.true_real_name
+			"candidate_name" = candidate.real_name
 		)
 	)
-	
+
 	if(!query.Execute(async = TRUE) || query.NextRow())
 		to_chat(endorser, span_notice("Your account is already endorsing this character."))
 		to_chat(candidate, span_notice("[endorser] cannot endorse you."))
@@ -51,7 +51,7 @@
 		LIMIT 1",
 		list(
 			"ckey" = endorser.ckey,
-			"char_name" = endorser.true_real_name,
+			"char_name" = endorser.real_name,
 			"mem_type" = MEMBER_TYPE_ENDORSER,
 			"grp_type" = connection_type
 		)
