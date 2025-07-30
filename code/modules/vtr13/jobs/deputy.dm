@@ -40,7 +40,7 @@
 	suit = /obj/item/clothing/suit/vampire/trench/armored
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/invictus
-	backpack_contents = list(/obj/item/vampire_stake=1, /obj/item/vamp/creditcard=1, /obj/item/vamp/keys/hound=1)
+	backpack_contents = list(/obj/item/vampire_stake=1, /obj/item/vamp/creditcard=1, /obj/item/vamp/keys/sheriff_vtr=1)
 
 	backpack = /obj/item/storage/backpack
 	satchel = /obj/item/storage/backpack/satchel
