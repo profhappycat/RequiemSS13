@@ -21,6 +21,7 @@
 	known_contacts = list("Voivode")
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	v_duty = "You are the talon of the Voivode, their prized researcher... Or test subject. Help your covenant conduct their research into the occult and paranormal. Observe and catalogue everything of note in the city. Master the coils and transcend the limitations of the vampiric condition."
 

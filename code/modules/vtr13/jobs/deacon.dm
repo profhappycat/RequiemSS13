@@ -19,6 +19,7 @@
 	known_contacts = list("Bishop")
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	allowed_species = list("Vampire")
 	v_duty = "You're one of the Deacon, a senior member of the Lancea et Sanctum. Bear up the Lance and keep the Chapel in the name of your Bishop. Advise your fellow Kindred on matters of faith and morality. Discretely dispose of any unfortunate lapses in judgement."

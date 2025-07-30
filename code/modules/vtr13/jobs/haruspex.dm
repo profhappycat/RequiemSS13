@@ -20,6 +20,7 @@
 	display_order = JOB_DISPLAY_ORDER_HARUSPEX
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	v_duty = "You're a respected member of the Circle of the Crone, granted power to lead by the Hierophant. Assist the Hierophant in carrying out any rituals. Manage the Queen Lilith. Spread wonder and terror at the monster you have become."
 

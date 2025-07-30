@@ -23,6 +23,7 @@
 	known_contacts = list("Carthian Representative")
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	allowed_species = list("Vampire")
 	v_duty = "You're a member of the Carthian Representative's cabinet. Organize votes. Keep the contraband flowing. Protect your fellow Carthians from the abuses of their elders."

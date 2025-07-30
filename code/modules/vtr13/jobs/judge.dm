@@ -23,6 +23,7 @@
 	my_contact_is_important = TRUE
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	allowed_species = list("Vampire")
 	known_contacts = list("Seneschal", "Page", "Keeper of Elysium", "Carthian Representative", "Bishop", "Hierophant", "Voivode")

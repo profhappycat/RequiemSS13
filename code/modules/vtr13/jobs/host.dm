@@ -17,6 +17,7 @@
 	minimum_vamp_rank = VAMP_RANK_NEONATE
 
 	endorsement_required = TRUE
+	is_deputy = TRUE
 
 	allowed_species = list("Vampire")
 	v_duty = "You're a Host at Elysium, an extension of the Keeper's Will. Pour drinks and keep the blood flowing."

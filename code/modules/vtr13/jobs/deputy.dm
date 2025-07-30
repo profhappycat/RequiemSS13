@@ -20,11 +20,13 @@
 	mind_traits = list(TRAIT_DONUT_LOVER)
 
 	display_order = JOB_DISPLAY_ORDER_DEPUTY
-
-	bounty_types = CIV_JOB_SEC
-	endorsement_required = TRUE
-
 	known_contacts = list("Prince", "Keeper of Elysium", "Sheriff")
+	bounty_types = CIV_JOB_SEC
+
+	endorsement_required = TRUE
+	is_deputy = TRUE
+
+
 	allowed_species = list("Vampire")
 	v_duty = "You're a Deputy, one of the Sheriff's finest show dogs. Ensure that the Traditions are kept. Protect the Invictus and its leadership."
 
