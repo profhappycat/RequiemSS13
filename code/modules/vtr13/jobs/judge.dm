@@ -39,7 +39,7 @@
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	l_pocket = /obj/item/vamp/phone/page
-	backpack_contents = list(/obj/item/phone_book=1, /obj/item/vamp/creditcard/invictus=1, /obj/item/vamp/keys/page=1)
+	backpack_contents = list(/obj/item/phone_book=1, /obj/item/vamp/creditcard/invictus=1, /obj/item/vamp/keys/seneschal_vtr=1)
 
 /obj/effect/landmark/start/vtr/judge
 	name = "Judge"

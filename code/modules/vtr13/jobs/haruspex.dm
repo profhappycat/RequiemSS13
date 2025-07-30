@@ -35,7 +35,7 @@
 	uniform = /obj/item/clothing/under/vampire/emo
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/acolyte
-	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/acolyte=1)
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/hierophant=1)
 
 /obj/effect/landmark/start/vtr/haruspex
 	name = "Haruspex"

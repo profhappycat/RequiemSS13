@@ -36,7 +36,7 @@
 	uniform = /obj/item/clothing/under/vampire/emo
 	l_pocket = /obj/item/vamp/phone/carthian
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
-	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/carthian=1, /obj/item/melee/chainofcommand=1)
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/representative=1, /obj/item/melee/chainofcommand=1)
 
 /obj/effect/landmark/start/vtr/whip
 	name = "Whip"

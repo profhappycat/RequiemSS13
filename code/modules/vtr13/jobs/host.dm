@@ -30,7 +30,7 @@
 	uniform = /obj/item/clothing/under/vampire/emo
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/bartender_vtr
-	backpack_contents = list(/obj/item/vamp/keys/bartender_vtr=1, /obj/item/vamp/creditcard=1)
+	backpack_contents = list(/obj/item/vamp/keys/keeper=1, /obj/item/vamp/creditcard=1)
 
 /datum/outfit/job/host/pre_equip(mob/living/carbon/human/H)
 	..()

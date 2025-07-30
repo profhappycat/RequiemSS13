@@ -31,7 +31,7 @@
 	shoes = /obj/item/clothing/shoes/vampire/jackboots
 	id = /obj/item/card/id/sanctified
 	l_pocket = /obj/item/vamp/phone/sanctified
-	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/sanctified=1)
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/bishop=1)
 
 /obj/effect/landmark/start/vtr/vicar
 	name = "Vicar"

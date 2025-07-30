@@ -33,7 +33,7 @@
 	uniform = /obj/item/clothing/under/vampire/emo
 	shoes = /obj/item/clothing/shoes/vampire
 	l_pocket = /obj/item/vamp/phone/sworn
-	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/sworn=1)
+	backpack_contents = list(/obj/item/vamp/creditcard=1, /obj/item/vamp/keys/voivode_vtr=1)
 
 /obj/effect/landmark/start/vtr/claw
 	name = "Claw"
