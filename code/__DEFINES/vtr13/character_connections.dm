@@ -24,7 +24,7 @@
 #define CONNECTION_ENDORSEMENT_JUDGE "Endorsement for Judge"
 #define CONNECTION_ENDORSEMENT_HOST "Endorsement for Host"
 #define CONNECTION_ENDORSEMENT_DEPUTY "Endorsement for Deputy"
-#define CONNECTION_ENDORSEMENT_DEACON "Endorsement for Deacon"
+#define CONNECTION_ENDORSEMENT_VICAR "Endorsement for Vicar"
 #define CONNECTION_ENDORSEMENT_HARUSPEX "Endorsement for Haruspex"
 #define CONNECTION_ENDORSEMENT_CLAW "Endorsement for Claw"
 #define CONNECTION_ENDORSEMENT_WHIP "Endorsement for Whip"

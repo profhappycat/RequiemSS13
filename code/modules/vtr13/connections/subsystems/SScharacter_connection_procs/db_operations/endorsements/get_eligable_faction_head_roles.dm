@@ -28,7 +28,7 @@
 			"grp_type_9" = CONNECTION_ENDORSEMENT_JUDGE,
 			"grp_type_10" = CONNECTION_ENDORSEMENT_HOST,
 			"grp_type_11" = CONNECTION_ENDORSEMENT_DEPUTY,
-			"grp_type_12" = CONNECTION_ENDORSEMENT_DEACON,
+			"grp_type_12" = CONNECTION_ENDORSEMENT_VICAR,
 			"grp_type_13" = CONNECTION_ENDORSEMENT_HARUSPEX,
 			"grp_type_14" = CONNECTION_ENDORSEMENT_CLAW,
 			"grp_type_15" = CONNECTION_ENDORSEMENT_WHIP,
@@ -80,9 +80,9 @@
 			if(CONNECTION_ENDORSEMENT_DEPUTY)
 				if(endorsement_count >= DEPUTY_ENDORSEMENT_MIN)
 					LAZYADD(eligiable_roles, "Deputy")
-			if(CONNECTION_ENDORSEMENT_DEACON)
+			if(CONNECTION_ENDORSEMENT_VICAR)
 				if(endorsement_count >= DEPUTY_ENDORSEMENT_MIN)
-					LAZYADD(eligiable_roles, "Deacon")
+					LAZYADD(eligiable_roles, "Vicar")
 			if(CONNECTION_ENDORSEMENT_HARUSPEX)
 				if(endorsement_count >= DEPUTY_ENDORSEMENT_MIN)
 					LAZYADD(eligiable_roles, "Haruspex")

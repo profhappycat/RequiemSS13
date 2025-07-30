@@ -3,8 +3,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Seneschal")
 	faction = "Vampire"
-	total_positions = 7
-	spawn_positions = 7
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Sheriff"
 	selection_color = "#00ffff"
 	minimal_player_age = 7
@@ -28,7 +28,7 @@
 
 
 	allowed_species = list("Vampire")
-	v_duty = "You're a Deputy, one of the Sheriff's finest show dogs. Ensure that the Traditions are kept. Protect the Invictus and its leadership."
+	v_duty = "You're a Deputy, one of the Sheriff's finest hounds. Ensure that the Traditions are kept. Protect the Invictus and its leadership."
 
 /datum/outfit/job/deputy
 	name = "Deputy"

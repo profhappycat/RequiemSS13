@@ -3,8 +3,8 @@
 	title = "Whip"
 	department_head = list("Carthian Representative")
 	faction = "Vampire"
-	total_positions = 20
-	spawn_positions = 20
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Carthian Representative"
 	selection_color = "#ff1904"
 

@@ -2,8 +2,8 @@
 	title = "Haruspex"
 	department_head = list("Hierophant")
 	faction = "Vampire"
-	total_positions = 20
-	spawn_positions = 20
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Hierophant"
 	selection_color = "#00ff15"
 

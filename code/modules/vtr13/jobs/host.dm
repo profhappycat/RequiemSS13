@@ -2,8 +2,8 @@
 	title = "Host"
 	department_head = list("Keeper of Elysium")
 	faction = "Vampire"
-	total_positions = 4
-	spawn_positions = 4
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Keeper of Elysium"
 	selection_color = "#00ffff"
 

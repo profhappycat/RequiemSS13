@@ -68,12 +68,12 @@ GLOBAL_LIST_INIT(command_positions, list(
 ))
 
 #define JOB_DISPLAY_ORDER_BISHOP 			20
-#define JOB_DISPLAY_ORDER_DEACON			21
+#define JOB_DISPLAY_ORDER_VICAR			21
 #define JOB_DISPLAY_ORDER_SANCTIFIED 		22
 #define JOB_DISPLAY_ORDER_CLERGY 			23
 GLOBAL_LIST_INIT(lancea_positions, list(
 	"Bishop",
-	"Deacon",
+	"Vicar",
 	"Sanctified",
 	"Clergy"
 ))

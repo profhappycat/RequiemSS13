@@ -2,8 +2,8 @@
 	title = "Claw"
 	department_head = list("Voivode")
 	faction = "Vampire"
-	total_positions = 10
-	spawn_positions = 10
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the Voivode"
 	selection_color = "#df1ca4"
 
