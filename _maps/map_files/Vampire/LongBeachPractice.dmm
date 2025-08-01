@@ -2737,7 +2737,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/ammo_box/vampire/c45acp,
 /obj/item/gun/ballistic/automatic/vampire/m1911,
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/vamp45acp,
 /turf/open/floor/plating/vampplating,
 /area/vtm/vtr/masquerade/interior/floor_two/northwest/police_station)
 "clh" = (
@@ -6354,7 +6354,7 @@
 /obj/item/storage/firstaid/regular,
 /obj/item/gun/ballistic/automatic/vampire/m1911,
 /obj/item/ammo_box/vampire/c45acp,
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/vamp45acp,
 /turf/open/floor/plating/vampplating,
 /area/vtm/vtr/masquerade/interior/floor_two/northwest/police_station)
 "ffL" = (
@@ -13691,9 +13691,9 @@
 /obj/item/camera/detective,
 /obj/item/clipboard,
 /obj/item/clipboard,
-/obj/item/ammo_box/magazine/m45,
-/obj/item/ammo_box/magazine/m45,
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/ammo_box/magazine/vamp45acp,
 /turf/open/floor/plating/parquetry,
 /area/vtm/vtr/masquerade/interior/ground_floor/northwest/police_station)
 "lxo" = (
@@ -25388,8 +25388,8 @@
 	pixel_y = 0
 	},
 /obj/item/clipboard,
-/obj/item/ammo_box/magazine/m45,
-/obj/item/ammo_box/magazine/m45,
+/obj/item/ammo_box/magazine/vamp45acp,
+/obj/item/ammo_box/magazine/vamp45acp,
 /turf/open/floor/plating/parquetry,
 /area/vtm/vtr/masquerade/interior/ground_floor/northwest/police_station)
 "uEp" = (
