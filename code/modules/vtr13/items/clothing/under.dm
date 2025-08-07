@@ -282,6 +282,11 @@
 	desc = "A black gown with draping sleeves and golden embroidery."
 	icon_state = "sermon"
 
+/obj/item/clothing/under/vampire/vtr/dress/chain
+	name = "chain dress"
+	desc = "A risque yet classy formal gown, made of lace with draping chains. For the modern princess."
+	icon_state = "chain_dress"
+
 /obj/item/clothing/under/vampire/vtr/skater_boy
 	name = "skater boy cargo pants"
 	desc = "A tank top, tie, and cargo pants. How familiar..."
