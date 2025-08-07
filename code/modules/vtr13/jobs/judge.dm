@@ -10,7 +10,7 @@
 	selection_color = "#00ffff"
 	req_admin_notify = 1
 
-	outfit = /datum/outfit/job/page
+	outfit = /datum/outfit/job/judge
 
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SRV
@@ -35,7 +35,7 @@
 	name = "Judge"
 	jobtype = /datum/job/vamp/vtr/judge
 
-	id = /obj/item/card/id/page
+	id = /obj/item/card/id/judge
 	uniform = /obj/item/clothing/under/vampire/clerk
 	shoes = /obj/item/clothing/shoes/vampire/brown
 	l_pocket = /obj/item/vamp/phone/page

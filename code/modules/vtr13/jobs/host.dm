@@ -7,7 +7,7 @@
 	supervisors = "the Keeper of Elysium"
 	selection_color = "#00ffff"
 
-	outfit = /datum/outfit/job/bartender_vtr
+	outfit = /datum/outfit/job/host
 
 	paycheck = PAYCHECK_EASY
 	paycheck_department = ACCOUNT_SRV
