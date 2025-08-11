@@ -251,6 +251,10 @@
 	display_name = "dress, little black"
 	path = /obj/item/clothing/under/vampire/vtr/dress/littleblackdress
 
+/datum/gear/uniform/dress/chaindress
+	display_name = "dress, chain"
+	path = /obj/item/clothing/under/vampire/vtr/dress/chain
+
 /datum/gear/uniform/dress/yellowswoop
 	display_name = "dress, yellow swoop"
 	path = /obj/item/clothing/under/vampire/vtr/dress/yellowswoop
