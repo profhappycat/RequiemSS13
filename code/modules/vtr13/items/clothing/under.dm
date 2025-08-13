@@ -287,6 +287,11 @@
 	desc = "A risque yet classy formal gown, made of lace with draping chains. For the modern princess."
 	icon_state = "chain_dress"
 
+/obj/item/clothing/under/vampire/vtr/dress/modest
+	name = "modest dress"
+	desc = "A largely unadorned, old-fashioned black dress. For the shy ones."
+	icon_state = "dress_modest"
+
 /obj/item/clothing/under/vampire/vtr/skater_boy
 	name = "skater boy cargo pants"
 	desc = "A tank top, tie, and cargo pants. How familiar..."
@@ -346,4 +351,9 @@
 	name = "suspenders outfit"
 	desc = "Black slacks, white button-up, a pair of old-timey suspenders, and some very fancy gold cuff-links."
 	icon_state = "suspenders_fancy"
+
+/obj/item/clothing/under/vampire/vtr/buttonup_red
+	name = "red button-up"
+	desc = "A dark red button-up shirt worn with dark jeans. Hides bloodstains pretty good."
+	icon_state = "redbutton"
 

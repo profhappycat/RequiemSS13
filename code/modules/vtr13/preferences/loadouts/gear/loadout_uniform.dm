@@ -254,6 +254,12 @@
 /datum/gear/uniform/dress/chaindress
 	display_name = "dress, chain"
 	path = /obj/item/clothing/under/vampire/vtr/dress/chain
+	cost = 3
+
+/datum/gear/uniform/dress/modest
+	display_name = "dress, modest"
+	path = /obj/item/clothing/under/vampire/vtr/dress/modest
+	cost = 3
 
 /datum/gear/uniform/dress/yellowswoop
 	display_name = "dress, yellow swoop"
@@ -389,6 +395,10 @@
 /datum/gear/uniform/leopard
 	display_name = "outfit, revealing"
 	path = /obj/item/clothing/under/vampire/vtr/sceneleopard
+
+/datum/gear/uniform/redbutton
+	display_name = "outfit, red button-up"
+	path = /obj/item/clothing/under/vampire/vtr/buttonup_red
 
 /datum/gear/uniform/daisyd
 	display_name = "daisy dukes"
