@@ -16,7 +16,7 @@
 
 /datum/discipline_power/vtr/dominate/command/activate(mob/living/target)
 	. = ..()
-	playsound(target, 'code/modules/wod13/sounds/dominate.ogg', 100, FALSE)
+	SEND_SOUND(target, sound('code/modules/wod13/sounds/dominate.ogg', 0, 0, 75))
 	if(!do_mob(owner, owner, 1 SECONDS))
 		return
 	owner.say(selected_command.phrase)
