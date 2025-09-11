@@ -17,4 +17,3 @@
 	)
 	icon_state = "french"
 	default_priority = 90
-
