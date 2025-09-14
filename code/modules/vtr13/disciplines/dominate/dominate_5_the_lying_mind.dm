@@ -67,7 +67,7 @@
 	to_chat(target, span_notice("You consent to domination. Consent may be retracted at any time."))
 	log_admin("[target] was affected by Dominate [level] from [owner]. Command: '[the_command]'")
 
-	playsound(target, 'code/modules/wod13/sounds/dominate.ogg', 100, FALSE)
+	SEND_SOUND(target, sound('code/modules/wod13/sounds/dominate.ogg', 0, 0, 75))
 	to_chat(target, span_userdanger("Your mind has been altered: [the_command]"))
 
 	apply_discipline_affliction_overlay(target, "dominate", 2, 5 SECONDS)

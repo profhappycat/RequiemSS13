@@ -29,7 +29,11 @@
 		/datum/language/hebrew,
 		/datum/language/japanese,
 		/datum/language/cantonese,
-		/datum/language/greek
+		/datum/language/greek,
+		/datum/language/armenian,
+		/datum/language/persian,
+		/datum/language/tagalog,
+		/datum/language/korean
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

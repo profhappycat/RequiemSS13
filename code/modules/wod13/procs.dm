@@ -1,7 +1,7 @@
 /mob/living/carbon/human/proc/AdjustHumanity(var/value, var/limit, var/forced = FALSE)
 	if(iskindred(src) && GLOB.canon_event && !is_special_character(src)) // combined checks into one
 		var/mod = 1
-		if(clane && value < 0)
+		if(clane && value < 0 && !forced)
 			mod = clane.humanitymod
 		var/new_humanity = humanity
 		var/adjustedvalue = clamp(humanity+(value * mod), 0, 10) // Clamp into valid range

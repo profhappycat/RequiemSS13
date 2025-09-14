@@ -45,8 +45,8 @@
 	if(!SSroll.opposed_roll(
 		owner,
 		target,
-		dice_a = owner.get_charisma() + discipline.level + trait_bonus,
-		dice_b = target.get_composure() + target.get_potency(),
+		dice_a = owner.get_charisma() + discipline.level,
+		dice_b = target.get_composure() + target.get_potency() + trait_bonus,
 		alert_atom = target,
 		show_player_a = FALSE,
 		show_player_b = FALSE))
@@ -71,7 +71,7 @@
 	to_chat(target, span_notice("You consent to domination. Consent may be retracted at any time."))
 	log_admin("[target] was affected by Dominate [level] from [owner]. Command: '[the_command]'")
 
-	playsound(target, 'code/modules/wod13/sounds/dominate.ogg', 100, FALSE)
+	SEND_SOUND(target, sound('code/modules/wod13/sounds/dominate.ogg', 0, 0, 75))
 
 	to_chat(target, span_userdanger("You are compelled to obey the following command: [the_command]"))
 
