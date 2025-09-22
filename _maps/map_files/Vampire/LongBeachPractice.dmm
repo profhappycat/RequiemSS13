@@ -3510,7 +3510,7 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/vtr/masquerade/exterior/floor_three/northeast/northeast_long_beach/inaccessible)
 "cQI" = (
-/obj/structure/vampdoor/simple{
+/obj/structure/vampdoor/vtr_warehouse/unlocked{
 	dir = 4
 	},
 /turf/open/floor/plating/vampwood,
@@ -5391,7 +5391,7 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/nightclub)
 "esw" = (
-/obj/structure/vampdoor/glass,
+/obj/structure/vampdoor/vtr_invictus/unlocked,
 /turf/open/floor/mineral/plastitanium,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/castle_lobby)
 "etV" = (
@@ -7017,11 +7017,11 @@
 /turf/open/floor/plating/toilet,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/old_house)
 "fCG" = (
-/obj/structure/vampdoor/glass{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 10
+	},
+/obj/structure/vampdoor/vtr_crone/unlocked{
+	dir = 4
 	},
 /turf/open/floor/carpet/red,
 /area/vtm/vtr/masquerade/interior/floor_two/southeast/queen_lilith)
@@ -7546,7 +7546,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 1
 	},
-/obj/structure/vampdoor/wood,
+/obj/structure/vampdoor/vtr_church/unlocked,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/church)
 "fYm" = (
@@ -7636,7 +7636,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/structure/vampdoor/wood/old{
+/obj/structure/vampdoor/vtr_warehouse/unlocked{
 	dir = 4
 	},
 /turf/open/floor/plating/vampwood,
@@ -7659,11 +7659,11 @@
 /turf/open/floor/plating/church,
 /area/vtm/vtr/elysium/interior/ground_floor/central/castle_theater)
 "gdD" = (
-/obj/structure/vampdoor/simple{
-	dir = 4
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/structure/vampdoor/vtr_warehouse/unlocked{
+	dir = 4
 	},
 /turf/open/floor/plating/vampwood,
 /area/vtm/vtr/masquerade/interior/ground_floor/southwest/warehouse)
@@ -9480,11 +9480,11 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/basement/central/library_basement)
 "hEW" = (
-/obj/structure/vampdoor/glass{
-	dir = 8
-	},
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
+	},
+/obj/structure/vampdoor/vtr_crone/unlocked{
+	dir = 4
 	},
 /turf/open/floor/carpet/red,
 /area/vtm/vtr/masquerade/interior/floor_two/southeast/queen_lilith)
@@ -10531,12 +10531,12 @@
 /turf/open/floor/plating/sidewalk/poor,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/nightclub)
 "iwz" = (
-/obj/structure/vampdoor/simple,
 /obj/effect/turf_decal/siding/wood,
+/obj/structure/vampdoor/vtr_clinic,
 /turf/open/floor/plating/parquetry,
 /area/vtm/vtr/masquerade/interior/ground_floor/southwest/clinic)
 "iwA" = (
-/obj/structure/vampdoor/glass{
+/obj/structure/vampdoor/vtr_police/unlocked{
 	dir = 4
 	},
 /turf/open/floor/plating/vampplating,
@@ -10845,7 +10845,7 @@
 /turf/closed/wall/vampwall/junk/low,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/library)
 "iNp" = (
-/obj/structure/vampdoor/wood,
+/obj/structure/vampdoor/vtr_church/unlocked,
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/ground_floor/northeast/church)
 "iNy" = (
@@ -10872,8 +10872,8 @@
 /turf/open/floor/plating/vampgrass,
 /area/vtm/vtr/masquerade/exterior/ground_floor/central/central_long_beach/inaccessible)
 "iOP" = (
-/obj/structure/vampdoor/old,
 /obj/effect/vip_barrier/boris,
+/obj/structure/vampdoor/vtr_kiss/unlocked,
 /turf/open/floor/plating/concrete,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/nightclub)
 "iOS" = (
@@ -16493,7 +16493,7 @@
 /turf/closed/wall/vampwall/painted,
 /area/vtm/vtr/masquerade/exterior/floor_three/northeast/northeast_long_beach/inaccessible)
 "nBy" = (
-/obj/structure/vampdoor/wood,
+/obj/structure/vampdoor/vtr_library/unlocked,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/library)
 "nBD" = (
@@ -21429,7 +21429,7 @@
 /turf/closed/wall/vampwall/painted,
 /area/vtm/vtr/masquerade/exterior/basement/river/la_river)
 "rxD" = (
-/obj/structure/vampdoor/glass,
+/obj/structure/vampdoor/vtr_invictus/unlocked,
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/castle_lobby)
 "rxG" = (
@@ -21458,7 +21458,7 @@
 /turf/closed/wall/vampwall/painted,
 /area/vtm/vtr/masquerade/interior/ground_floor/northwest/apartment)
 "ryR" = (
-/obj/structure/vampdoor/old,
+/obj/structure/vampdoor/vtr_kiss/unlocked,
 /turf/open/floor/plating/vampwood,
 /area/vtm/vtr/masquerade/interior/floor_two/central/nightclub)
 "rzh" = (
@@ -25321,10 +25321,10 @@
 /turf/open/floor/plating/vampcarpet,
 /area/vtm/vtr/masquerade/interior/floor_two/southwest/warehouse)
 "uqL" = (
-/obj/structure/vampdoor/old{
+/obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/wideplating/dark{
+/obj/structure/vampdoor/vtr_kiss/unlocked{
 	dir = 4
 	},
 /turf/open/floor/plating/sidewalk/poor,
@@ -27949,7 +27949,7 @@
 /area/vtm/vtr/masquerade/interior/floor_two/northwest/apartment_suite_3)
 "wxV" = (
 /obj/effect/turf_decal/siding/white,
-/obj/structure/vampdoor/glass,
+/obj/structure/vampdoor/vtr_clinic/unlocked,
 /turf/open/floor/plating/sidewalk,
 /area/vtm/vtr/masquerade/interior/ground_floor/southwest/clinic)
 "wyb" = (
@@ -28199,8 +28199,8 @@
 /turf/open/floor/plating/parquetry/old,
 /area/vtm/vtr/masquerade/interior/floor_three/northwest/apartment_suite_2)
 "wHo" = (
-/obj/structure/vampdoor/glass,
 /obj/effect/vip_barrier/elysium_2,
+/obj/structure/vampdoor/vtr_invictus/unlocked,
 /turf/open/floor/plating/vampplating/stone,
 /area/vtm/vtr/masquerade/interior/ground_floor/central/castle_lobby)
 "wHv" = (

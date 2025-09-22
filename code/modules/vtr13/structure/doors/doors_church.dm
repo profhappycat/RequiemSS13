@@ -20,3 +20,6 @@
 /obj/structure/vampdoor/vtr_church/bishop_office
 	lock_id = "bishop"
 	lockpick_difficulty = 5
+
+/obj/structure/vampdoor/vtr_church/unlocked
+	locked = FALSE

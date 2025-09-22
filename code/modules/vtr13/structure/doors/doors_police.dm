@@ -29,3 +29,10 @@
 	baseicon = "vault"
 	lock_id = "sergeant"
 	lockpick_difficulty = 7 //there are 9 million guns in here, this is the hardest lock on the map and will require maxed stats and either luck or enough time for multiple attempts
+
+/obj/structure/vampdoor/vtr_police/unlocked
+	locked = FALSE
+	icon_state = "glass_blue-1"
+	baseicon = "glass_blue"
+	opacity = FALSE
+	glass = TRUE

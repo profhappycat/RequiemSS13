@@ -14,3 +14,10 @@
 /obj/structure/vampdoor/vtr_clinic/director
 	lock_id = "director"
 	lockpick_difficulty = 5
+
+/obj/structure/vampdoor/vtr_clinic/unlocked
+	icon_state = "glass_blue-1"
+	baseicon = "glass_blue"
+	locked = FALSE
+	opacity = FALSE
+	glass = TRUE

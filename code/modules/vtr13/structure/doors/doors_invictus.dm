@@ -56,3 +56,10 @@
 	burnable = FALSE
 	lock_id = "janitor"
 	lockpick_difficulty = 3
+
+/obj/structure/vampdoor/vtr_invictus/unlocked
+	locked = FALSE
+	icon_state = "glass_blue-1"
+	baseicon = "glass_blue"
+	opacity = FALSE
+	glass = TRUE
