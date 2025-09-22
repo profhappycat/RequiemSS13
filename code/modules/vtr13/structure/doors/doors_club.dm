@@ -26,3 +26,6 @@
 	baseicon = "wood"
 	burnable = TRUE
 	lock_id = "keeper"
+
+/obj/structure/vampdoor/vtr_kiss/unlocked
+	locked = FALSE

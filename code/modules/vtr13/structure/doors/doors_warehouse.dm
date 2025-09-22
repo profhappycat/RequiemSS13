@@ -11,3 +11,8 @@
 /obj/structure/vampdoor/vtr_warehouse/rep_office
 	lock_id = "carthian_rep"
 	lockpick_difficulty = 5
+
+/obj/structure/vampdoor/vtr_warehouse/unlocked
+	locked = FALSE
+	icon_state = "oldwood-1"
+	baseicon = "oldwood"

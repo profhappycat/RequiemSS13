@@ -20,3 +20,6 @@
 	burnable = FALSE
 	lock_id = "sworn"
 	lockpick_difficulty = 6
+
+/obj/structure/vampdoor/vtr_library/unlocked
+	locked = FALSE
