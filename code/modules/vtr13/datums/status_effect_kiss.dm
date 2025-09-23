@@ -19,7 +19,7 @@
 		H.Dizzy(10)
 
 /datum/status_effect/kissed/on_remove()
-	to_chat(owner, "<span class='userdanger'>As you wake, you find it hard to recall the last minute or so. All that remains are vague sense-impressions and a pleasant, warm feeling. </span>") //feel free to change these
+	to_chat(owner, "<span class='userdanger'>As you wake, you find it hard to recall the last minute or so. All that remains are emotions, a fuzzy image or two, and a pleasant, warm feeling. </span>") //feel free to change these
 	owner.remove_client_colour(/datum/client_colour/brightened)
 	owner.SetSleeping(50)
 	if(ishuman(owner))
