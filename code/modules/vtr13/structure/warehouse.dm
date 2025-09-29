@@ -10,7 +10,3 @@
 	name = "stack of newspaper"
 	desc = "A big stack of newspapers, ready for distribution."
 	icon_state ="newspapers"
-
-/obj/effect/decal/pallet/small
-	name = "small pallet"
-	icon = 'icons/vtr13/structure/warehouse.dmi'
